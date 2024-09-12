@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "@tsconfig/vite-react/tsconfig.json",
+    "@tsconfig/strictest/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "~/*": [
+        "./src/assets/external/*"
+      ],
+      "panda/*": [
+        "./panda/*"
+      ],
+      "package": [
+        "./package.json"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
