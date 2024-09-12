@@ -1,4 +1,4 @@
-import { p } from "./_p";
+import { styled as p } from "panda/jsx";
 
 export const Button = p("button", {
   base: {
