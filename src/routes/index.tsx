@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { styled as p } from "panda/jsx";
+import { HStack, styled as p } from "panda/jsx";
 import mainVisual from "@/assets/logo/svg/mainVisual.svg";
+import { ProjectCard } from "@/components/ProjectCard";
 import { Expanded } from "@/components/panda/Expanded";
 
 export const Route = createFileRoute("/")({
@@ -41,33 +42,127 @@ export const Route = createFileRoute("/")({
             現在募集中のプロジェクト
           </p.h3>
           <p.p>おすすめプロジェクト</p.p>
-        </p.div>
-
-        <p.div
-          display="flex"
-          flexWrap="wrap"
-          justifyContent="center"
-          my="100px"
-          p="10%"
-        >
-          <p.p>a</p.p>
+          <HStack>
+            <ProjectCard
+              description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+            <ProjectCard
+              description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+            <ProjectCard
+              description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+          </HStack>
+          <HStack>
+            <ProjectCard
+              description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+            <ProjectCard
+              description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+            <ProjectCard
+              description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+          </HStack>
         </p.div>
       </p.div>
-      <p.div pl="10%" textAlign="left">
+      <p.div pl="10%" py={150} textAlign="left">
         <p.h3 fontSize="170%" fontWeight="bold">
           自分が蒔いた種
         </p.h3>
         <p.p>おすすめプロジェクト</p.p>
-      </p.div>
-
-      <p.div
-        display="flex"
-        flexWrap="wrap"
-        justifyContent="center"
-        my="100px"
-        p="10%"
-      >
-        <p.p>a</p.p>
+        <HStack>
+          <ProjectCard
+            description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+            isFinished={false}
+            keyVisual="https://placehold.jp/250x150.png"
+            location="中区周辺"
+            name="タイトル"
+            tag="カフェテリア"
+            wateringPeople={1}
+          />
+          <ProjectCard
+            description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+            isFinished={false}
+            keyVisual="https://placehold.jp/250x150.png"
+            location="中区周辺"
+            name="タイトル"
+            tag="カフェテリア"
+            wateringPeople={1}
+          />
+          <ProjectCard
+            description="
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。
+          ここには生成AIが市民の意見を集約した文章が入ります。"
+            isFinished={false}
+            keyVisual="https://placehold.jp/250x150.png"
+            location="中区周辺"
+            name="タイトル"
+            tag="カフェテリア"
+            wateringPeople={1}
+          />
+        </HStack>
       </p.div>
     </Expanded>
   ),
