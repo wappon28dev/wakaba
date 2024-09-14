@@ -11,12 +11,11 @@
     "test": "tsc && prettier --check ./src/ --check && eslint --ext .ts,.tsx ./src ",
     "fmt": "prettier --write ./src/",
     "lint": "eslint --ext .ts,.tsx ./src",
-    "supabase:login": "supabase login",
+    "supabase": "dotenvx run -- supabase",
     "supabase:link": "dotenvx run -- bun run ./scripts/supabase-link.ts",
-    "supabase:db:pull": "supabase db pull",
-    "supabase:start": "supabase start",
-    "supabase:db:reset": "supabase db reset",
-    "supabase:stop": "supabase stop"
+    "supabase:start": "supabase start -x storage-api,imgproxy,inbucket,pgadmin-schema-diff,edge-runtime,logflare,vector,pgbouncer",
+    "supabase:seed": "supabase db dump --local --data-only -f ./supabase/seed.sql",
+    "supabase:gen-type": "bunx supabase gen types typescript --local > ./src/types/supabase.gen.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.14.0",
