@@ -16,29 +16,31 @@ export const Route = createFileRoute("/")({
           width="30vw"
         />
       </p.div>
-      <p.div height="600px" p="10%">
-        <p.h2 fontSize="200%" fontWeight="bold" textAlign="center">
-          Wakabaとは
-        </p.h2>
-        <p.p
-          fontSize="100%"
-          maxWidth="60%"
-          mt="40px"
-          mx="auto"
-          textAlign="center"
-        >
-          昔、あるところになかなか子どもが生まれない夫婦がいました。
-          でも、ある時、ようやくかわいらしい男の子が産まれました。
-          れどれ。あら、こぶなんてないじゃないの？」
-          「おばちゃん。名前が長すぎるから、もうこぶが引っ込んじゃったよ
-        </p.p>
+      <p.div height="800" p="10%">
+        <p.div>
+          <p.h2 fontSize="200%" fontWeight="bold" textAlign="center">
+            Wakabaとは
+          </p.h2>
+          <p.p
+            fontSize="100%"
+            maxWidth="60%"
+            mt="40px"
+            mx="auto"
+            textAlign="center"
+          >
+            昔、あるところになかなか子どもが生まれない夫婦がいました。
+            でも、ある時、ようやくかわいらしい男の子が産まれました。
+            れどれ。あら、こぶなんてないじゃないの？」
+            「おばちゃん。名前が長すぎるから、もうこぶが引っ込んじゃったよ
+          </p.p>
+        </p.div>
       </p.div>
       <p.div>
         <p.div pl="10%" textAlign="left">
           <p.h3 fontSize="170%" fontWeight="bold">
             現在募集中のプロジェクト
           </p.h3>
-          <p.p py={10}>おすすめプロジェクト</p.p>
+          <p.p>おすすめプロジェクト</p.p>
         </p.div>
 
         <p.div
@@ -55,7 +57,7 @@ export const Route = createFileRoute("/")({
         <p.h3 fontSize="170%" fontWeight="bold">
           自分が蒔いた種
         </p.h3>
-        <p.p py={10}>おすすめプロジェクト</p.p>
+        <p.p>おすすめプロジェクト</p.p>
       </p.div>
 
       <p.div
