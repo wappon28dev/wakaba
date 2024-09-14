@@ -3,6 +3,7 @@ import { HStack, styled as p } from "panda/jsx";
 import mainVisual from "@/assets/logo/svg/mainVisual.svg";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Expanded } from "@/components/panda/Expanded";
+import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 
 export const Route = createFileRoute("/")({
   component: () => (
@@ -125,44 +126,48 @@ export const Route = createFileRoute("/")({
           自分が蒔いた種
         </p.h3>
         <p.p>おすすめプロジェクト</p.p>
-        <HStack>
-          <ProjectCard
-            description="
+        <HorizontalScrolling>
+          <HStack>
+            <ProjectCard
+              description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-            isFinished={false}
-            keyVisual="https://placehold.jp/250x150.png"
-            location="中区周辺"
-            name="タイトル"
-            tag="カフェテリア"
-            wateringPeople={1}
-          />
-          <ProjectCard
-            description="
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区周辺"
+              name="タイトル"
+              tag="カフェテリア"
+              wateringPeople={1}
+            />
+            <ProjectCard
+              description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-            isFinished={false}
-            keyVisual="https://placehold.jp/250x150.png"
-            location="中区周辺"
-            name="タイトル"
-            tag="カフェテリア"
-            wateringPeople={1}
-          />
-          <ProjectCard
-            description="
+              isFinished={false}
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区一番街"
+              name="タイトル"
+              sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
+              tag="カフェテリア"
+              wateringPeople={100}
+            />
+            <ProjectCard
+              description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-            isFinished={false}
-            keyVisual="https://placehold.jp/250x150.png"
-            location="中区周辺"
-            name="タイトル"
-            tag="カフェテリア"
-            wateringPeople={1}
-          />
-        </HStack>
+              isFinished
+              keyVisual="https://placehold.jp/250x150.png"
+              location="中区一番街"
+              name="タイトル"
+              sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
+              tag="カフェテリア"
+              wateringPeople={100}
+            />
+          </HStack>
+        </HorizontalScrolling>
       </p.div>
     </Expanded>
   ),
