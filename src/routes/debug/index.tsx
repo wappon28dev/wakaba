@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { styled as p } from "panda/jsx";
 
 export const Route = createFileRoute("/debug/")({
-  component: () => <div>Hello /debug/!</div>,
+  component: () => <p.div>Hello /debug/!</p.div>,
 });

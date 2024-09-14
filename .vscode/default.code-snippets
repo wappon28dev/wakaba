@@ -1,0 +1,7 @@
+{
+  "import `styled` as `p` alias by Panda CSS": {
+    "prefix": "pd",
+    "body": ["import { styled as p } from \"panda/jsx\";"],
+    "description": "import `styled` as `p` alias by Panda CSS",
+  },
+}
