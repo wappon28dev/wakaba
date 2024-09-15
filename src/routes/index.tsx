@@ -3,11 +3,10 @@ import { HStack, styled as p } from "panda/jsx";
 import mainVisual from "@/assets/logo/svg/mainVisual.svg";
 import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 import { ProjectCard } from "@/components/ProjectCard";
-import { Expanded } from "@/components/panda/Expanded";
 
 export const Route = createFileRoute("/")({
   component: () => (
-    <Expanded alignItems="start">
+    <p.div>
       <p.div
         alignItems="center"
         bg="gray.200"
@@ -184,6 +183,6 @@ export const Route = createFileRoute("/")({
           </HStack>
         </HorizontalScrolling>
       </p.div>
-    </Expanded>
+    </p.div>
   ),
 });
