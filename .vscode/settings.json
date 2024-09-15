@@ -1,9 +1,15 @@
 {
   "cSpell.words": [
     "envsafe",
+    "fontface",
+    "Fontface",
+    "fontsource",
+    "Hstack",
     "iconify",
+    "pandacss",
     "supabase",
     "SUPABASE",
-    "tanstack"
+    "tanstack",
+    "Vstack"
   ]
 }

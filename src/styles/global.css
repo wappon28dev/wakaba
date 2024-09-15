@@ -5,28 +5,6 @@
   --font-mono: "UDEV Gothic 35 JPDOC", monospace;
 }
 
-html {
-  font-size: var(--font-sizes-lg);
-}
-
-body {
-  font-family: var(--font-sans);
-  font-feature-settings: "palt";
-}
-
-pre,
-code {
-  font-family: var(--font-mono);
-}
-
-button {
-  cursor: pointer;
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.4;
-  }
-}
-
 ul,
 menu,
 dir {
@@ -62,18 +40,5 @@ table {
   }
   th {
     border-bottom: 2px solid;
-  }
-}
-
-/* 768px = md */
-@media (width < 768px) {
-  html {
-    font-size: var(--font-sizes-md);
-  }
-  article {
-    padding-inline: var(--spacing-5);
-  }
-  .content {
-    padding-inline: var(--spacing-10);
   }
 }
