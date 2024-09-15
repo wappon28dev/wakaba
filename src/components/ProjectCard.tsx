@@ -53,15 +53,18 @@ export function ProjectCard({
         {isFinished && (
           <p.img
             h="50px"
-            left={-3}
+            left={0}
             position="absolute"
             rounded="full"
             src="https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1"
-            top={-3}
+            top={0}
           />
         )}
       </p.div>
       <p.div
+        css={{
+          WebkitLineClamp: 2,
+        }}
         h="1/2"
         overflow="hidden"
         pt={2}
@@ -76,8 +79,9 @@ export function ProjectCard({
             </p.span>
           </HStack>
           <p.div
-            h="auto"
-            maxH="40px"
+            css={{
+              WebkitLineClamp: 2,
+            }}
             overflow="hidden"
             textOverflow="ellipsis"
             white-space="nowrap"
@@ -86,7 +90,7 @@ export function ProjectCard({
           </p.div>
           <HStack w="100%">
             <p.span>
-              <HStack gap={-1}>
+              <HStack gap={0}>
                 <Icon icon="bi:geo-alt-fill" />
                 {location}
               </HStack>
