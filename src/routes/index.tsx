@@ -1,32 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HStack, styled as p } from "panda/jsx";
 import mainVisual from "@/assets/logo/svg/mainVisual.svg";
+import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Expanded } from "@/components/panda/Expanded";
-import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 
 export const Route = createFileRoute("/")({
   component: () => (
     <Expanded alignItems="start">
-      <p.div bg="gray.200" height="600px">
+      <p.div
+        alignItems="center"
+        bg="gray.200"
+        display="flex"
+        height={{ base: "300px", sm: "600px" }}
+        justifyContent="center"
+      >
         <p.img
           alt="mainVisual"
           maxWidth={300}
           mx="auto"
-          py={150}
           src={mainVisual}
           width="30vw"
         />
       </p.div>
-      <p.div height="800" p="10%">
+
+      <p.div
+        display="flex"
+        flexDirection="column"
+        height={{ base: "400px", sm: "500px" }}
+        justifyContent="center"
+      >
         <p.div>
           <p.h2 fontSize="200%" fontWeight="bold" textAlign="center">
             Wakabaとは
           </p.h2>
           <p.p
             fontSize="100%"
-            maxWidth="60%"
-            mt="40px"
+            maxWidth={{ base: "85%", sm: "70%" }}
+            mt="20px"
             mx="auto"
             textAlign="center"
           >
@@ -43,82 +54,86 @@ export const Route = createFileRoute("/")({
             現在募集中のプロジェクト
           </p.h3>
           <p.p>おすすめプロジェクト</p.p>
-          <HStack>
-            <ProjectCard
-              description="
+          <HorizontalScrolling>
+            <HStack>
+              <ProjectCard
+                description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-              isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
-              location="中区周辺"
-              name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
-            />
-            <ProjectCard
-              description="
+                isFinished={false}
+                keyVisual="https://placehold.jp/250x150.png"
+                location="中区周辺"
+                name="タイトル"
+                tag="カフェテリア"
+                wateringPeople={1}
+              />
+              <ProjectCard
+                description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-              isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
-              location="中区周辺"
-              name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
-            />
-            <ProjectCard
-              description="
+                isFinished={false}
+                keyVisual="https://placehold.jp/250x150.png"
+                location="中区周辺"
+                name="タイトル"
+                tag="カフェテリア"
+                wateringPeople={1}
+              />
+              <ProjectCard
+                description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-              isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
-              location="中区周辺"
-              name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
-            />
-          </HStack>
-          <HStack>
-            <ProjectCard
-              description="
+                isFinished={false}
+                keyVisual="https://placehold.jp/250x150.png"
+                location="中区周辺"
+                name="タイトル"
+                tag="カフェテリア"
+                wateringPeople={1}
+              />
+            </HStack>
+          </HorizontalScrolling>
+          <HorizontalScrolling>
+            <HStack>
+              <ProjectCard
+                description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-              isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
-              location="中区周辺"
-              name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
-            />
-            <ProjectCard
-              description="
+                isFinished={false}
+                keyVisual="https://placehold.jp/250x150.png"
+                location="中区周辺"
+                name="タイトル"
+                tag="カフェテリア"
+                wateringPeople={1}
+              />
+              <ProjectCard
+                description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-              isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
-              location="中区周辺"
-              name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
-            />
-            <ProjectCard
-              description="
+                isFinished={false}
+                keyVisual="https://placehold.jp/250x150.png"
+                location="中区周辺"
+                name="タイトル"
+                tag="カフェテリア"
+                wateringPeople={1}
+              />
+              <ProjectCard
+                description="
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。
           ここには生成AIが市民の意見を集約した文章が入ります。"
-              isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
-              location="中区周辺"
-              name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
-            />
-          </HStack>
+                isFinished={false}
+                keyVisual="https://placehold.jp/250x150.png"
+                location="中区周辺"
+                name="タイトル"
+                tag="カフェテリア"
+                wateringPeople={1}
+              />
+            </HStack>
+          </HorizontalScrolling>
         </p.div>
       </p.div>
       <p.div pl="10%" py={150} textAlign="left">
