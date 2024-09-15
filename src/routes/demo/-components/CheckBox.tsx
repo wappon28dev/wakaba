@@ -12,9 +12,7 @@ export function PopoverSample(): ReactElement {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
-        <Button fontWeight="bold" variant="outlined">
-          ポップオーバーサンプル！
-        </Button>
+        <Button variant="outlined">ポップオーバーサンプル！</Button>
       </Popover.Trigger>
       <Popover.Positioner>
         <Popover.Content className={cls.content}>
