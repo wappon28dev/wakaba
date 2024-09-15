@@ -3,27 +3,31 @@ import { ErrorScreen } from "@/components/ErrorScreen";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { NotFoundScreen } from "@/components/NotFound";
-import { Expanded } from "@/components/panda/Expanded";
 
-import "@/styles/fonts.css";
+import { Expanded } from "@/components/cva/Expanded";
+
 import "@/styles/global.css";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/noto-sans-jp";
 
 export const Route = createRootRoute({
   component: () => (
     <Expanded
+      basedOn="screen"
       display="grid"
       gridTemplateColumns="100%"
       gridTemplateRows="auto 1fr auto"
-      size="screen"
+      h="unset"
+      minH={["100dvh", "100vh"]}
     >
       <Header />
       <Outlet />
       <Footer />
     </Expanded>
   ),
-  errorComponent: ({ error }) => (
-    <Expanded size="screen">
-      <ErrorScreen error={error} />
+  errorComponent: ({ error, info }) => (
+    <Expanded basedOn="screen">
+      <ErrorScreen componentStack={info?.componentStack} error={error} />
     </Expanded>
   ),
   notFoundComponent: () => (

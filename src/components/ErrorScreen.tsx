@@ -1,14 +1,19 @@
 import { Icon } from "@iconify/react";
 import { HStack, styled as p, VStack } from "panda/jsx";
 import { useEffect, useRef, type ReactElement } from "react";
-import { Expanded } from "./panda/Expanded";
+import { IconText } from "./IconText";
+import { Button } from "./cva/Button";
+import { Expanded } from "./cva/Expanded";
+import { type Nullable } from "@/types/utils";
 
 export function ErrorScreen({
   title,
   error,
+  componentStack,
 }: {
   title?: string;
   error?: unknown;
+  componentStack?: Nullable<string>;
 }): ReactElement {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -28,27 +33,39 @@ export function ErrorScreen({
     <Expanded bg="red.50" color="red.500" items="center">
       <VStack position="relative" w="100%">
         <Icon height="3em" icon="mdi:robot-dead" />
-        <p.p fontSize="1.2rem" fontWeight="bold">
-          {title != null ? `${title}中に` : "不明な"}エラーが発生しました
-        </p.p>
+        <VStack gap="0">
+          <p.p fontSize="1.2rem" fontWeight="bold">
+            {title != null ? `${title}中に` : "不明な"}エラーが発生しました！
+          </p.p>
+          <p.p fontSize="sm" fontWeight="medium">
+            コンソールでエラーの詳細を確認してください
+          </p.p>
+        </VStack>
         <p.code>{String(error)}</p.code>
+        <p.code>{componentStack}</p.code>
         {title == null && (
           <HStack>
-            <p.button
+            <Button
+              colorPalette="red"
               onClick={() => {
                 window.location.href = "/";
               }}
+              variant="outlined"
             >
-              <p.p>ホームに戻る</p.p>
-            </p.button>
-            <p.button
+              <IconText icon="mdi:backburger">ホームに戻る</IconText>
+            </Button>
+            <Button
+              colorPalette="red"
               onClick={() => {
                 localStorage.clear();
                 window.location.reload();
               }}
+              variant="outlined"
             >
-              <p.p>設定ファイルを削除</p.p>
-            </p.button>
+              <IconText icon="mdi:delete-forever-outline">
+                設定ファイルを削除
+              </IconText>
+            </Button>
           </HStack>
         )}
         <p.div

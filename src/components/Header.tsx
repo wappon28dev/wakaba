@@ -1,8 +1,9 @@
-import { Icon } from "@iconify/react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { css } from "panda/css";
 import { HStack, styled as p } from "panda/jsx";
 import { type ReactElement } from "react";
+import { Logo } from "./Logo";
+import { Expanded } from "./cva/Expanded";
 
 function getCapitalizedStr(s: string): string {
   const s0 = s.at(0);
@@ -31,6 +32,7 @@ export function Header(): ReactElement {
         className={css({
           "& > *": {
             transition: "opacity 0.2s",
+            display: "flex",
             _hover: {
               opacity: 0.5,
             },
@@ -38,7 +40,9 @@ export function Header(): ReactElement {
         })}
         to="/"
       >
-        <Icon height="1.5em" icon="mdi:leaf" />
+        <Expanded items="center">
+          <Logo height="1.5em" variant="sym" />
+        </Expanded>
       </Link>
       <HStack gap="0">
         {["about", "projects", "seeds", "overview", "contact"].map((t) => (

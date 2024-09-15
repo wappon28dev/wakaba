@@ -2,15 +2,17 @@ import { styled as p } from "panda/jsx";
 
 export const Expanded = p("div", {
   base: {
-    minW: "100%",
-    minH: "100%",
+    w: "100%",
+    h: "100%",
   },
   variants: {
-    size: {
-      container: {},
+    basedOn: {
+      container: {
+        w: "100%",
+        h: "100%",
+      },
       screen: {
-        minW: ["100vw", "100dvw"],
-        minH: ["100vh", "100dvh"],
+        h: ["100vh", "100dvh"],
       },
     },
     items: {
