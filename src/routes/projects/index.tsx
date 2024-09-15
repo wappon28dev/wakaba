@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HStack } from "panda/jsx";
 import { HorizontalScrolling } from "@/components/HorizontalScrolling";
-import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectCard } from "@/components/project/Card";
 
 export const Route = createFileRoute("/projects/")({
   component: () => {
