@@ -13,16 +13,11 @@ export function Logo({
   return <Icon icon={LOGO[variant]} {...props} />;
 }
 
-export function LogoComposite({
-  scale = 1,
-  ...props
-}: {
-  scale?: number;
-} & VstackProps): ReactElement {
+export function LogoComposite({ ...props }: VstackProps): ReactElement {
   return (
     <VStack w="fit-content" {...props}>
-      <Logo height={`${4 * scale}em`} variant="sym" />
-      <Logo height={`${1 * scale}em`} variant="title" />
+      <Logo height="4em" variant="sym" />
+      <Logo height="1em" variant="title" />
     </VStack>
   );
 }

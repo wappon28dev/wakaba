@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HStack, styled as p } from "panda/jsx";
-import mainVisual from "@/assets/logo/svg/mainVisual.svg";
 import { HorizontalScrolling } from "@/components/HorizontalScrolling";
-import { ProjectCard } from "@/components/ProjectCard";
+import { LogoComposite } from "@/components/Logo";
+import { ProjectCard } from "@/components/project/Card";
 
 export const Route = createFileRoute("/")({
   component: () => (
@@ -11,15 +11,15 @@ export const Route = createFileRoute("/")({
         alignItems="center"
         bg="gray.200"
         display="flex"
-        height={{ base: "300px", sm: "600px" }}
         justifyContent="center"
+        py="20"
+        w="100%"
       >
-        <p.img
-          alt="mainVisual"
-          maxWidth={300}
-          mx="auto"
-          src={mainVisual}
-          width="30vw"
+        <LogoComposite
+          zoom={{
+            base: 2,
+            smDown: 1.5,
+          }}
         />
       </p.div>
 
