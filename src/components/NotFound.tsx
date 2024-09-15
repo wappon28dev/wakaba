@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { styled as p, VStack } from "panda/jsx";
 import { type ReactElement } from "react";
-import { Expanded } from "./panda/Expanded";
+import { Expanded } from "./cva/Expanded";
 
 export function NotFoundScreen(): ReactElement {
   return (

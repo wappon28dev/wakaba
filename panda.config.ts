@@ -1,4 +1,7 @@
 import { defineConfig } from "@pandacss/dev";
+import pandaPreset from "@pandacss/preset-panda";
+import pandaAnimate from "pandacss-animate";
+import { globalCss } from "@/styles/global";
 
 export default defineConfig({
   // Whether to use css reset
@@ -14,14 +17,30 @@ export default defineConfig({
   theme: {
     extend: {
       tokens: {
+        colors: {
+          "wkb-brown": { value: "#462D25" },
+          "wkb-green": { value: "#83C024" },
+          "wkb-orange": { value: "#F49D22" },
+          "wkb-white": { value: "#F2F2F2" },
+        },
         fonts: {
-          sans: { value: "var(--font-sans)" },
-          mono: { value: "var(--font-mono)" },
+          sans: {
+            value: "'Inter Variable', 'Noto Sans JP Variable', sans-serif",
+          },
+          mono: { value: "'JetBrains Mono Variable', monospace" },
         },
         zIndex: {
           header: { value: 10 },
           modal: { value: 100 },
           modalContent: { value: 110 },
+        },
+      },
+      semanticTokens: {
+        colors: {
+          "wkb.primary": { value: "{colors.wkb-green}" },
+          "wkb.secondary": { value: "{colors.wkb-orange}" },
+          "wkb.text": { value: "{colors.wkb-brown}" },
+          "wkb.background": { value: "{colors.wkb-white}" },
         },
       },
       keyframes: {
@@ -44,6 +63,11 @@ export default defineConfig({
       },
     },
   },
+
+  globalCss,
+
+  // @ts-expect-error `pandaPreset` がなぜか型が合わない
+  presets: [pandaPreset, pandaAnimate],
 
   // The output directory for your css system
   outdir: "panda",

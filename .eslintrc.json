@@ -8,6 +8,7 @@
     "airbnb-typescript",
     "standard-with-typescript",
     "plugin:react/recommended",
+    "plugin:@pandacss/recommended",
     "prettier"
   ],
   "parserOptions": {
@@ -59,6 +60,13 @@
       }
     ],
     "unused-imports/no-unused-imports": "error",
-    "react-refresh/only-export-components": "warn"
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "Omit": "Use `OmitStrict`."
+        }
+      }
+    ]
   }
 }

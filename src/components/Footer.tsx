@@ -3,7 +3,7 @@ import { type ReactElement } from "react";
 
 export function Footer(): ReactElement {
   return (
-    <p.footer bg="gray" color="white" p="4" textAlign="center">
+    <p.footer bg="wkb-brown" color="wkb-white" p="4" textAlign="center">
       mdn
     </p.footer>
   );
