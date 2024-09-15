@@ -1,5 +1,5 @@
-import { globalCss } from "@/styles/global";
 import { defineConfig } from "@pandacss/dev";
+import { globalCss } from "@/styles/global";
 
 export default defineConfig({
   // Whether to use css reset
@@ -19,7 +19,7 @@ export default defineConfig({
           "wkb-brown": { value: "#462D25" },
           "wkb-green": { value: "#83C024" },
           "wkb-orange": { value: "#F49D22" },
-          "wkb-gray": { value: "#F2F2F2" },
+          "wkb-white": { value: "#F2F2F2" },
         },
         fonts: {
           sans: {
@@ -38,7 +38,7 @@ export default defineConfig({
           "wkb.primary": { value: "{colors.wkb-green}" },
           "wkb.secondary": { value: "{colors.wkb-orange}" },
           "wkb.text": { value: "{colors.wkb-brown}" },
-          "wkb.background": { value: "{colors.wkb-gray}" },
+          "wkb.background": { value: "{colors.wkb-white}" },
         },
       },
       keyframes: {

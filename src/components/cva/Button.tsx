@@ -2,6 +2,7 @@ import { styled as p } from "panda/jsx";
 
 export const Button = p("button", {
   base: {
+    colorPalette: "wkb.primary",
     p: "2",
     px: "4",
     rounded: "md",
@@ -9,27 +10,31 @@ export const Button = p("button", {
   variants: {
     variant: {
       light: {
-        bg: "colorPalette.50",
-        color: "colorPalette.500",
+        bg: "colorPalette/5",
+        color: "colorPalette",
         _hover: {
-          bg: "colorPalette.100",
+          bg: "colorPalette/10",
         },
       },
       filled: {
-        bg: "colorPalette.500",
-        color: "white",
+        bg: "colorPalette",
+        color: "wkb-white",
         _hover: {
-          bg: "colorPalette.600",
+          bg: "colorPalette/90",
         },
       },
       outlined: {
-        border: "1px solid",
-        borderColor: "colorPalette.500",
-        color: "colorPalette.500",
+        m: "1",
+        outline: "1px solid",
+        outlineColor: "colorPalette",
+        color: "colorPalette",
         _hover: {
-          bg: "colorPalette.50",
+          bg: "colorPalette/5",
         },
       },
     },
+  },
+  defaultVariants: {
+    variant: "light",
   },
 });

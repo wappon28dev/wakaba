@@ -19,7 +19,7 @@ export function Header(): ReactElement {
 
   return (
     <p.header
-      bg="white"
+      bg="wkb.background"
       display="flex"
       justifyContent="space-between"
       p="4"
@@ -50,10 +50,10 @@ export function Header(): ReactElement {
             key={t}
             className={css({
               _hover: {
-                bg: "gray.100",
+                bg: "wkb.text/5",
               },
               "&[data-active='true']": {
-                bg: "gray.100",
+                bg: "wkb.text/5",
                 fontWeight: "bold",
               },
               p: "1",

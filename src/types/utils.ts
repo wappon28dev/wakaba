@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type Override<T, U extends { [Key in keyof T]?: unknown }> = Omit<
   T,
   keyof U
