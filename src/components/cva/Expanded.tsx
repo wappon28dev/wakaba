@@ -12,7 +12,8 @@ export const Expanded = p("div", {
         h: "100%",
       },
       screen: {
-        h: ["100vh", "100dvh"],
+        // eslint-disable-next-line @pandacss/no-dynamic-styling
+        h: ["100dvh", "100vh"],
       },
     },
     items: {

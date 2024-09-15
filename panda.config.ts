@@ -1,4 +1,6 @@
 import { defineConfig } from "@pandacss/dev";
+import pandaPreset from "@pandacss/preset-panda";
+import pandaAnimate from "pandacss-animate";
 import { globalCss } from "@/styles/global";
 
 export default defineConfig({
@@ -25,7 +27,7 @@ export default defineConfig({
           sans: {
             value: "'Inter Variable', 'Noto Sans JP Variable', sans-serif",
           },
-          mono: { value: "var(--font-mono)" },
+          mono: { value: "'JetBrains Mono Variable', monospace" },
         },
         zIndex: {
           header: { value: 10 },
@@ -63,6 +65,9 @@ export default defineConfig({
   },
 
   globalCss,
+
+  // @ts-expect-error `pandaPreset` がなぜか型が合わない
+  presets: [pandaPreset, pandaAnimate],
 
   // The output directory for your css system
   outdir: "panda",

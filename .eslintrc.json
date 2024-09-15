@@ -8,6 +8,7 @@
     "airbnb-typescript",
     "standard-with-typescript",
     "plugin:react/recommended",
+    "plugin:@pandacss/recommended",
     "prettier"
   ],
   "parserOptions": {

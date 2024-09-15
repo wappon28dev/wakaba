@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LogoComposite } from "@/components/Logo";
+import { styled as p } from "panda/jsx";
 
 export const Route = createFileRoute("/")({
-  component: () => <LogoComposite />,
+  component: () => <p.p>Hello! </p.p>,
 });

@@ -1,6 +1,6 @@
-import { defineGlobalStyles } from "@pandacss/dev";
+import { type GlobalStyleObject } from "@pandacss/dev";
 
-export const globalCss = defineGlobalStyles({
+export const globalCss: GlobalStyleObject = {
   "html, body": {
     color: "wkb.text",
     bg: "wkb.background",
@@ -32,4 +32,4 @@ export const globalCss = defineGlobalStyles({
       px: "10",
     },
   },
-});
+};

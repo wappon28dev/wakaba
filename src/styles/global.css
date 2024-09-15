@@ -1,10 +1,5 @@
 @layer reset, base, tokens, recipes, utilities;
 
-:root {
-  --font-sans: "LINE Seed JP", sans-serif;
-  --font-mono: "UDEV Gothic 35 JPDOC", monospace;
-}
-
 ul,
 menu,
 dir {

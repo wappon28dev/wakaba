@@ -9,6 +9,7 @@ import { Expanded } from "@/components/cva/Expanded";
 import "@/styles/global.css";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/noto-sans-jp";
+import "@fontsource-variable/jetbrains-mono";
 
 export const Route = createRootRoute({
   component: () => (
