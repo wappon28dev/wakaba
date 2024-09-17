@@ -1,38 +1,93 @@
 import { Icon } from "@iconify/react";
-import { Link } from "@tanstack/react-router";
+import {
+  useRouterState,
+  type ParsedLocation,
+  Link,
+} from "@tanstack/react-router";
+import { css } from "panda/css";
+import { styled as p, HStack } from "panda/jsx";
+import { type ComponentProps, type ReactElement } from "react";
+import { Logo } from "./Logo";
+import { getCapitalizedStr } from "@/lib/utils";
 
-import { styled as p, HStack, VStack } from "panda/jsx";
-import { type ReactElement } from "react";
-import Logo from "@/assets/logo.svg";
+function LinkText({
+  currentLoc,
+  to,
+}: {
+  currentLoc: ParsedLocation;
+  to: NonNullable<ComponentProps<typeof Link>["to"]>;
+}): ReactElement {
+  return (
+    <Link
+      data-active={currentLoc.pathname.startsWith(to)}
+      resetScroll={false}
+      to={to}
+    >
+      {getCapitalizedStr(to.slice(1))}
+    </Link>
+  );
+}
 
 export function Footer(): ReactElement {
+  const { resolvedLocation } = useRouterState();
+
   return (
-    <p.footer bg="wkb.text" color="wkb-white" p="4" textAlign="center">
-      <VStack alignItems="center" gap="4" justifyContent="center">
-        <HStack gap="2" justify="center" justifyContent="center" pr={5}>
-          <Icon height={30} icon="mdi:github" width={30} />
-          <Icon height={30} icon="mdi:twitter" width={30} />
-          <Icon height={30} icon="mdi:instagram" width={30} />
-        </HStack>
-        <HStack
-          fontSize="sm"
-          fontWeight="bold"
-          gap="9"
-          justify="center"
-          justifyContent="center"
+    <p.footer
+      alignItems="center"
+      bg="wkb.on-bg"
+      color="wkb.bg"
+      display="flex"
+      flexDirection="column"
+      fontSize="sm"
+      gap="5"
+      p="4"
+    >
+      <HStack gap="5">
+        <Icon height="2em" icon="mdi:github" />
+        <Icon height="2em" icon="mdi:twitter" />
+        <Icon height="2em" icon="mdi:instagram" />
+      </HStack>
+      <HStack
+        className={css({
+          "& > a": {
+            "&:not(:has(svg))": {
+              _hover: {
+                bg: "wkb.bg/5",
+              },
+              "&[data-active='true']": {
+                bg: "wkb.bg/5",
+                fontWeight: "bold",
+              },
+            },
+            p: "1",
+            px: "2",
+            rounded: "md",
+          },
+        })}
+        gap="5"
+        ml="5" // NOTE: 中央揃えの見た目のため, 右にずらしている
+      >
+        <LinkText currentLoc={resolvedLocation} to="/projects" />
+        <LinkText currentLoc={resolvedLocation} to="/seeds" />
+        <Link
+          className={css({
+            "& > *": {
+              transition: "opacity 0.2s",
+              display: "flex",
+              _hover: {
+                opacity: 0.5,
+              },
+            },
+          })}
+          resetScroll={false}
+          to="/"
         >
-          <Link to="/seeds"> Seeds </Link>
-          <Link to="/projects"> Projects </Link>
-          <Link to="/">
-            <img alt="logo" height={60} src={Logo} width={50} />
-          </Link>
-          <Link to="/overview"> Overview </Link>
-          <Link to="/contact"> Contact </Link>
-        </HStack>
-        <p.p fontSize="sm" pr={5}>
-          2024 Hack Aichi team mdn
-        </p.p>
-      </VStack>
+          <Logo height="2em" refillColor="colors.wkb.bg" variant="sym" />
+        </Link>
+        <LinkText currentLoc={resolvedLocation} to="/overview" />
+        <LinkText currentLoc={resolvedLocation} to="/contact" />
+      </HStack>
+      <p.p>Hack Aichi + 2024 ･ mdn Team</p.p>
     </p.footer>
   );
 }

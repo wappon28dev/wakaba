@@ -9,7 +9,6 @@ export const Route = createFileRoute("/")({
     <p.div>
       <p.div
         alignItems="center"
-        bg="gray.200"
         display="flex"
         justifyContent="center"
         py="20"

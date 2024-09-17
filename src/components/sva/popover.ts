@@ -15,7 +15,7 @@ export const svaPopover = sva({
   base: {
     content: {
       p: "2",
-      bg: "wkb.background",
+      bg: "wkb.bg",
       border: "1px solid",
       rounded: "md",
       shadow: "md",

@@ -4,22 +4,14 @@ import { HStack, styled as p } from "panda/jsx";
 import { type ReactElement } from "react";
 import { Logo } from "./Logo";
 import { Expanded } from "./cva/Expanded";
-
-function getCapitalizedStr(s: string): string {
-  const s0 = s.at(0);
-  if (s0 == null) {
-    throw new Error("Expected a string with a length of at least 1 character");
-  }
-
-  return s0.toUpperCase() + s.slice(1);
-}
+import { getCapitalizedStr } from "@/lib/utils";
 
 export function Header(): ReactElement {
   const { resolvedLocation } = useRouterState();
 
   return (
     <p.header
-      bg="wkb.background"
+      bg="wkb.bg-overlay"
       display="flex"
       justifyContent="space-between"
       p="4"
@@ -38,6 +30,7 @@ export function Header(): ReactElement {
             },
           },
         })}
+        resetScroll={false}
         to="/"
       >
         <Expanded items="center">
@@ -61,6 +54,7 @@ export function Header(): ReactElement {
               rounded: "md",
             })}
             data-active={resolvedLocation.pathname.startsWith(`/${t}`)}
+            resetScroll={false}
             to={`/${t}`}
           >
             <p.nav>{getCapitalizedStr(t)}</p.nav>

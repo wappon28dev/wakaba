@@ -18,10 +18,16 @@ export default defineConfig({
     extend: {
       tokens: {
         colors: {
+          "wkb-neutral": {
+            0: { value: "#FFFFFF" },
+            100: { value: "#F7F7F7" },
+            300: { value: "#757575" },
+            700: { value: "#2C2C2C" },
+            900: { value: "#1E1E1E" },
+          },
           "wkb-brown": { value: "#462D25" },
           "wkb-green": { value: "#83C024" },
           "wkb-orange": { value: "#F49D22" },
-          "wkb-white": { value: "#F2F2F2" },
         },
         fonts: {
           sans: {
@@ -39,8 +45,11 @@ export default defineConfig({
         colors: {
           "wkb.primary": { value: "{colors.wkb-green}" },
           "wkb.secondary": { value: "{colors.wkb-orange}" },
-          "wkb.text": { value: "{colors.wkb-brown}" },
-          "wkb.background": { value: "{colors.wkb-white}" },
+          "wkb.text": { value: "{colors.wkb-neutral.900}" },
+          "wkb.text-variant": { value: "{colors.wkb-neutral.300}" },
+          "wkb.bg": { value: "{colors.wkb-neutral.100}" },
+          "wkb.bg-overlay": { value: "{colors.wkb-neutral.0}" },
+          "wkb.on-bg": { value: "{colors.wkb-neutral.700}" },
         },
       },
       keyframes: {
