@@ -45,7 +45,7 @@ export function Header(): ReactElement {
         </Expanded>
       </Link>
       <HStack gap="0">
-        {["about", "projects", "seeds", "overview", "contact"].map((t) => (
+        {["projects", "seeds", "overview", "contact"].map((t) => (
           <Link
             key={t}
             className={css({
