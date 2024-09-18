@@ -15,7 +15,7 @@ export const svaPopover = sva({
   base: {
     content: {
       p: "2",
-      bg: "wkb.background",
+      bg: "wkb.bg",
       border: "1px solid",
       rounded: "md",
       shadow: "md",
@@ -44,7 +44,7 @@ export const svaPopover = sva({
     },
     // https://zagjs.com/components/popover#arrow
     arrow: {
-      "--arrow-background": "var(--colors-wkb\\.background)",
+      "--arrow-background": "var(--colors-wkb\\.bg)",
       "--arrow-size": "16px",
       "--arrow-shadow-color": "gray",
     },

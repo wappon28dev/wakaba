@@ -74,5 +74,5 @@ export const Route = createFileRoute("/overview/")({
         </Box>
       </p.div>
     );
-  },
+  },main:src/routes/_auth/overview/index.tsx
 });
