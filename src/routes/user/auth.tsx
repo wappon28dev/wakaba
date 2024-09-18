@@ -2,23 +2,24 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, type ReactElement } from "react";
 import { Loading } from "@/components/Loading";
-import { toaster } from "@/components/Toast";
 import { Expanded } from "@/components/cva/Expanded";
-import { useAuth } from "@/hooks/useAuth";
+import { useSession } from "@/hooks/useSession";
+import { toaster } from "@/lib/utils/toast";
 
-export const Route = createFileRoute("/auth/callback")({
+export const Route = createFileRoute("/user/auth")({
   component: () => <Page />,
 });
 
 function Page(): ReactElement {
-  const { isLogged } = useAuth();
+  const { isLogged } = useSession();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogged) {
-      void navigate({ to: "/" });
-      toaster.success({
-        title: "ログインしました",
+      void navigate({ to: "/" }).then(() => {
+        toaster.success({
+          title: "正常にログインしました",
+        });
       });
     }
   }, [isLogged]);

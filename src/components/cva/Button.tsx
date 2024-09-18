@@ -51,6 +51,16 @@ export const Button = p("button", {
         },
       },
     },
+    size: {
+      sm: {
+        fontSize: "sm",
+        px: "2",
+        py: "1",
+      },
+      md: {
+        fontSize: "md",
+      },
+    },
   },
   defaultVariants: {
     variant: "light",

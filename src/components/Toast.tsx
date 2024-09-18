@@ -1,4 +1,4 @@
-import { Toast, Toaster, createToaster } from "@ark-ui/react";
+import { Toast, Toaster } from "@ark-ui/react";
 import { Icon } from "@iconify/react";
 import { type Type } from "@zag-js/toast";
 import { Divider, HStack, VStack } from "panda/jsx";
@@ -8,14 +8,8 @@ import { match } from "ts-pattern";
 import { IconText } from "./IconText";
 import { Button } from "./cva/Button";
 import { svaToast } from "./sva/toast";
+import { toaster } from "@/lib/utils/toast";
 import { type Nullable } from "@/types/utils";
-
-export const toaster = createToaster({
-  placement: "bottom-end",
-  overlap: true,
-  gap: 24,
-  max: 3,
-});
 
 type Style = {
   icon: string;
@@ -95,9 +89,7 @@ export function StyledToast(): ReactElement {
                   <Toast.ActionTrigger asChild>
                     <Button
                       colorPalette={color?.split(".").at(1) ?? "wkb.text"}
-                      fontSize="sm"
-                      px="2"
-                      py="1"
+                      size="sm"
                       variant="text"
                     >
                       {toast.action?.label}
