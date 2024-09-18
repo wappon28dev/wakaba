@@ -1,6 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { styled as p } from "panda/jsx";
+import { Box, styled as p } from "panda/jsx";
+import { Map } from "./-components/Map";
 
 export const Route = createFileRoute("/overview/")({
-  component: () => <p.p>Hello /overview/!</p.p>,
+  component: () => {
+    const currentUserLocation = {
+      lat: 35.6895,
+      lng: 139.6917,
+    };
+
+    return (
+      <p.div>
+        <Box maxH="100dvh" width="100%">
+          <Map currentUserLocation={currentUserLocation} />
+        </Box>
+      </p.div>
+    );
+  },
 });
