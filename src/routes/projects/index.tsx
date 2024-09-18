@@ -10,7 +10,7 @@ export const Route = createFileRoute("/projects/")({
     }
     return (
       <>
-        <HorizontalScrolling>
+        <HorizontalScrolling title="新着プロジェクト">
           <HStack>
             <ProjectCard
               description="
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/projects/")({
             />
           </HStack>
         </HorizontalScrolling>
-        <HorizontalScrolling>
+        <HorizontalScrolling title="達成したプロジェクト">
           <HStack>
             <ProjectCard
               description="
@@ -94,7 +94,7 @@ export const Route = createFileRoute("/projects/")({
             />
           </HStack>
         </HorizontalScrolling>
-        <HorizontalScrolling>
+        <HorizontalScrolling title="おすすめのプロジェクト">
           <HStack>
             <ProjectCard
               description="

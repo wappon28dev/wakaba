@@ -3,9 +3,10 @@ import { type GlobalStyleObject } from "@pandacss/dev";
 export const globalCss: GlobalStyleObject = {
   "html, body": {
     color: "wkb.text",
-    bg: "wkb.background",
+    bg: "wkb.bg",
     fontFeatureSettings: "'plat'",
     fontFamily: "sans",
+    scrollBehavior: "smooth",
 
     fontSize: {
       base: "large",
