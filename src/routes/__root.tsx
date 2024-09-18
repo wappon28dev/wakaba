@@ -7,6 +7,7 @@ import { ErrorScreen } from "@/components/ErrorScreen";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { NotFoundScreen } from "@/components/NotFound";
+import { StyledToast } from "@/components/Toast";
 import { Expanded } from "@/components/cva/Expanded";
 
 import "@/styles/global.css";
@@ -28,6 +29,7 @@ export const Route = createRootRoute({
       <Header />
       <Outlet />
       <Footer />
+      <StyledToast />
     </Expanded>
   ),
   errorComponent: ({ error, info }) => (
