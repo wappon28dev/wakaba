@@ -23,7 +23,7 @@ type projects = {
   target_amount_of_money: number;
 };
 
-export const Route = createFileRoute("/overview/")({
+export const Route = createFileRoute("/_auth/overview/")({
   component: () => {
     const currentUserLocation = {
       lat: 35.6895,
@@ -74,5 +74,5 @@ export const Route = createFileRoute("/overview/")({
         </Box>
       </p.div>
     );
-  },main:src/routes/_auth/overview/index.tsx
+  },
 });
