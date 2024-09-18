@@ -1,6 +1,6 @@
 import { Popover } from "@ark-ui/react";
 import { Icon } from "@iconify/react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { useNavigate, Link, useRouterState } from "@tanstack/react-router";
 import { css } from "panda/css";
 import { Divider, HStack, styled as p, VStack } from "panda/jsx";
 import { vstack } from "panda/patterns/vstack";
@@ -15,6 +15,7 @@ import { User } from "@/lib/classes/user";
 import { getCapitalizedStr } from "@/lib/utils";
 
 function UserIndicator(): ReactElement {
+  const navigate = useNavigate();
   const { session } = useSession();
 
   if (session == null) {
@@ -74,7 +75,7 @@ function UserIndicator(): ReactElement {
           <Button
             colorPalette="wkb.text"
             onClick={() => {
-              void User.signOut();
+              void User.signOut(navigate);
             }}
             size="sm"
             variant="outlined"

@@ -3,7 +3,7 @@ import { HStack } from "panda/jsx";
 import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 import { ProjectCard } from "@/components/project/Card";
 
-export const Route = createFileRoute("/projects/")({
+export const Route = createFileRoute("/_auth/projects/")({
   component: () => {
     if (typeof window === "undefined") {
       return null;
