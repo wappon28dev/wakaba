@@ -6,15 +6,11 @@ export function ProjectCard({
   name,
   keyVisual,
   location,
-  isFinished,
   amountOfMoney,
-  sponsorIcon,
 }: {
   name: string;
   location: string;
-  isFinished: boolean;
   amountOfMoney: number;
-  sponsorIcon?: string;
   keyVisual: string;
 }): ReactElement {
   return (
@@ -38,26 +34,6 @@ export function ProjectCard({
           src={keyVisual}
           w="100%"
         />
-        {sponsorIcon !== "" && (
-          <p.img
-            bottom={0}
-            h="50px"
-            position="absolute"
-            right={0}
-            rounded="full"
-            src={sponsorIcon}
-          />
-        )}
-        {isFinished && (
-          <p.img
-            h="50px"
-            left="-3"
-            position="absolute"
-            rounded="full"
-            src="https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1"
-            top="-3"
-          />
-        )}
       </p.div>
       <p.div h="1/2" pt={4}>
         <p.span>
