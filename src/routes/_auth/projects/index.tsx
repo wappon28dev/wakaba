@@ -5,7 +5,7 @@ import { GridLayout } from "@/components/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
 
-export const Route = createFileRoute("/projects/")({
+export const Route = createFileRoute("/_auth/projects/")({
   component: () => {
     const tabs = svaTabs();
     if (typeof window === "undefined") {
