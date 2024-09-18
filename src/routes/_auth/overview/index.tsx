@@ -72,6 +72,7 @@ export const Route = createFileRoute("/_auth/overview/")({
         <Box maxH="100dvh" width="100%">
           <Map currentUserLocation={currentUserLocation} projects={projects} />
         </Box>
+        周辺で募集中のプロジェクト (この下にプロジェクトカードを並べるか悩み中)
       </p.div>
     );
   },
