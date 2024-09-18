@@ -43,6 +43,13 @@ export const Button = p("button", {
           bg: "colorPalette/5",
         },
       },
+      text: {
+        bg: "colorPalette/5",
+        color: "colorPalette",
+        _hover: {
+          bg: "colorPalette/10",
+        },
+      },
     },
   },
   defaultVariants: {
