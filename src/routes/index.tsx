@@ -129,9 +129,9 @@ export const Route = createFileRoute("/")({
           <p.a
             height={100}
             href="/projects?q=cafe"
-            mt="50px"
+            m="50px"
             mx="auto"
-            width={{ base: "200", md: "300" }}
+            width="1/3"
           >
             <Button
               _hover={{
@@ -152,9 +152,9 @@ export const Route = createFileRoute("/")({
             fontWeight="bold"
             height={100}
             href="/projects?q=cafe"
-            mt="50px"
+            m="50px"
             mx="auto"
-            width={{ base: "200", md: "300" }}
+            width="1/3"
           >
             <Button
               _hover={{
@@ -173,9 +173,9 @@ export const Route = createFileRoute("/")({
           <p.a
             height={100}
             href="/projects?q=gym"
-            mt="50px"
+            m="50px"
             mx="auto"
-            width={{ base: "200", md: "300" }}
+            width="1/3"
           >
             <Button
               _hover={{
