@@ -30,7 +30,7 @@ export const Button = p("button", {
       },
       filled: {
         bg: "colorPalette",
-        color: "wkb-white",
+        color: "wkb.bg",
         _hover: {
           bg: "colorPalette/90",
         },

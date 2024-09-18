@@ -1,9 +1,12 @@
-import { Outlet, createRootRoute } from "@tanstack/react-router";
+import {
+  Outlet,
+  createRootRoute,
+  ScrollRestoration,
+} from "@tanstack/react-router";
 import { ErrorScreen } from "@/components/ErrorScreen";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { NotFoundScreen } from "@/components/NotFound";
-
 import { Expanded } from "@/components/cva/Expanded";
 
 import "@/styles/global.css";
@@ -21,6 +24,7 @@ export const Route = createRootRoute({
       h="unset"
       minH={["100dvh", "100vh"]}
     >
+      <ScrollRestoration getKey={(location) => location.pathname} />
       <Header />
       <Outlet />
       <Footer />
