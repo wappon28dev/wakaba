@@ -13,126 +13,81 @@ export const Route = createFileRoute("/projects/")({
         <HorizontalScrolling title="新着プロジェクト">
           <HStack>
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区周辺"
               name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
             />
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区一番街"
               name="タイトル"
               sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
-              tag="カフェテリア"
-              wateringPeople={100}
             />
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区一番街"
               name="タイトル"
               sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
-              tag="カフェテリア"
-              wateringPeople={100}
             />
           </HStack>
         </HorizontalScrolling>
         <HorizontalScrolling title="達成したプロジェクト">
           <HStack>
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区周辺"
               name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
             />
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区一番街"
               name="タイトル"
               sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
-              tag="カフェテリア"
-              wateringPeople={100}
             />
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区一番街"
               name="タイトル"
               sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
-              tag="カフェテリア"
-              wateringPeople={100}
             />
           </HStack>
         </HorizontalScrolling>
         <HorizontalScrolling title="おすすめのプロジェクト">
           <HStack>
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区周辺"
               name="タイトル"
-              tag="カフェテリア"
-              wateringPeople={1}
             />
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished={false}
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区一番街"
               name="タイトル"
               sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
-              tag="カフェテリア"
-              wateringPeople={100}
             />
             <ProjectCard
-              description="
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。
-          ここには生成AIが市民の意見を集約した文章が入ります。"
+              amountOfMoney={100000}
               isFinished
-              keyVisual="https://placehold.jp/250x150.png"
+              keyVisual="https://placehold.jp/300x150.png"
               location="中区一番街"
               name="タイトル"
               sponsorIcon="https://avatars.githubusercontent.com/u/104073343?v=4"
-              tag="カフェテリア"
-              wateringPeople={100}
             />
           </HStack>
         </HorizontalScrolling>

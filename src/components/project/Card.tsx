@@ -1,35 +1,33 @@
 import { Icon } from "@iconify/react";
-import { styled as p, HStack, VStack } from "panda/jsx";
+import { styled as p, HStack } from "panda/jsx";
 import { type ReactElement } from "react";
 
 export function ProjectCard({
   name,
-  description,
   keyVisual,
   location,
-  wateringPeople,
   isFinished,
+  amountOfMoney,
   sponsorIcon,
-  tag,
 }: {
   name: string;
-  description: string;
   location: string;
   isFinished: boolean;
-  tag: string;
-  wateringPeople: number;
+  amountOfMoney: number;
   sponsorIcon?: string;
   keyVisual: string;
 }): ReactElement {
   return (
     <p.div
-      color="gray.600"
+      bg="wkb-neutral.0"
       fontSize="sm"
-      m={10}
+      m={4}
+      mdDown={{ minW: "90%" }}
       minH={300}
-      minW={250}
+      minW={300}
+      p={4}
       rounded="md"
-      w="30%"
+      w="20%"
     >
       <p.div position="relative">
         <p.img
@@ -61,39 +59,20 @@ export function ProjectCard({
           />
         )}
       </p.div>
-      <p.div
-        h="1/2"
-        overflow="hidden"
-        pt={2}
-        textOverflow="ellipsis"
-        white-space="nowrap"
-      >
-        <VStack>
-          <HStack w="100%">
-            <p.p fontSize="xl">{name}</p.p>
-            <p.span bg="red.400" ml="auto" px={2} rounded="md">
-              # {tag}
-            </p.span>
+      <p.div h="1/2" pt={4}>
+        <p.span>
+          <HStack gap="-1">
+            <Icon icon="bi:geo-alt-fill" />
+            {location}
           </HStack>
-          <p.div
-            h="auto"
-            maxH="40px"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            white-space="nowrap"
-          >
-            <p.p>{description}</p.p>
-          </p.div>
-          <HStack w="100%">
-            <p.span>
-              <HStack gap="-1">
-                <Icon icon="bi:geo-alt-fill" />
-                {location}
-              </HStack>
-            </p.span>
-            <p.span ml="auto">支援人数: {wateringPeople}人</p.span>
-          </HStack>
-        </VStack>
+        </p.span>
+        <p.p fontSize="3xl">{name}</p.p>
+        <p.p fontSize="md">現在金額 ￥{amountOfMoney}</p.p>
+        <HStack>
+          <Icon icon="mdi:star-outline" width={30} />
+          <Icon icon="mdi:share-variant" width={30} />
+          {/*  ここにステータスあいこんを追加してほしい */}
+        </HStack>
       </p.div>
     </p.div>
   );
