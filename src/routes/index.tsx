@@ -136,7 +136,7 @@ export const Route = createFileRoute("/")({
         >
           {inView3 && (
             <p.div display="grid" fadeIn="5" placeItems="center" width="100%">
-              <p.div>
+              <p.div width="100%">
                 <p.h2
                   color="wkb.text"
                   fontSize="300%"
@@ -158,8 +158,8 @@ export const Route = createFileRoute("/")({
               </p.div>
               <p.div
                 display="grid"
-                gap="20px" // ボタン間の余白を調整
-                gridTemplateColumns="repeat(3, 1fr)" // 3列構成に
+                gap="20px"
+                gridTemplateColumns="repeat(3, 1fr)"
                 pt={150}
                 px="5%"
                 width="100%"
@@ -189,6 +189,7 @@ export const Route = createFileRoute("/")({
                     background="wkb.primary"
                     color="wkb.bg"
                     fontSize="150%"
+                    fontWeight="bold"
                     height="100%"
                     width="100%"
                   >
