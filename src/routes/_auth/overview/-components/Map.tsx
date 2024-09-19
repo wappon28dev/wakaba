@@ -35,8 +35,9 @@ export function Map({
   projects,
 }: {
   currentUserLocation: {
-    lat: number;
-    lng: number;
+    lat: number | null;
+    lng: number | null;
+
   };
   projects: projects[];
 }): ReactElement {
@@ -62,6 +63,11 @@ export function Map({
     shadowSize: [41, 41],
   });
 
+  if (currentUserLocation.lat === null || currentUserLocation.lng === null) {
+    return <p.div>位置情報が取得できませんでした。</p.div>;
+  }
+
+
   return (
     <MapContainer
       center={[currentUserLocation.lat, currentUserLocation.lng]}
@@ -70,7 +76,13 @@ export function Map({
       zoomControl={false}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker icon={currentUserIcon} position={currentUserLocation} />
+      <Marker
+        icon={currentUserIcon}
+        position={{
+          lat: currentUserLocation.lat,
+          lng: currentUserLocation.lng,
+        }}
+      />
       {projects.map((project) => (
         <Marker
           key={project.project_id}

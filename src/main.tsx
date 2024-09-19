@@ -7,16 +7,16 @@ import { routeTree } from "./routeTree.gen";
 export const router = createRouter({
   routeTree,
   context: {
-    // ref: https://tanstack.com/router/v1/docs/framework/react/guide/authenticated-routes#authentication-using-react-contexthooks
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    session: null!,
+    session: null,
+    hasAppReady: false,
   },
 });
 
 function App(): ReactElement {
-  const { session } = useSession();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return <RouterProvider context={{ session: session! }} router={router} />;
+  const { session, hasAuthMounted } = useSession();
+  const hasAppReady = hasAuthMounted;
+
+  return <RouterProvider context={{ session, hasAppReady }} router={router} />;
 }
 
 const rootElement = document.getElementById("root");

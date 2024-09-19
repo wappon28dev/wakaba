@@ -20,6 +20,7 @@ function Page(): ReactElement {
     if (session != null) {
       void navigate({ to: redirectTo ?? "/" }).then(() => {
         toaster.success({
+          id: "login-success",
           title: "正常にログインしました",
           description:
             redirectTo != null ? `${redirectTo} へ遷移しました` : undefined,

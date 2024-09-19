@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Box, styled as p } from "panda/jsx";
+import { useEffect, useState } from "react";
 import { Map } from "./-components/Map";
 
 type projects = {
@@ -25,10 +26,23 @@ type projects = {
 
 export const Route = createFileRoute("/_auth/overview/")({
   component: () => {
-    const currentUserLocation = {
-      lat: 35.6895,
-      lng: 139.6917,
-    };
+    const [currentUserLocation, setCurrentUserLocation] = useState<{
+      lat: number | null;
+      lng: number | null;
+    }>({
+      lat: null,
+      lng: null,
+    });
+    useEffect(() => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          setCurrentUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        });
+      }
+    });
 
     const projects: projects[] = [
       {

@@ -13,6 +13,7 @@ export function handleToasterError(
   error: Error,
 ): void {
   toaster.error({
+    id: `handleToasterError-${title}`,
     title,
     description: error.message,
   });
