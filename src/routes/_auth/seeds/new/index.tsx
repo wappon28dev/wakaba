@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
           });
         });
       }
-    });
+    }, []);
 
     return (
       <p.div>
