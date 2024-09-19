@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useAtom } from "jotai";
 import { styled as p } from "panda/jsx";
 import { useEffect, type ReactElement } from "react";
 import { Loading } from "@/components/Loading";
 import { Expanded } from "@/components/cva/Expanded";
-import { useSession } from "@/hooks/useSession";
+import { $redirectTo } from "@/lib/stores/redirect";
 import { toaster } from "@/lib/utils/toast";
 
 export const Route = createFileRoute("/user/auth")({
@@ -11,18 +12,23 @@ export const Route = createFileRoute("/user/auth")({
 });
 
 function Page(): ReactElement {
-  const { isLogged } = useSession();
+  const { session } = Route.useRouteContext();
   const navigate = useNavigate();
+  const [redirectTo, setRedirectTo] = useAtom($redirectTo);
 
   useEffect(() => {
-    if (isLogged) {
-      void navigate({ to: "/" }).then(() => {
+    if (session != null) {
+      void navigate({ to: redirectTo ?? "/" }).then(() => {
         toaster.success({
           title: "正常にログインしました",
+          description:
+            redirectTo != null ? `${redirectTo} へ遷移しました` : undefined,
+          duration: 5000,
         });
+        setRedirectTo(undefined);
       });
     }
-  }, [isLogged]);
+  }, [session]);
 
   return (
     <Expanded items="center">
