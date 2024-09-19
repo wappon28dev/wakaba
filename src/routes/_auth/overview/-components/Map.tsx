@@ -37,7 +37,6 @@ export function Map({
   currentUserLocation: {
     lat: number | null;
     lng: number | null;
-
   };
   projects: projects[];
 }): ReactElement {
@@ -66,7 +65,6 @@ export function Map({
   if (currentUserLocation.lat === null || currentUserLocation.lng === null) {
     return <p.div>位置情報が取得できませんでした。</p.div>;
   }
-
 
   return (
     <MapContainer
