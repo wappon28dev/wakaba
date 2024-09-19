@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Box, styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
-
 import { Map } from "./-components/Map";
 
 type projects = {
