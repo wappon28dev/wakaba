@@ -1,9 +1,16 @@
 import { Tabs } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { styled as p } from "panda/jsx";
+import { HStack, styled as p } from "panda/jsx";
+import { Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { GridLayout } from "@/components/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 type Project = {
   name: string;
@@ -11,7 +18,7 @@ type Project = {
   amountOfMoney: number;
   status: "wakaba" | "seed" | "tree";
   keyVisual: string;
-  // 
+  
 };
 
 export const Route = createFileRoute("/_auth/projects/")({
@@ -20,36 +27,55 @@ export const Route = createFileRoute("/_auth/projects/")({
     if (typeof window === "undefined") {
       return null;
     }
+
     return (
       <>
-        {/* <Carousel.Root className={carusel.root} loop>
-          <Carousel.Viewport className={carusel.viewport}>
-            <Carousel.ItemGroup className={carusel.itemGroup}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n, index) => (
-                <Carousel.Item
-                  key={index}
-                  className={carusel.item}
-                  index={index}
-                >
+        <p.div w="100dvw">
+          <Swiper
+            autoplay
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+              1280: {
+                slidesPerView: 4,
+              },
+              1536: {
+                slidesPerView: 5,
+              },
+              1792: {
+                slidesPerView: 6,
+              },
+            }}
+            centeredSlides
+            loop
+            modules={[Pagination, Navigation]}
+            navigation
+            pagination={{
+              clickable: true,
+            }}
+          >
+            <HStack>
+              {[...Array(9)].map((_) => (
+                <SwiperSlide key={_} zoom={false}>
                   <ProjectCard
                     amountOfMoney={100000}
                     keyVisual="https://placehold.jp/300x150.png"
                     location="中区周辺"
                     name="タイトル"
+                    status="wakaba"
                   />
-                </Carousel.Item>
+                </SwiperSlide>
               ))}
-            </Carousel.ItemGroup>
-          </Carousel.Viewport>
-          <Carousel.Control className={carusel.control}>
-            <Carousel.PrevTrigger className={carusel.prevTrigger}>
-              <Icon icon="bi:chevron-left" />
-            </Carousel.PrevTrigger>
-            <Carousel.NextTrigger className={carusel.nextTrigger}>
-              <Icon icon="bi:chevron-right" />
-            </Carousel.NextTrigger>
-          </Carousel.Control>
-        </Carousel.Root> */}
+            </HStack>
+          </Swiper>
+        </p.div>
 
         <p.div
           alignItems="center"
