@@ -13,8 +13,15 @@
     "envsafe",
     "fontsource",
     "gemini",
+    "fontsource",
+    "gemini",
     "Hstack",
     "iconify",
+    "instagram",
+    "jetbrains",
+    "lottie",
+    "lottiefiles",
+    "neverthrow",
     "instagram",
     "jetbrains",
     "lottie",
@@ -25,7 +32,6 @@
     "SUPABASE",
     "tanstack",
     "vstack",
-    "Vstack",
     "wakaba"
   ]
 }
