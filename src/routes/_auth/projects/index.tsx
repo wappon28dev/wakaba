@@ -13,6 +13,7 @@ export const Route = createFileRoute("/_auth/projects/")({
     }
     return (
       <>
+
         {/* <Carousel.Root className={carusel.root} loop>
           <Carousel.Viewport className={carusel.viewport}>
             <Carousel.ItemGroup className={carusel.itemGroup}>

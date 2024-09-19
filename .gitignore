@@ -26,3 +26,4 @@ dist-ssr
 src/routeTree.gen.ts
 .env.keys
 src/types/supabase.gen.ts
+tsconfig.tsbuildinfo
