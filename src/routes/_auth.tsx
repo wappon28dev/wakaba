@@ -4,6 +4,10 @@ import { toaster } from "@/lib/utils/toast";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: async ({ context, location }) => {
+    if (!context.hasAppReady) {
+      throw new Error("App is not ready");
+    }
+
     if (context.session == null) {
       toaster.create({
         id: "login-required",
