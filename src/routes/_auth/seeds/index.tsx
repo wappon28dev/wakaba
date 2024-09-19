@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useInView } from "react-intersection-observer";
+import { SownSeed } from "./-components/sownSeed";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 
-export const Route = createFileRoute("/seeds/")({
+export const Route = createFileRoute("/_auth/seeds/")({
   component: () => {
     const [ref1, inView1] = useInView({
       rootMargin: "-500px",
@@ -13,6 +14,11 @@ export const Route = createFileRoute("/seeds/")({
 
     return (
       <Expanded alignItems="start">
+        <SownSeed
+          category="花"
+          createdAt="2021.10.10"
+          description="これはテストです。"
+        />
         <p.div
           ref={ref1}
           background="wkb.bg"
