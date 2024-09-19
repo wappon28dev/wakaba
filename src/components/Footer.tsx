@@ -43,7 +43,13 @@ export function Footer(): ReactElement {
       p="4"
     >
       <HStack gap="5">
-        <Icon height="2em" icon="mdi:github" />
+        <a
+          href="https://github.com/wappon28dev/wakaba"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon height="2em" icon="mdi:github" />
+        </a>
         <Icon height="2em" icon="mdi:twitter" />
         <Icon height="2em" icon="mdi:instagram" />
       </HStack>
