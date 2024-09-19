@@ -59,18 +59,21 @@ export const Route = createFileRoute("/")({
                 keyVisual="https://placehold.jp/250x150.png"
                 location="中区周辺"
                 name="タイトル"
+                status="wakaba"
               />
               <ProjectCard
                 amountOfMoney={100}
                 keyVisual="https://placehold.jp/250x150.png"
                 location="中区周辺"
                 name="タイトル"
+                status="wakaba"
               />
               <ProjectCard
                 amountOfMoney={100}
                 keyVisual="https://placehold.jp/250x150.png"
                 location="中区周辺"
                 name="タイトル"
+                status="wakaba"
               />
             </HStack>
           </HorizontalScrolling>
@@ -81,18 +84,21 @@ export const Route = createFileRoute("/")({
                 keyVisual="https://placehold.jp/250x150.png"
                 location="中区周辺"
                 name="タイトル"
+                status="wakaba"
               />
               <ProjectCard
                 amountOfMoney={100}
                 keyVisual="https://placehold.jp/250x150.png"
                 location="中区周辺"
                 name="タイトル"
+                status="wakaba"
               />
               <ProjectCard
                 amountOfMoney={100}
                 keyVisual="https://placehold.jp/250x150.png"
                 location="中区周辺"
                 name="タイトル"
+                status="wakaba"
               />
             </HStack>
           </HorizontalScrolling>
@@ -110,18 +116,21 @@ export const Route = createFileRoute("/")({
               keyVisual="https://placehold.jp/250x150.png"
               location="中区周辺"
               name="タイトル"
+              status="wakaba"
             />
             <ProjectCard
               amountOfMoney={100}
               keyVisual="https://placehold.jp/250x150.png"
               location="中区周辺"
               name="タイトル"
+              status="wakaba"
             />
             <ProjectCard
               amountOfMoney={100}
               keyVisual="https://placehold.jp/250x150.png"
               location="中区周辺"
               name="タイトル"
+              status="wakaba"
             />
           </HStack>
         </HorizontalScrolling>

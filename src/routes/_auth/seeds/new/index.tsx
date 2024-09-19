@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/cva/Button";
 import { yahooRevGeoAPI } from "@/lib/services/address";
 
@@ -40,11 +40,13 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
     }, []);
 
     const handleButtonClick = async (): Promise<void> => {
-      try {
-        await yahooRevGeoAPI(1, 1);
-        console.log("成功しました！");
-      } catch (error) {
-        console.error("エラーが発生しました:", error);
+      if (location?.lat !== undefined && location?.lon !== undefined) {
+        try {
+          await yahooRevGeoAPI(location?.lat, location?.lon);
+          console.log("成功しました！");
+        } catch (error) {
+          console.error("エラーが発生しました:", error);
+        }
       }
     };
 
