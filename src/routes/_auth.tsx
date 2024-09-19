@@ -6,6 +6,7 @@ export const Route = createFileRoute("/_auth")({
   beforeLoad: async ({ context, location }) => {
     if (context.session == null) {
       toaster.create({
+        id: "login-required",
         title: "ログインしてください",
         description: "このページにアクセスするにはログインが必要です",
         type: "error",
