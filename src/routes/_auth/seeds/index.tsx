@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Grid, styled as p } from "panda/jsx";
+import { styled as p } from "panda/jsx";
 import { useInView } from "react-intersection-observer";
 import { SownSeed } from "./-components/sownSeed";
 import { GridLayout } from "@/components/GridLayout";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_auth/seeds/")({
           ref={ref1}
           background="wkb.bg"
           display="grid"
-          height={{ base: "400px", sm: "600px" }}
+          height={{ base: "400px", md: "600px" }}
           placeItems="center"
           width="100%"
         >
@@ -47,7 +47,7 @@ export const Route = createFileRoute("/_auth/seeds/")({
                 mt="40px"
                 mx="auto"
               >
-                新しい種を植える
+                <a href="/seeds/new">新しい種を植える</a>
               </Button>
             </p.div>
           )}
