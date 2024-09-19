@@ -5,6 +5,15 @@ import { GridLayout } from "@/components/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
 
+type Project = {
+  name: string;
+  location: string;
+  amountOfMoney: number;
+  status: "wakaba" | "seed" | "tree";
+  keyVisual: string;
+  // 
+};
+
 export const Route = createFileRoute("/_auth/projects/")({
   component: () => {
     const tabs = svaTabs();
@@ -13,7 +22,6 @@ export const Route = createFileRoute("/_auth/projects/")({
     }
     return (
       <>
-
         {/* <Carousel.Root className={carusel.root} loop>
           <Carousel.Viewport className={carusel.viewport}>
             <Carousel.ItemGroup className={carusel.itemGroup}>
@@ -85,18 +93,21 @@ export const Route = createFileRoute("/_auth/projects/")({
                   keyVisual="https://placehold.jp/300x150.png"
                   location="中区周辺"
                   name="タイトル"
+                  status="wakaba"
                 />
                 <ProjectCard
                   amountOfMoney={100000}
                   keyVisual="https://placehold.jp/300x150.png"
                   location="中区一番街"
                   name="タイトル"
+                  status="tree"
                 />
                 <ProjectCard
                   amountOfMoney={100000}
                   keyVisual="https://placehold.jp/300x150.png"
                   location="中区一番街"
                   name="タイトル"
+                  status="seed"
                 />
               </>
             </GridLayout>
