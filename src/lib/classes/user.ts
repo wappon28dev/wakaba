@@ -33,6 +33,7 @@ export class User {
     );
     await navigate({ to: "/" });
     toaster.success({
+      id: "sign-out",
       title: "正常にサインアウトしました",
       description: "またね～～～ 👋",
     });

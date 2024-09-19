@@ -60,6 +60,7 @@ export const Route = createFileRoute("/_auth/projects/")({
             <HStack>
               {[...Array(9)].map((_) => (
                 <SwiperSlide key={_} zoom={false}>
+
                   <ProjectCard
                     amountOfMoney={100000}
                     keyVisual="https://placehold.jp/300x150.png"

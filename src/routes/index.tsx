@@ -60,6 +60,7 @@ export const Route = createFileRoute("/")({
                 location="中区周辺"
                 name="タイトル"
                 status="tree"
+n
               />
               <ProjectCard
                 amountOfMoney={100}
