@@ -4,6 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Flex, Grid, HStack, styled as p, VStack } from "panda/jsx";
 import { useRef } from "react";
 import { FruitCard } from "./-components/Fruit";
+import { ReportCard } from "./-components/Report";
 import { ICON } from "@/assets/icon";
 import { svaDialog } from "@/components/sva/dialog";
 import { svaProgress } from "@/components/sva/progress";
@@ -410,28 +411,56 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
           </Grid>
         </p.div>
 
-        <Grid
-          ref={scrollRef}
-          gap={4}
-          gridTemplateColumns="repeat(auto-fill, minmax(500px, 1fr))"
+        <p.div
+          bg="wkb-neutral.0"
+          display="flex"
           justifyContent="center"
-          mdDown={{ gridTemplateColumns: "1fr" }}
-          p={4}
+          w="100dvw"
         >
-          {data.fruits.map((f, index) => (
-            <FruitCard
-              key={f.name}
-              description={f.description}
-              index={index}
-              key_visual={f.key_visual}
-              name={f.name}
-            />
-          ))}
-        </Grid>
+          <VStack alignItems="center" w={1200}>
+            <p.p fontSize="2xl" mt={4} fontWeight="bold">
+              支援する
+            </p.p>
+            <Grid
+              ref={scrollRef}
+              gap={4}
+              gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+              justifyContent="center"
+              p={4}
+            >
+              {data.fruits.map((f, index) => (
+                <FruitCard
+                  key={f.name}
+                  description={f.description}
+                  index={index}
+                  key_visual={f.key_visual}
+                  name={f.name}
+                />
+              ))}
+            </Grid>
 
-        {data.status === "tree" && (
-          
-)}
+            <p.div display="flex" justifyContent="center" w="100%">
+              <HStack>
+                <p.p fontSize="2xl" fontWeight="bold">
+                  レポート一覧
+                </p.p>
+                <p.div ml="auto">
+                  <Icon icon="mdi:plus" width={30} />
+                </p.div>
+              </HStack>
+              {data.reports.map((r) => (
+                <p.div key={r.report_id}>
+                  <ReportCard
+                    body={r.body}
+                    created_at={r.created_at}
+                    key_visual={r.key_visual}
+                    title={r.title}
+                  />
+                </p.div>
+              ))}
+            </p.div>
+          </VStack>
+        </p.div>
       </p.div>
     );
   },

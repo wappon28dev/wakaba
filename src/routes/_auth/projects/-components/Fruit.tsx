@@ -15,7 +15,7 @@ export function FruitCard({
   index: number;
 }): ReactElement {
   return (
-    <VStack bg="wkb-neutral.0" p={4} rounded="md">
+    <VStack bg="wkb-neutral.100" p={4} rounded="md">
       <p.img
         alignSelf="start"
         alt="Placeholder"
