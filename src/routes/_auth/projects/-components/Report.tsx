@@ -9,6 +9,7 @@ export function ReportCard({
   title,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   created_at,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   report_id,
 }: {
   body: string;
