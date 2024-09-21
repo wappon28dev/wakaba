@@ -4,7 +4,7 @@ import { useNavigate, Link, useRouterState } from "@tanstack/react-router";
 import { css } from "panda/css";
 import { Divider, HStack, styled as p, VStack } from "panda/jsx";
 import { vstack } from "panda/patterns/vstack";
-import { type ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import { IconText } from "./IconText";
 import { Logo } from "./Logo";
 import { Button } from "./cva/Button";
@@ -88,8 +88,60 @@ function UserIndicator(): ReactElement {
   );
 }
 
+function MobileMenu(): ReactElement {
+  const cls = svaPopover();
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Icon icon="mdi:menu" width={30} />
+      </Popover.Trigger>
+      <Popover.Positioner>
+        <Popover.Content
+          className={[
+            cls.content,
+            vstack({
+              alignItems: "start",
+            }),
+          ].join(" ")}
+        >
+          <Popover.Arrow className={cls.arrow}>
+            <Popover.ArrowTip className={cls.arrowTip} />
+          </Popover.Arrow>
+          <HStack justify="space-between" w="100%">
+            <Popover.Title className={cls.title}>メニュー</Popover.Title>
+            <Popover.CloseTrigger className={cls.closeTrigger}>
+              <Icon icon="mdi:close" />
+            </Popover.CloseTrigger>
+          </HStack>
+          <Divider />
+          <VStack alignItems="start" fontSize="sm" w="100%">
+            {["projects", "seeds", "overview", "contact"].map((t) => (
+              <Link key={t} resetScroll={false} to={`/${t}`}>
+                <p.nav>{getCapitalizedStr(t)}</p.nav>
+              </Link>
+            ))}
+          </VStack>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+
 export function Header(): ReactElement {
   const { resolvedLocation } = useRouterState();
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = (): void => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <p.header
@@ -100,7 +152,7 @@ export function Header(): ReactElement {
       position="sticky"
       top="0"
       w="100%"
-      zIndex="header"
+      zIndex="modalContent"
     >
       <Link
         className={css({
@@ -120,30 +172,34 @@ export function Header(): ReactElement {
         </Expanded>
       </Link>
       <HStack gap="2">
-        <HStack gap="0">
-          {["projects", "seeds", "overview", "contact"].map((t) => (
-            <Link
-              key={t}
-              className={css({
-                _hover: {
-                  bg: "wkb.text/5",
-                },
-                "&[data-active='true']": {
-                  bg: "wkb.text/5",
-                  fontWeight: "bold",
-                },
-                p: "1",
-                px: "2",
-                rounded: "md",
-              })}
-              data-active={resolvedLocation.pathname.startsWith(`/${t}`)}
-              resetScroll={false}
-              to={`/${t}`}
-            >
-              <p.nav>{getCapitalizedStr(t)}</p.nav>
-            </Link>
-          ))}
-        </HStack>
+        {width >= 400 ? (
+          <HStack gap="0">
+            {["projects", "seeds", "overview", "contact"].map((t) => (
+              <Link
+                key={t}
+                className={css({
+                  _hover: {
+                    bg: "wkb.text/5",
+                  },
+                  "&[data-active='true']": {
+                    bg: "wkb.text/5",
+                    fontWeight: "bold",
+                  },
+                  p: "1",
+                  px: "2",
+                  rounded: "md",
+                })}
+                data-active={resolvedLocation.pathname.startsWith(`/${t}`)}
+                resetScroll={false}
+                to={`/${t}`}
+              >
+                <p.nav>{getCapitalizedStr(t)}</p.nav>
+              </Link>
+            ))}
+          </HStack>
+        ) : (
+          <MobileMenu />
+        )}
         <UserIndicator />
       </HStack>
     </p.header>
