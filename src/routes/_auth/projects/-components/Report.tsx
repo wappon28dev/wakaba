@@ -9,11 +9,13 @@ export function ReportCard({
   title,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   created_at,
+  report_id,
 }: {
   body: string;
   key_visual: string;
   title: string;
   created_at: string;
+  report_id: string;
 }): ReactElement {
   return (
     <p.div
