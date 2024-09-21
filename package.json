@@ -16,8 +16,8 @@
     "setup": "bun supabase:start && bun supabase db reset && bun supabase:gen-type",
     "supabase": "dotenvx run -- supabase",
     "supabase:link": "dotenvx run -- bun run ./scripts/supabase-link.ts",
-    "supabase:start": "bun supabase start -x imgproxy,inbucket,pgadmin-schema-diff,edge-runtime,logflare,vector,pgbouncer",
-    "supabase:seed": "bun supabase db dump --local --data-only -f ./supabase/seed.sql",
+    "supabase:start": "supabase start -x imgproxy,inbucket,pgadmin-schema-diff,edge-runtime,logflare,vector,pgbouncer",
+    "supabase:seed": "supabase db dump --local --data-only -f ./supabase/seed.sql",
     "supabase:gen-type": "bunx supabase gen types typescript --local > ./src/types/supabase.gen.ts"
   },
   "dependencies": {
@@ -38,9 +38,10 @@
     "neverthrow": "^8.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.53.0",
     "react-intersection-observer": "^9.13.1",
     "react-leaflet": "^4.2.1",
+    "swiper": "^11.1.14",
+    "react-hook-form": "^7.53.0",
     "swr": "^2.2.5",
     "ts-pattern": "^5.3.1",
     "zod": "^3.23.8"

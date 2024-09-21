@@ -1,10 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "version": "0.2",
-  "ignorePaths": [
-    "node_modules",
-    "/package.json"
-  ],
+  "ignorePaths": ["node_modules", "/package.json"],
   "words": [
     "Aichi",
     "backburger",
@@ -16,15 +13,11 @@
     "Hstack",
     "iconify",
     "instagram",
-    "jetbrains",
-    "lottie",
-    "lottiefiles",
     "neverthrow",
     "pandacss",
     "supabase",
     "SUPABASE",
     "tanstack",
-    "vstack",
     "Vstack",
     "wakaba"
   ]

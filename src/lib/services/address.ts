@@ -10,10 +10,8 @@ export function yahooRevGeoAPI(
   const url = `https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder?lat=${lat}&lon=${lon}&appid=${VITE_YAHOO_REV_GEO_API_KEY}`;
 
   return ResultAsync.fromPromise(
-    axios.get(url, {
-      headers: { "Access-Control-Allow-Origin": "http://127.0.0.1:5173" },
-    }),
-    (e) => e, 
+    axios.get(url, { headers: { "Content-Type": "*" } }),
+    (e) => e,
   )
     .andThen((response) => {
       const { data } = response;
