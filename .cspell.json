@@ -1,16 +1,17 @@
 {
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "version": "0.2",
-  "ignorePaths": [
-    "node_modules",
-    "/package.json"
-  ],
+  "ignorePaths": ["node_modules", "/package.json"],
   "words": [
     "Aichi",
     "backburger",
     "cloudflare",
     "consts",
+    "cloudflare",
+    "consts",
     "envsafe",
+    "fontsource",
+    "gemini",
     "fontsource",
     "gemini",
     "Hstack",
@@ -20,12 +21,13 @@
     "lottie",
     "lottiefiles",
     "neverthrow",
+    "instagram",
+    "neverthrow",
     "pandacss",
     "supabase",
     "SUPABASE",
     "tanstack",
     "vstack",
-    "Vstack",
     "wakaba"
   ]
 }

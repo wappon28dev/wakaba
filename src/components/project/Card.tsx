@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { styled as p, HStack } from "panda/jsx";
+
 import { type ReactElement } from "react";
 import { ICON } from "@/assets/icon";
 
