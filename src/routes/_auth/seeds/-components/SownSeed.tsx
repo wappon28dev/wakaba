@@ -16,19 +16,11 @@ export function SownSeed({
   return (
     <p.div
       _hover={{ shadow: "md" }}
-<<<<<<< HEAD
-      bg="wkb-neutral.100"
-      fontSize="sm"
-      m={4}
-      mdDown={{ minW: "1/2" }}
-      minH={250}
-=======
       bg="wkb-neutral.0"
       fontSize="sm"
       m={4}
       mdDown={{ minW: "1/2" }}
-      minH={280}
->>>>>>> main
+      minH={250}
       minW="1/3"
       p={4}
       rounded="xl"
@@ -36,13 +28,8 @@ export function SownSeed({
     >
       <p.div display="grid" gap={2}>
         <HStack gap={2} justify="start">
-<<<<<<< HEAD
-          <HStack alignItems="baseline">
-            <Icon icon="bi:calendar" />
-=======
           <HStack alignItems="center" justify="center">
             <Icon icon="uil:calender" width={30} />
->>>>>>> main
             <p.p>{createdAt}</p.p>
           </HStack>
           <p.span ml="auto">
