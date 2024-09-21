@@ -23,27 +23,36 @@ export function FruitCard({
         src={key_visual}
       />
       <HStack alignSelf="start" gap={2}>
-        <p.p fontSize="2xl" fontWeight="bold">
+        <p.p color="wkb-neutral.700" fontSize="2xl" fontWeight="bold">
           {name}
         </p.p>
         {index === 0 && (
-          <p.span fontSize="xl" fontWeight="bold">
+          <p.span color="wkb-neutral.700" fontSize="xl" fontWeight="bold">
             ¥ 1,000
           </p.span>
         )}
         {index === 1 && (
-          <p.span fontSize="xl" fontWeight="bold">
+          <p.span color="wkb-neutral.700" fontSize="xl" fontWeight="bold">
             ¥ 3,000
           </p.span>
         )}
         {index === 2 && (
-          <p.span fontSize="xl" fontWeight="bold">
+          <p.span color="wkb-neutral.700" fontSize="xl" fontWeight="bold">
             ¥ 5,000
           </p.span>
         )}
       </HStack>
-      <p.p fontSize="sm">{description}</p.p>
-      <Button alignSelf="end" variant="filled">
+      <p.p color="wkb-neutral.700" fontSize="sm">
+        {description}
+      </p.p>
+      <Button
+        _hover={{
+          transform: "scale(1.05)",
+          transition: "transform 0.1s",
+        }}
+        alignSelf="end"
+        variant="filled"
+      >
         支援する
       </Button>
     </VStack>

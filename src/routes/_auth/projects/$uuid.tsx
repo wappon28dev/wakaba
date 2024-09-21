@@ -328,9 +328,16 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
       },
       reports: [
         {
-          body: "body",
+          body: "昔、あるところになかなか子どもが生まれない夫婦がいました。でも、ある時、ようやくかわいらしい男の子が産まれました。れどれ。あら、こぶなんてないじゃないの？」「おばちゃん。名前が長すぎるから、もうこぶが引っ込んじゃったよ",
           key_visual: "https://via.placeholder.com/150",
           report_id: "1",
+          title: "タイトル",
+          created_at: "2021-09-06T00:00:00Z",
+        },
+        {
+          body: "昔、あるところになかなか子どもが生まれない夫婦がいました。でも、ある時、ようやくかわいらしい男の子が産まれました。れどれ。あら、こぶなんてないじゃないの？」「おばちゃん。名前が長すぎるから、もうこぶが引っ込んじゃったよ",
+          key_visual: "https://via.placeholder.com/150",
+          report_id: "2",
           title: "title",
           created_at: "2021-09-06T00:00:00Z",
         },
@@ -419,13 +426,19 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
         />
 
         <p.div
-          bg="wkb-neutral.0"
+          bg="wkb.primary"
           display="flex"
           justifyContent="center"
           w="100dvw"
         >
-          <VStack alignItems="center" maxW="100%" w={1200}>
-            <p.p fontSize="2xl" fontWeight="bold" mt={4}>
+          <VStack ref={scrollRef} alignItems="center" maxW="100%" w={1200}>
+            <p.p
+              color="wkb-neutral.0"
+              fontSize="2xl"
+              fontWeight="bold"
+              mb={4}
+              mt={20}
+            >
               支援する
             </p.p>
             <Grid
@@ -445,9 +458,15 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
               ))}
             </Grid>
 
-            <p.div display="flex" justifyContent="center" w="100%">
+            <p.div display="flex" justifyContent="center" mb={10} w="100%">
               <VStack alignItems="center" w={1200}>
-                <p.p fontSize="2xl" fontWeight="bold">
+                <p.p
+                  color="wkb-neutral.0"
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  mb={4}
+                  mt={20}
+                >
                   レポート
                 </p.p>
                 {data.reports.map((r) => (
@@ -455,7 +474,6 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
                     <ReportCard
                       body={r.body}
                       created_at={r.created_at}
-                      key_visual={r.key_visual}
                       report_id={r.report_id}
                       title={r.title}
                     />

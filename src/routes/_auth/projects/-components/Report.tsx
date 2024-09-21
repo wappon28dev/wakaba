@@ -1,11 +1,10 @@
-import { HStack, styled as p, VStack } from "panda/jsx";
+import { Grid, styled as p, VStack } from "panda/jsx";
 import { type ReactElement } from "react";
 import { Button } from "@/components/cva/Button";
 
 export function ReportCard({
   body,
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  key_visual,
   title,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   created_at,
@@ -13,39 +12,34 @@ export function ReportCard({
   report_id,
 }: {
   body: string;
-  key_visual: string;
   title: string;
   created_at: string;
   report_id: string;
 }): ReactElement {
+  // 2000/09/06の形式にしたい
+  const date = new Date(created_at);
   return (
     <p.div
       bg="wkb-neutral.0"
       fontSize="sm"
       m={4}
       mdDown={{ minW: "90%" }}
-      minH={300}
-      minW={300}
       p={4}
       rounded="md"
-      w="20%"
     >
       <p.div position="relative">
-        <p.img
-          alt="Placeholder"
-          h="1/2"
-          objectFit="cover"
-          rounded="md"
-          src={key_visual}
-          w="100%"
-        />
-      </p.div>
-      <p.div h="1/2" pt={4}>
-        <p.span>
-          <HStack gap="-1">{created_at}</HStack>
+        <p.span color="wkb-neutral.700" fontSize="xl">
+          {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}
         </p.span>
-        <p.p fontSize="3xl">{title}</p.p>
-        <p.p fontSize="md">{body}</p.p>
+      </p.div>
+      <Grid>
+        <p.span />
+        <p.p color="wkb-neutral.700" fontSize="3xl" fontWeight="bold" mb={2}>
+          {title}
+        </p.p>
+        <p.p color="wkb-neutral.700" fontSize="md">
+          {body}
+        </p.p>
         <VStack>
           <Button
             onClick={() => {
@@ -53,7 +47,7 @@ export function ReportCard({
             }}
           />
         </VStack>
-      </p.div>
+      </Grid>
     </p.div>
   );
 }
