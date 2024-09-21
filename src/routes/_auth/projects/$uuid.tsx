@@ -417,8 +417,8 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
           justifyContent="center"
           w="100dvw"
         >
-          <VStack alignItems="center" w={1200}>
-            <p.p fontSize="2xl" mt={4} fontWeight="bold">
+          <VStack alignItems="center" maxW="100%" w={1200}>
+            <p.p fontSize="2xl" fontWeight="bold" mt={4}>
               支援する
             </p.p>
             <Grid
@@ -440,24 +440,21 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
             </Grid>
 
             <p.div display="flex" justifyContent="center" w="100%">
-              <HStack>
+              <VStack alignItems="center" w={1200}>
                 <p.p fontSize="2xl" fontWeight="bold">
-                  レポート一覧
+                  レポート
                 </p.p>
-                <p.div ml="auto">
-                  <Icon icon="mdi:plus" width={30} />
-                </p.div>
-              </HStack>
-              {data.reports.map((r) => (
-                <p.div key={r.report_id}>
-                  <ReportCard
-                    body={r.body}
-                    created_at={r.created_at}
-                    key_visual={r.key_visual}
-                    title={r.title}
-                  />
-                </p.div>
-              ))}
+                {data.reports.map((r) => (
+                  <p.div key={r.report_id}>
+                    <ReportCard
+                      body={r.body}
+                      created_at={r.created_at}
+                      key_visual={r.key_visual}
+                      title={r.title}
+                    />
+                  </p.div>
+                ))}
+              </VStack>
             </p.div>
           </VStack>
         </p.div>
