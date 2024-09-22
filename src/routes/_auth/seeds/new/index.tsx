@@ -1,12 +1,9 @@
-import { Portal, Select } from "@ark-ui/react";
-import { Icon } from "@iconify/react";
+import { Field } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "@/components/cva/Button";
-import { svaSelect } from "@/components/sva/select";
-import { yahooRevGeoAPI } from "@/lib/services/address";
+import { useForm } from "react-hook-form";
+import { svaField } from "@/components/sva/field";
 
 type IFormInput = {
   location: unknown;
@@ -14,27 +11,15 @@ type IFormInput = {
   description: string;
 };
 
+const field = svaField();
+
 export const Route = createFileRoute("/_auth/seeds/new/")({
   component: () => {
-    const { register, handleSubmit } = useForm<IFormInput>();
+    const { register } = useForm<IFormInput>();
     const [location, setLocation] = useState<{
       lat: number;
       lon: number;
     } | null>(null);
-
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-      console.log("フォームデータ:", data);
-    };
-
-    const cls = svaSelect();
-
-    type Item = { label: string; value: string; disabled?: boolean };
-    const items: Item[] = [
-      { label: "カフェ", value: "cafe" },
-      { label: "", value: "solid" },
-      { label: "Vue", value: "vue" },
-      { label: "Svelte", value: "svelte", disabled: true },
-    ];
 
     useEffect(() => {
       if ("geolocation" in navigator) {
@@ -57,97 +42,60 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
       }
     }, []);
 
-    const handleButtonClick = async (): Promise<void> => {
-      if (location?.lat !== undefined && location?.lon !== undefined) {
-        try {
-          await yahooRevGeoAPI(location?.lat, location?.lon);
-          console.log("成功しました！");
-        } catch (error) {
-          console.error("エラーが発生しました:", error);
-        }
-      }
-    };
-
-    const handleButtonClickWrapper = (): void => {
-      handleButtonClick().catch((error) => {
-        console.error("エラーが発生しました:", error);
-      });
-    };
-
-    const handleSubmitWrapper = (event?: React.BaseSyntheticEvent): void => {
-      handleSubmit(onSubmit, (submitErrors) => {
-        console.error("フォームの送信に失敗しました:", submitErrors);
-      })(event).catch((error) => {
-        console.error("エラーが発生しました:", error);
-      });
-    };
-
     return (
-      <p.div>
-        {location !== null ? (
-          <div>
-            <p.p>現在の位置情報:</p.p>
-            <p.p>緯度: {location.lat}</p.p>
-            <p.p>経度: {location.lon}</p.p>
-          </div>
-        ) : (
-          <p.p>位置情報を取得中...</p.p>
-        )}
-        <Button onClick={handleButtonClickWrapper}>a</Button>
-        <p.form onSubmit={handleSubmitWrapper}>
-          <p.input
-            {...register("location", { required: true, maxLength: 20 })}
-          />
-          <p.input {...register("category", { pattern: /^[A-Za-z]+$/i })} />
-          <p.input
-            type="number"
-            {...register("description", { min: 18, max: 99 })}
-          />
-          <input type="submit" />
-        </p.form>
-        <Select.Root className={cls.root} items={items}>
-          <Select.Label className={cls.label}>Framework</Select.Label>
-          <Select.Control>
-            <Select.Trigger>
-              <Select.ValueText
-                className={cls.valueText}
-                placeholder="カテゴリー"
-              />
-              <Select.Indicator className={cls.indicator}>
-                <Icon icon="mdi:close" />
-              </Select.Indicator>
-            </Select.Trigger>
-            <Select.ClearTrigger className={cls.clearTrigger}>
-              Clear
-            </Select.ClearTrigger>
-          </Select.Control>
-          <Portal>
-            <Select.Positioner className={cls.positioner}>
-              <Select.Content className={cls.content}>
-                <Select.ItemGroup className={cls.itemGroup}>
-                  <Select.ItemGroupLabel className={cls.itemGroupLabel}>
-                    Frameworks
-                  </Select.ItemGroupLabel>
-                  {items.map((item) => (
-                    <Select.Item
-                      key={item.value}
-                      className={cls.item}
-                      item={item}
-                    >
-                      <Select.ItemText className={cls.itemText}>
-                        {item.label}
-                      </Select.ItemText>
-                      <Select.ItemIndicator className={cls.itemIndicator}>
-                        ✓
-                      </Select.ItemIndicator>
-                    </Select.Item>
-                  ))}
-                </Select.ItemGroup>
-              </Select.Content>
-            </Select.Positioner>
-          </Portal>
-          <Select.HiddenSelect />
-        </Select.Root>
+      <p.div py={50}>
+        <p.div p={30}>
+          <p.h2
+            color="wkb-green"
+            fontSize="3rem"
+            fontWeight="bold"
+            textAlign="center"
+          >
+            Wakaba
+          </p.h2>
+          <p.p textAlign="center">新しい種を植える</p.p>
+        </p.div>
+        <Field.Root className={field.root}>
+          <p.div p={2}>
+            <p.p fontWeight="bold">位置情報</p.p>
+            <Field.Input
+              {...register("location")}
+              className={field.input}
+              disabled
+              inputMode="text"
+              placeholder={
+                location != null
+                  ? `経度：${location.lat},緯度：${location.lon}`
+                  : "取得中..."
+              }
+            />
+          </p.div>
+          <p.div p={2}>
+            <p.p fontWeight="bold" py={2}>
+              カテゴリー
+            </p.p>
+            <Field.Select {...register("category")} className={field.select}>
+              <option value="">選択してください</option>
+              <option value="">休憩</option>
+              <option value="2">環境</option>
+              <option value="3">飲食</option>
+              <option value="4">施設</option>
+              <option value="5">移動</option>
+              <option value="6">その他</option>
+            </Field.Select>
+          </p.div>
+          <p.div p={2}>
+            <p.p fontWeight="bold" py={2}>
+              意見
+            </p.p>
+            <Field.Textarea
+              {...register("description")}
+              className={field.textarea}
+              inputMode="text"
+              placeholder="意見を入力してください"
+            />
+          </p.div>
+        </Field.Root>
       </p.div>
     );
   },
