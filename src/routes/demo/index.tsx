@@ -3,6 +3,7 @@ import { css } from "panda/css";
 import { HStack, VStack, styled as p } from "panda/jsx"; // NOTE: この行のスニペット: `pd` → Tab
 import { PopoverSample } from "./-components/CheckBox";
 import { GeminiDemo } from "./-components/GeminiTest";
+import { GeminiDemo2 } from "./-components/GeminiTest2";
 import { Logo, LogoComposite } from "@/components/Logo";
 
 export const Route = createFileRoute("/demo/")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/demo/")({
       </HStack>
       <p.h2>Gemini API Demo</p.h2>
       <GeminiDemo />
+      <GeminiDemo2 />
     </VStack>
   ),
 });
