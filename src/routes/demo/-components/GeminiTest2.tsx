@@ -1,9 +1,10 @@
-import { styled as p, VStack } from "panda/jsx";
+import { Grid, styled as p, VStack } from "panda/jsx";
 import { useState, type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { IconText } from "@/components/IconText";
 import { Button } from "@/components/cva/Button";
+import { ProjectCard } from "@/components/project/Card";
 import { ask } from "@/lib/services/ai";
 import { S } from "@/lib/utils/patterns";
 
@@ -67,7 +68,6 @@ descriptionにはどんなプロジェクトかどんなことができるか将
 飲食 深夜営業の健康的な弁当屋が欲しい
 施設 地域の特産品を販売する常設マルシェが欲しい
 飲食 ビーガン向けの専門レストランが欲しい
-移動 シェアサイクルのポートを増やしてほしい
 飲食 地元の高齢者が運営する昔ながらの食堂が欲しい
 施設 地域の芸術家が作品を展示・販売できるギャラリーカフェが欲しい
 環境 空き家を活用したコミュニティスペースを増やしてほしい
@@ -84,8 +84,8 @@ descriptionにはどんなプロジェクトかどんなことができるか将
 function Asking(): ReactElement {
   const result = useSWRImmutable("fortune", askProjectData);
   return (
-    <VStack alignItems="start">
-      <Button variant="outlined">
+    <VStack alignItems="center" w="100%">
+      <Button alignSelf="center" variant="outlined">
         {match(result)
           .with(S.Loading, () => (
             <IconText icon="svg-spinners:ring-resize">
@@ -98,23 +98,34 @@ function Asking(): ReactElement {
             </IconText>
           ))
           .otherwise(() => (
-            <IconText
-              icon="mdi:cloud-sync"
-              onClick={() => {
-                void result.mutate();
-              }}
-            >
-              もう一度 Gemini に聞いてみる
-            </IconText>
+            <p.div>
+              <p.div>
+                <IconText
+                  icon="mdi:cloud-sync"
+                  onClick={() => {
+                    void result.mutate();
+                  }}
+                >
+                  もう一度 Gemini に聞いてみる
+                </IconText>
+              </p.div>
+            </p.div>
           ))}
       </Button>
-      <p.div borderColor="wkb.text/50" borderLeft="3px solid" pl="2">
+      <p.div>
         {match(result)
           .with(S.Success, ({ data }) => (
-            <VStack alignItems="start" gap="0">
-              <p.ul>
+            <VStack alignItems="center" gap="10">
+              <p.ul borderColor="wkb.text/50" borderLeft="3px solid" pl="2">
                 {JSON.stringify(data)}
               </p.ul>
+              <ProjectCard
+                amountOfMoney={0}
+                keyVisual="https://placehold.jp/300x150.png"
+                location={data.territory_id}
+                name={data.name}
+                status="wakaba"
+              />
             </VStack>
           ))
           .with(S.Error, ({ error }) => {
@@ -132,20 +143,107 @@ export function GeminiDemo2(): ReactElement {
   const [shouldAsk, setShouldAsk] = useState(false);
 
   return (
-    <VStack alignItems="start">
-      <p.p>ProjectをSeedsから生成する!</p.p>
-      {shouldAsk ? (
-        <Asking />
-      ) : (
-        <Button
-          onClick={() => {
-            setShouldAsk(true);
-          }}
-          variant="outlined"
-        >
-          <IconText icon="mdi:cloud-sync">Gemini に聞いてみる</IconText>
-        </Button>
-      )}
-    </VStack>
+    <Grid gridTemplateColumns="1fr 2fr" w="100%">
+      <VStack alignItems="center">
+        <p.p>Seeds</p.p>
+        {[
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description: "深夜営業の健康的な食事が楽しめるカフェが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description: "多国籍料理が楽しめるフードコートが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "その他",
+            description: "地域の人々が集まれるコミュニティスペースが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description: "アレルギー対応の専門レストランが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description: "深夜営業の健康的な弁当屋が欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "施設",
+            description: "地域の特産品を販売する常設マルシェが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description: "ビーガン向けの専門レストランが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description: "地元の高齢者が運営する昔ながらの食堂が欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "施設",
+            description:
+              "地域の芸術家が作品を展示・販売できるギャラリーカフェが欲しい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "環境",
+            description: "空き家を活用したコミュニティスペースを増やしてほしい",
+          },
+          {
+            createdAt: "2024-09-22T00:00:00Z",
+            category: "飲食",
+            description:
+              "地元の食材を使った料理教室が定期的に開かれる場所が欲しい",
+          },
+        ].map((seed) => (
+          <p.div
+            key={seed.description}
+            bg="wkb-neutral.0"
+            p={4}
+            rounded="md"
+            w="400px"
+          >
+            <p.p fontSize="sm" mb={2}>
+              {seed.createdAt}
+            </p.p>
+            <p.p mb={2}>
+              <p.span
+                bg="wkb.secondary"
+                color="wkb-neutral.0"
+                p={1}
+                rounded="md"
+              >
+                {seed.category}
+              </p.span>
+            </p.p>
+            <p.p>{seed.description}</p.p>
+          </p.div>
+        ))}
+      </VStack>
+      <VStack alignItems="center">
+        <p.p>ProjectをSeedsから生成する!</p.p>
+        {shouldAsk ? (
+          <Asking />
+        ) : (
+          <Button
+            onClick={() => {
+              setShouldAsk(true);
+            }}
+            variant="outlined"
+          >
+            <IconText icon="emdi:cloud-sync">Gemini に聞いてみる</IconText>
+          </Button>
+        )}
+      </VStack>
+    </Grid>
   );
 }
