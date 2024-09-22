@@ -13,6 +13,7 @@ export const Route = createFileRoute("/demo/")({
     useEffect(() => {
       void fetchAddressFromLocation({ lat: 35.681236, lon: 139.767125 }).then(
         (res) => {
+          // eslint-disable-next-line no-console
           console.log(res);
         },
       );

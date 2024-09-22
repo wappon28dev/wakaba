@@ -44,7 +44,7 @@ export const svaDialog = sva({
     },
     backdrop: {
       animation: "fadeIn 0.3s",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: "wkb-neutral.0/20",
       position: "fixed",
       top: 0,
       left: 0,

@@ -22,22 +22,23 @@ jobs:
       - name: 🔨 Prepare Node environment
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 22
       - name: 🔨 Prepare Bun environment
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - run: curl -sfS https://dotenvx.sh/install.sh | sh
-
       - name: 🎉 Install project dependencies
         run: bun i
 
-      - name: 🏗️ Build app
-        run: bun run build
+      - name: 🔏 Decrypt .envs
+        run: bun dotenvx decrypt -f .env -f .env.production
         env:
           DOTENV_PRIVATE_KEY: ${{ secrets.DOTENV_PRIVATE_KEY }}
           DOTENV_PRIVATE_KEY_PRODUCTION: ${{ secrets.DOTENV_PRIVATE_KEY_PRODUCTION }}
+
+      - name: 🏗️ Build app
+        run: bun run build
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
