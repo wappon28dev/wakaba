@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { svaField } from "@/components/sva/field";
 import { Button } from "@/components/cva/Button";
-import { yahooRevGeoAPI } from "@/lib/services/address";
+import { svaField } from "@/components/sva/field";
+import { fetchAddressFromLocation } from "@/lib/services/address";
 
 type IFormInput = {
   location: unknown;
@@ -44,7 +44,15 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
 
     const handleButtonClick = async (): Promise<void> => {
       try {
-        await yahooRevGeoAPI(1, 1);
+        if (location != null) {
+          await fetchAddressFromLocation({
+            lon: location.lon,
+            lat: location.lat,
+          });
+          console.log("成功しました！");
+        } else {
+          console.error("位置情報が設定されていません。");
+        }
         console.log("成功しました！");
       } catch (error) {
         console.error("エラーが発生しました:", error);
