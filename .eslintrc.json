@@ -16,7 +16,8 @@
     "sourceType": "module",
     "project": [
       "./tsconfig.json",
-      "./scripts/tsconfig.json"
+      "./scripts/tsconfig.json",
+      "./functions/tsconfig.json"
     ]
   },
   "plugins": [

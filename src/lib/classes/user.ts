@@ -2,7 +2,7 @@ import { type Session } from "@supabase/supabase-js";
 import { type UseNavigateResult } from "@tanstack/react-router";
 import { match, P } from "ts-pattern";
 import { supabase } from "@/lib/services/supabase";
-import { handleToasterError, toaster } from "@/lib/utils/toast";
+import { notifyErrorInToast, toaster } from "@/lib/utils/toast";
 import { type UserMetadata } from "@/types/auth";
 
 export class User {
@@ -20,7 +20,7 @@ export class User {
         },
       }),
     ).with({ error: P.nonNullable }, ({ error }) => {
-      handleToasterError("User.signIn", "サインインに失敗しました", error);
+      notifyErrorInToast("User.signIn", "サインインに失敗しました", error);
     });
   }
 
@@ -28,7 +28,7 @@ export class User {
     match(await supabase.auth.signOut()).with(
       { error: P.nonNullable },
       ({ error }) => {
-        handleToasterError("User.signOut", "サインアウトに失敗しました", error);
+        notifyErrorInToast("User.signOut", "サインアウトに失敗しました", error);
       },
     );
     await navigate({ to: "/" });

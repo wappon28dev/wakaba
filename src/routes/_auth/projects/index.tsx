@@ -12,14 +12,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-type Project = {
-  name: string;
-  location: string;
-  amountOfMoney: number;
-  status: "wakaba" | "seed" | "tree";
-  keyVisual: string;
-};
-
 export const Route = createFileRoute("/_auth/projects/")({
   component: () => {
     const tabs = svaTabs();
