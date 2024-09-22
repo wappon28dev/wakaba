@@ -203,14 +203,14 @@ export const sponsorDataData: Array<
     target_amount_of_money: 1000,
     reports: [
       {
-      body: "スポンサー1のレポート",
-      created_at: "2024-09-22T00:00:00Z",
-      key_visual: "https://via.placeholder.com/150",
-      project_id: "1",
-      report_id: "1",
-      sponsor_id: "1",
-      title: "スポンサー1のレポート",
-      }
+        body: "スポンサー1のレポート",
+        created_at: "2024-09-22T00:00:00Z",
+        key_visual: "https://via.placeholder.com/150",
+        project_id: "1",
+        report_id: "1",
+        sponsor_id: "1",
+        title: "スポンサー1のレポート",
+      },
     ],
     fruits: [
       {

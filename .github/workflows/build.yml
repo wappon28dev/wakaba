@@ -1,0 +1,66 @@
+name: cloudflare
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[skip ci]') == false
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 📸 Calculate commit hash
+        id: sha
+        uses: pr-mpt/actions-commit-hash@v2
+
+      - name: 🔨 Prepare Node environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+      - name: 🔨 Prepare Bun environment
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: curl -sfS https://dotenvx.sh/install.sh | sh
+
+      - name: 🎉 Install project dependencies
+        run: bun i
+
+      - name: 🏗️ Build app
+        run: bun run build
+        env:
+          DOTENV_PRIVATE_KEY: ${{ secrets.DOTENV_PRIVATE_KEY }}
+          DOTENV_PRIVATE_KEY_PRODUCTION: ${{ secrets.DOTENV_PRIVATE_KEY_PRODUCTION }}
+
+      - name: 🚀 Deploy to Cloudflare Pages
+        id: cloudflare_pages_deploy
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: "pages deploy . --project-name wkb"
+          workingDirectory: ./dist
+        env:
+          NODE_VERSION: 22
+
+      - name: 🚀 Deploy pages based on commit sha
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              context: "cloudflare / build (push)",
+              description: "Commit based deploy",
+              state: "success",
+              sha,
+              target_url: "https://wkb.pages.dev",
+            });

@@ -240,7 +240,7 @@ export function GeminiDemo2(): ReactElement {
             }}
             variant="outlined"
           >
-            <IconText icon="emdi:cloud-sync">Gemini に聞いてみる</IconText>
+            <IconText icon="mdi:cloud-sync">Gemini に聞いてみる</IconText>
           </Button>
         )}
       </VStack>
