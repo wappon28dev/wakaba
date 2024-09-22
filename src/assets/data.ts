@@ -136,7 +136,7 @@ export const projectsData: Array<DBSchema<"projects"> & { seed_id: number[] }> =
       name: "若者向け起業支援センター設立",
       project_id: "5",
       territory_id: "1",
-      seed_id: [9,16],
+      seed_id: [9, 16],
     },
     {
       category_id: "3",
@@ -148,7 +148,7 @@ export const projectsData: Array<DBSchema<"projects"> & { seed_id: number[] }> =
       name: "昔ながらの食堂",
       project_id: "6",
       territory_id: "1",
-      seed_id: [10,12,15],
+      seed_id: [10, 12, 15],
     },
     {
       category_id: "2",
@@ -160,7 +160,7 @@ export const projectsData: Array<DBSchema<"projects"> & { seed_id: number[] }> =
       name: "空き家活用コミュニティスペース",
       project_id: "7",
       territory_id: "1",
-      seed_id: [11,14,18],
+      seed_id: [11, 14, 18],
     },
     {
       category_id: "3",
@@ -172,20 +172,60 @@ export const projectsData: Array<DBSchema<"projects"> & { seed_id: number[] }> =
       name: "地元食材料理教室",
       project_id: "8",
       territory_id: "1",
-      seed_id: [10,12],
+      seed_id: [10, 12],
     },
     {
       category_id: "4",
       created_at: "2024-09-22T00:00:00Z",
       deadline: "2024-10-22T00:00:00Z",
-      description: "地元の農家から直接新鮮な食材を仕入れ地域特産品を販売する、賑わいのあるマルシェ。",
+      description:
+        "地元の農家から直接新鮮な食材を仕入れ地域特産品を販売する、賑わいのあるマルシェ。",
       key_visual: null,
       name: "地域特産品マルシェ",
       project_id: "9",
       territory_id: "1",
-      seed_id: [13,17],
+      seed_id: [13, 17],
     },
   ];
+
+export const sponsorDataData: Array<
+  DBSchema<"sponsor_data"> & {
+    reports: Array<DBSchema<"reports">>;
+    fruits: Array<DBSchema<"fruits">>;
+  }
+> = [
+  {
+    created_at: "2024-09-22T00:00:00Z",
+    location: { lat: 35.688, lng: 139.69 },
+    sponsor_id: "1",
+    motivation: "スポンサー1のモチベーション",
+    project_id: "1",
+    target_amount_of_money: 1000,
+    reports: [
+      {
+      body: "スポンサー1のレポート",
+      created_at: "2024-09-22T00:00:00Z",
+      key_visual: "https://via.placeholder.com/150",
+      project_id: "1",
+      report_id: "1",
+      sponsor_id: "1",
+      title: "スポンサー1のレポート",
+      }
+    ],
+    fruits: [
+      {
+        fruit_id: "1",
+        name: "りんご",
+        created_at: "2024-09-22T00:00:00Z",
+        description: "りんごの説明",
+        amount_of_money: 1000,
+        key_visual: "https://via.placeholder.com/150",
+        project_id: "1",
+        sponsor_id: "1",
+      },
+    ],
+  },
+];
 
 export const seedsData: Array<DBSchema<"seeds">> = [
   {
@@ -323,5 +363,16 @@ export const seedsData: Array<DBSchema<"seeds">> = [
     location: { lat: 35.688, lng: 139.69 },
     sower_id: "1",
     category_id: "6",
+  },
+];
+
+export const sponsorsData: Array<DBSchema<"sponsors">> = [
+  {
+    sponsor_id: "1",
+    name: "スポンサー1",
+    created_at: "2024-09-22T00:00:00Z",
+    description: "スポンサー1です｡",
+    user_id: "2",
+    icon: "https://via.placeholder.com/150",
   },
 ];
