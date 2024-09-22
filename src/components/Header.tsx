@@ -130,6 +130,18 @@ function MobileMenu(): ReactElement {
 
 export function Header(): ReactElement {
   const { resolvedLocation } = useRouterState();
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = (): void => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <p.header
@@ -140,7 +152,7 @@ export function Header(): ReactElement {
       position="sticky"
       top="0"
       w="100%"
-      zIndex="header"
+      zIndex="modalContent"
     >
       <Link
         className={css({

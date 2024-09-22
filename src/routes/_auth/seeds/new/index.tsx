@@ -2,7 +2,7 @@ import { Field } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/cva/Button";
 import { svaField } from "@/components/sva/field";
 import { fetchAddressFromLocation } from "@/lib/services/address";
@@ -13,18 +13,20 @@ type IFormInput = {
   description: string;
 };
 
+type Param = {
+  lat: number;
+  lon: number;
+};
+
 const field = svaField();
 export const Route = createFileRoute("/_auth/seeds/new/")({
   component: () => {
-    const { register, handleSubmit } = useForm<IFormInput>();
+    const { register } = useForm<IFormInput>();
     const [location, setLocation] = useState<{
       lat: number;
       lon: number;
     } | null>(null);
-
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-      console.log("フォームデータ:", data);
-    };
+    const [address, setAddress] = useState<string | null>(null);
 
     useEffect(() => {
       if ("geolocation" in navigator) {
@@ -45,15 +47,24 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
     const handleButtonClick = async (): Promise<void> => {
       try {
         if (location != null) {
-          await fetchAddressFromLocation({
-            lon: location.lon,
+          const param: Param = {
             lat: location.lat,
-          });
-          console.log("成功しました！");
+            lon: location.lon,
+          };
+
+          console.log("位置情報:", param);
+
+          const response = await fetchAddressFromLocation(param);
+          setAddress(address);
+          if (response.isOk()) {
+            const resAddress = response.value?.Feature?.[0]?.Property?.Address;
+            console.log("住所:", resAddress);
+          } else {
+            console.error("APIエラー:", response.error);
+          }
         } else {
           console.error("位置情報が設定されていません。");
         }
-        console.log("成功しました！");
       } catch (error) {
         console.error("エラーが発生しました:", error);
       }
@@ -65,35 +76,8 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
       });
     };
 
-    const handleSubmitWrapper = (event?: React.BaseSyntheticEvent): void => {
-      handleSubmit(onSubmit, (submitErrors) => {
-        console.error("フォームの送信に失敗しました:", submitErrors);
-      })(event).catch((error) => {
-        console.error("エラーが発生しました:", error);
-      });
-    };
-
     return (
       <p.div>
-        {location !== null ? (
-          <div>
-            <p.p>現在の位置情報:</p.p>
-            <p.p>緯度: {location.lat}</p.p>
-            <p.p>経度: {location.lon}</p.p>
-          </div>
-        ) : (
-          <p.p>位置情報を取得中...</p.p>
-        )}
-        <Button onClick={handleButtonClickWrapper}>a</Button>
-        <form onSubmit={handleSubmitWrapper}>
-          <input {...register("location", { required: true, maxLength: 20 })} />
-          <input {...register("category", { pattern: /^[A-Za-z]+$/i })} />
-          <input
-            type="number"
-            {...register("description", { min: 18, max: 99 })}
-          />
-          <input type="submit" />
-        </form>
         <p.div py={50}>
           <p.div p={30}>
             <p.h2
@@ -146,6 +130,26 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
                 placeholder="意見を入力してください"
               />
             </p.div>
+            <Button
+              _hover={{
+                background: "wkb.primary",
+              }}
+              background="wkb.primary"
+              color="wkb.bg"
+              fontSize="1rem"
+              fontWeight="bold"
+              onClick={handleButtonClickWrapper}
+              rounded="md"
+              type="button"
+            >
+              種を蒔く
+            </Button>
+            {address != null && (
+              <p.div mt={4}>
+                <p.p fontWeight="bold">取得した住所:</p.p>
+                <p.p>{address}</p.p>
+              </p.div>
+            )}
           </Field.Root>
         </p.div>
       </p.div>
