@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { styled as p, HStack } from "panda/jsx";
+
 import { type ReactElement } from "react";
 import { ICON } from "@/assets/icon";
 
@@ -45,7 +46,7 @@ export function ProjectCard({
             {location}
           </HStack>
         </p.span>
-        <p.p fontSize="3xl">{name}</p.p>
+        <p.p fontSize="2xl">{name}</p.p>
         <p.p fontSize="md">現在金額 ￥{amountOfMoney}</p.p>
         <HStack>
           <Icon icon="mdi:star-outline" width={30} />

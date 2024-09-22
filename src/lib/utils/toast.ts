@@ -7,7 +7,7 @@ export const toaster = createToaster({
   max: 3,
 });
 
-export function handleToasterError(
+export function notifyErrorInToast(
   caller: string,
   title: string,
   error: Error,

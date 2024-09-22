@@ -29,8 +29,10 @@ export const globalCss: GlobalStyleObject = {
     },
   },
   ".content": {
+    maxW: "1200px",
+    px: "10",
     mdDown: {
-      px: "10",
+      px: "5",
     },
   },
 };
