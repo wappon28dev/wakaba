@@ -344,7 +344,7 @@ function GridDetailInfo({
               <p.p fontSize="xx-small">
                 このプロジェクトは
                 <p.span color="wkb.primary" fontWeight="bold">
-                  ALL or nothing
+                  All or Nothing
                 </p.span>
                 であり、目標金額に満たなかった時は返金し、達した場合にのみプロジェクトの実行とリターンを約束するというものです。
               </p.p>
