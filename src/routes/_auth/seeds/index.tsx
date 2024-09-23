@@ -7,6 +7,23 @@ import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 import { ProjectCard } from "@/components/project/Card";
 
+type CategoryType = "休憩" | "環境" | "飲食" | "施設" | "移動" | "その他";
+
+const convertCategory = (categoryId: string): CategoryType | undefined => {
+  const categoryMap: Record<string, CategoryType> = {
+    1: "休憩",
+    2: "環境",
+    3: "飲食",
+    4: "施設",
+    5: "移動",
+    6: "その他",
+  };
+  return categoryId in categoryMap ? categoryMap[categoryId] : undefined;
+};
+
+const formatCreatedAt = (createdAt: string): string =>
+  new Date(createdAt).toLocaleDateString("ja-JP");
+
 export const Route = createFileRoute("/_auth/seeds/")({
   component: () => (
     <Expanded alignItems="start">
@@ -47,16 +64,51 @@ export const Route = createFileRoute("/_auth/seeds/")({
         <p.h2 fontSize="1rem" fontWeight="bold" my={10} textAlign="left">
           自分が蒔いた種
         </p.h2>
-        <p.div display="flex" flexWrap="nowrap" gap={4} overflowX="auto">
-          {seedsData.map((seed) => (
-            <SownSeed
-              key={seed.seed_id}
-              category={seed.category_id}
-              createdAt={seed.created_at}
-              description={seed.description ?? ""}
-            />
-          ))}
+        <p.div display="flex" my={5} overflowX="auto" width="100%">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex" }}>
+              {seedsData
+                .filter((_, index) => index % 2 !== 0)
+                .map((seed) => {
+                  const category = convertCategory(seed.category_id);
+                  if (category === undefined) return null;
+
+                  return (
+                    <p.div key={seed.seed_id} minW={400} p={4} width="1/3">
+                      <Link to={`/projects/${seed.seed_id}`}>
+                        <SownSeed
+                          category={category}
+                          createdAt={formatCreatedAt(seed.created_at)}
+                          description={seed.description ?? ""}
+                        />
+                      </Link>
+                    </p.div>
+                  );
+                })}
+            </div>
+            <div style={{ display: "flex" }}>
+              {seedsData
+                .filter((_, index) => index % 2 === 0)
+                .map((seed) => {
+                  const category = convertCategory(seed.category_id);
+                  if (category === undefined) return null;
+
+                  return (
+                    <p.div key={seed.seed_id} minW={400} p={4} width="1/3">
+                      <Link to={`/projects/${seed.seed_id}`}>
+                        <SownSeed
+                          category={category}
+                          createdAt={formatCreatedAt(seed.created_at)}
+                          description={seed.description ?? ""}
+                        />
+                      </Link>
+                    </p.div>
+                  );
+                })}
+            </div>
+          </div>
         </p.div>
+
         <p.div my={50}>
           <p.h2 fontSize="1rem" fontWeight="bold" my={10} textAlign="left">
             目が出た種
@@ -68,9 +120,11 @@ export const Route = createFileRoute("/_auth/seeds/")({
                 .map((_) => (
                   <Link key={_.project_id} to={`/projects/${_.project_id}`}>
                     <ProjectCard
-                      description={projectsData.description}
+                      amount_of_money={_.amount_of_money}
+                      key_visual={_.key_visual ?? ""}
+                      location={_.location}
                       name={_.name}
-                      status={_.status}
+                      status="wakaba"
                     />
                   </Link>
                 ))}
