@@ -6,10 +6,13 @@ import { notifyErrorInToast, toaster } from "@/lib/utils/toast";
 import { type UserMetadata } from "@/types/auth";
 
 export class User {
-  constructor(public session: Session) {}
+  public metadata: UserMetadata;
+  public id: string;
 
-  public metadata = this.session.user.user_metadata as UserMetadata;
-  public id = this.session.user.id;
+  constructor(public session: Session) {
+    this.metadata = this.session.user.user_metadata as UserMetadata;
+    this.id = this.session.user.id;
+  }
 
   static async signIn(): Promise<void> {
     match(

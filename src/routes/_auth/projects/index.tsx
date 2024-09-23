@@ -1,8 +1,9 @@
 import { Tabs } from "@ark-ui/react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Flex, HStack, styled as p } from "panda/jsx";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { projectsData } from "@/assets/data";
 import { GridLayout } from "@/components/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
@@ -15,6 +16,7 @@ import "swiper/css/scrollbar";
 export const Route = createFileRoute("/_auth/projects/")({
   component: () => {
     const tabs = svaTabs();
+
     if (typeof window === "undefined") {
       return null;
     }
@@ -50,15 +52,24 @@ export const Route = createFileRoute("/_auth/projects/")({
             navigation
           >
             <HStack>
-              {[...Array(9)].map((_) => (
-                <SwiperSlide key={_} zoom={false}>
-                  <ProjectCard
-                    amountOfMoney={100000}
-                    keyVisual="https://placehold.jp/300x150.png"
-                    location="中区周辺"
-                    name="タイトル"
-                    status="wakaba"
-                  />
+              {projectsData.map((_) => (
+                <SwiperSlide key={_.project_id} zoom={false}>
+                  <Link key={_.project_id} to={`/projects/${_.project_id}`}>
+                    <ProjectCard
+                      amount_of_money={_.amount_of_money}
+                      key_visual={_.key_visual ?? ""}
+                      location={_.location}
+                      name={_.name}
+                      status={
+                        // eslint-disable-next-line
+                        _.project_id === "1"
+                          ? "seed"
+                          : _.project_id === "7"
+                            ? "tree"
+                            : "wakaba"
+                      }
+                    />
+                  </Link>
                 </SwiperSlide>
               ))}
             </HStack>
@@ -82,33 +93,88 @@ export const Route = createFileRoute("/_auth/projects/")({
               <Tabs.Content value="recommend">
                 <GridLayout>
                   <>
-                    {/* //!いずれ mapでループさせる */}
-                    <ProjectCard
-                      amountOfMoney={100000}
-                      keyVisual="https://placehold.jp/300x150.png"
-                      location="中区周辺"
-                      name="タイトル"
-                      status="wakaba"
-                    />
-                    <ProjectCard
-                      amountOfMoney={100000}
-                      keyVisual="https://placehold.jp/300x150.png"
-                      location="中区一番街"
-                      name="タイトル"
-                      status="tree"
-                    />
-                    <ProjectCard
-                      amountOfMoney={100000}
-                      keyVisual="https://placehold.jp/300x150.png"
-                      location="中区一番街"
-                      name="タイトル"
-                      status="seed"
-                    />
+                    {projectsData
+                      .sort((a, b) => b.amount_of_money - a.amount_of_money)
+                      .map((_) => (
+                        <Link
+                          key={_.project_id}
+                          to={`/projects/${_.project_id}`}
+                        >
+                          <ProjectCard
+                            amount_of_money={_.amount_of_money}
+                            key_visual={_.key_visual ?? ""}
+                            location={_.location}
+                            name={_.name}
+                            status={
+                              // eslint-disable-next-line
+                              _.project_id === "1"
+                                ? "seed"
+                                : _.project_id === "7"
+                                  ? "tree"
+                                  : "wakaba"
+                            }
+                          />
+                        </Link>
+                      ))}
                   </>
                 </GridLayout>
               </Tabs.Content>
-              <Tabs.Content value="trending">あとで</Tabs.Content>
-              <Tabs.Content value="all">つくるね</Tabs.Content>
+              <Tabs.Content value="trending">
+                <GridLayout>
+                  <>
+                    {projectsData
+                      .sort(
+                        (a, b) => Number(a.category_id) - Number(b.category_id),
+                      )
+                      .map((_) => (
+                        <Link
+                          key={_.project_id}
+                          to={`/projects/${_.project_id}`}
+                        >
+                          <ProjectCard
+                            key={_.project_id}
+                            amount_of_money={_.amount_of_money}
+                            key_visual={_.key_visual ?? ""}
+                            location={_.location}
+                            name={_.name}
+                            status={
+                              // eslint-disable-next-line
+                              _.project_id === "1"
+                                ? "seed"
+                                : _.project_id === "7"
+                                  ? "tree"
+                                  : "wakaba"
+                            }
+                          />
+                        </Link>
+                      ))}
+                  </>
+                </GridLayout>
+              </Tabs.Content>
+              <Tabs.Content value="all">
+                <GridLayout>
+                  <>
+                    {projectsData.reverse().map((_) => (
+                      <Link key={_.project_id} to={`/projects/${_.project_id}`}>
+                        <ProjectCard
+                          amount_of_money={_.amount_of_money}
+                          key_visual={_.key_visual ?? ""}
+                          location={_.location}
+                          name={_.name}
+                          status={
+                            // eslint-disable-next-line
+                            _.project_id === "1"
+                              ? "seed"
+                              : _.project_id === "7"
+                                ? "tree"
+                                : "wakaba"
+                          }
+                        />
+                      </Link>
+                    ))}
+                  </>
+                </GridLayout>
+              </Tabs.Content>
             </Tabs.Root>
           </p.div>
         </Flex>

@@ -1,6 +1,9 @@
 import type { PagesFunction } from "@cloudflare/workers-types";
 import { z } from "zod";
-import { type Env } from "./__lib/consts.js";
+import { getDefaultCors, type Env } from "./__lib/consts.js";
+
+export const onRequestOptions: PagesFunction<Env> = async ({ env }) =>
+  getDefaultCors(env.ADDR_REFERER_URL);
 
 export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   if (request.method !== "GET") {

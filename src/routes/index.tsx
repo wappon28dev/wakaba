@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useInView } from "react-intersection-observer";
+
 import { LogoComposite } from "@/components/Logo";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
