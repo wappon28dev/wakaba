@@ -52,7 +52,7 @@ export const Route = createFileRoute("/")({
           placeItems="center"
         >
           {inView1 && (
-            <p.div fadeIn="5">
+            <p.div duration="1000" fadeIn="5" slideInY="10">
               <p.h2
                 background="wkb.bg"
                 fontSize="300%"
@@ -85,7 +85,7 @@ export const Route = createFileRoute("/")({
           placeItems="center"
         >
           {inView2 && (
-            <p.div display="grid" fadeIn="5" placeItems="center">
+            <p.div duration="1000" fadeIn="5" placeItems="center" slideInY="10">
               <p.h2
                 color="wkb.bg"
                 fontSize="300%"
@@ -115,6 +115,7 @@ export const Route = createFileRoute("/")({
                   shadow: "md",
                 }}
                 background="wkb.bg"
+                display="flex"
                 fontSize="150%"
                 fontWeight="bold"
                 mt="40px"
@@ -135,7 +136,14 @@ export const Route = createFileRoute("/")({
           width={{ base: "100%", sm: "100%" }}
         >
           {inView3 && (
-            <p.div display="grid" fadeIn="5" placeItems="center" width="100%">
+            <p.div
+              display="grid"
+              duration="1000"
+              fadeIn="5"
+              placeItems="center"
+              slideInY="10"
+              width="100%"
+            >
               <p.div width="100%">
                 <p.h2
                   color="wkb.text"
