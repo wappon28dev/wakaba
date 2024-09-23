@@ -322,7 +322,8 @@ export const seedsData: Array<DBSchema<"seeds">> = [
   {
     seed_id: "2",
     created_at: "2024-09-22T00:00:00Z",
-    description: "静かに読書ができて昼食も取れて一日中滞在できるような屋外ブックカフェが欲しい",
+    description:
+      "静かに読書ができて昼食も取れて一日中滞在できるような屋外ブックカフェが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
     sower_id: "1",
     category_id: "1",
@@ -378,7 +379,8 @@ export const seedsData: Array<DBSchema<"seeds">> = [
   {
     seed_id: "10",
     created_at: "2024-09-22T00:00:00Z",
-    description: "アットホームな雰囲気の地元の農産物を使った安くて美味しいレストランが欲しい",
+    description:
+      "アットホームな雰囲気の地元の農産物を使った安くて美味しいレストランが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
     sower_id: "1",
     category_id: "3",
@@ -386,7 +388,8 @@ export const seedsData: Array<DBSchema<"seeds">> = [
   {
     seed_id: "11",
     created_at: "2024-09-22T00:00:00Z",
-    description: "若者から高齢者まで幅広い世代がコミュニティスペースを増やしてほしい",
+    description:
+      "若者から高齢者まで幅広い世代がコミュニティスペースを増やしてほしい",
     location: { lon: 136.886326, lat: 35.172757 },
     sower_id: "1",
     category_id: "2",
@@ -434,7 +437,8 @@ export const seedsData: Array<DBSchema<"seeds">> = [
   {
     seed_id: "17",
     created_at: "2024-09-22T00:00:00Z",
-    description: "地域の農家や漁師などの生産者と直接顔をあわせて､特産品を販売する常設マルシェが欲しい",
+    description:
+      "地域の農家や漁師などの生産者と直接顔をあわせて､特産品を販売する常設マルシェが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
     sower_id: "1",
     category_id: "4",
