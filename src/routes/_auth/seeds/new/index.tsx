@@ -59,16 +59,29 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
       }
     }, []);
     const onSubmit = (data: IFormInput): void => {
-      // 入力チェック
-      if (data.category_id.length === 0 || data.description.length === 0) {
+      let hasError = false;
+
+      if ((data.category_id.length === 0) || data.category_id.length === 0) {
         toaster.error({
-          id: "form-error",
+          id: "category-error",
           title: "エラー",
-          description: "カテゴリーと意見は必須です",
+          description: "カテゴリーは必須です",
           duration: 5000,
         });
-        return;
+        hasError = true;
       }
+
+      if (data.description.length === 0 || data.description.length === 0) {
+        toaster.error({
+          id: "description-error",
+          title: "エラー",
+          description: "意見は必須です",
+          duration: 5000,
+        });
+        hasError = true;
+      }
+
+      if (hasError) return;
 
       console.log("フォームデータ:", data);
       reset();
