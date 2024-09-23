@@ -120,9 +120,9 @@ function Asking(): ReactElement {
                 {JSON.stringify(data)}
               </p.ul>
               <ProjectCard
-                amountOfMoney={0}
-                keyVisual="https://placehold.jp/300x150.png"
-                location={data.territory_id}
+                amount_of_money={0}
+                key_visual="https://placehold.jp/300x150.png"
+                location={{ lon: 136.886326, lat: 35.172757 }}
                 name={data.name}
                 status="wakaba"
               />

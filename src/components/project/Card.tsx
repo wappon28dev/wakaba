@@ -1,22 +1,50 @@
 import { Icon } from "@iconify/react";
 import { styled as p, HStack } from "panda/jsx";
 
-import { type ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import { ICON } from "@/assets/icon";
+import { fetchAddressFromLocation } from "@/lib/services/address";
 
 export function ProjectCard({
   name,
-  keyVisual,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  key_visual,
   location,
-  amountOfMoney,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  amount_of_money,
   status,
 }: {
   name: string;
-  location: string;
-  amountOfMoney: number;
+  location: {
+    lat: number;
+    lon: number;
+  };
+  amount_of_money: number;
   status: "wakaba" | "seed" | "tree";
-  keyVisual: string;
+  key_visual: string;
 }): ReactElement {
+  const [address, setAddress] = useState<string>("");
+
+  useEffect(() => {
+    void fetchAddressFromLocation({
+      lat: location.lat,
+      lon: location.lon,
+    }).then((res) => {
+      const data =
+        status === "wakaba"
+          ? `${JSON.stringify(res?.value.Feature[0].Property.AddressElement[2].Name)}周辺`
+          : JSON.stringify(
+              res?.value.Feature[0].Property.AddressElement[2].Name,
+            ) +
+            JSON.stringify(
+              res?.value.Feature[0].Property.AddressElement[3].Name,
+            );
+      // eslint-disable-next-line no-console
+      console.log(data);
+      setAddress(data);
+    });
+  }, [location.lat, location.lon]);
+
   return (
     <p.div
       bg="wkb-neutral.0"
@@ -35,7 +63,7 @@ export function ProjectCard({
           h="1/2"
           objectFit="cover"
           rounded="md"
-          src={keyVisual}
+          src={key_visual}
           w="100%"
         />
       </p.div>
@@ -43,11 +71,11 @@ export function ProjectCard({
         <p.span>
           <HStack gap="-1">
             <Icon icon="bi:geo-alt-fill" />
-            {location}
+            {address.replace(/"/g, "")}
           </HStack>
         </p.span>
         <p.p fontSize="2xl">{name}</p.p>
-        <p.p fontSize="md">現在金額 ￥{amountOfMoney}</p.p>
+        <p.p fontSize="md">現在金額 ￥{amount_of_money}</p.p>
         <HStack>
           <Icon icon="mdi:star-outline" width={30} />
           <Icon icon="mdi:share-variant" width={30} />
