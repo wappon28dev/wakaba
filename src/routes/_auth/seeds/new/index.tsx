@@ -18,7 +18,6 @@ type Param = {
   lat: number;
   lon: number;
 };
-
 const field = svaField();
 export const Route = createFileRoute("/_auth/seeds/new/")({
   component: () => {
@@ -61,7 +60,7 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
     const onSubmit = (data: IFormInput): void => {
       let hasError = false;
 
-      if ((data.category_id.length === 0) || data.category_id.length === 0) {
+      if (data.category_id.length === 0 || data.category_id.length === 0) {
         toaster.error({
           id: "category-error",
           title: "エラー",
@@ -83,7 +82,6 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
 
       if (hasError) return;
 
-      console.log("フォームデータ:", data);
       reset();
       toaster.success({
         id: "login-success",
