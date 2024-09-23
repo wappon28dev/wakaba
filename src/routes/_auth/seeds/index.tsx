@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { SownSeed } from "./-components/SownSeed";
+import { seedsData, projectsData } from "@/assets/data";
 import { GridLayout } from "@/components/GridLayout";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
@@ -47,68 +48,14 @@ export const Route = createFileRoute("/_auth/seeds/")({
           自分が蒔いた種
         </p.h2>
         <p.div display="flex" flexWrap="nowrap" gap={4} overflowX="auto">
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-        </p.div>
-        <p.div display="flex" flexWrap="nowrap" gap={4} overflowX="auto">
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
-          <SownSeed
-            category="花"
-            createdAt="2021.10.10"
-            description="これはテストです。"
-          />
+          {seedsData.map((seed) => (
+            <SownSeed
+              key={seed.seed_id}
+              category={seed.category_id}
+              createdAt={seed.created_at}
+              description={seed.description ?? ""}
+            />
+          ))}
         </p.div>
         <p.div my={50}>
           <p.h2 fontSize="1rem" fontWeight="bold" my={10} textAlign="left">
@@ -116,41 +63,17 @@ export const Route = createFileRoute("/_auth/seeds/")({
           </p.h2>
           <GridLayout>
             <>
-              <ProjectCard
-                amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
-                location="中区周辺"
-                name="タイトル"
-                status="wakaba"
-              />
-              <ProjectCard
-                amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
-                location="中区周辺"
-                name="タイトル"
-                status="wakaba"
-              />{" "}
-              <ProjectCard
-                amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
-                location="中区周辺"
-                name="タイトル"
-                status="wakaba"
-              />{" "}
-              <ProjectCard
-                amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
-                location="中区周辺"
-                name="タイトル"
-                status="wakaba"
-              />{" "}
-              <ProjectCard
-                amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
-                location="中区周辺"
-                name="タイトル"
-                status="wakaba"
-              />
+              {projectsData
+                .sort((a, b) => b.created_at.localeCompare(a.created_at))
+                .map((_) => (
+                  <Link key={_.project_id} to={`/projects/${_.project_id}`}>
+                    <ProjectCard
+                      description={projectsData.description}
+                      name={_.name}
+                      status={_.status}
+                    />
+                  </Link>
+                ))}
             </>
           </GridLayout>
         </p.div>
