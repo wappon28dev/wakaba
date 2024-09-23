@@ -325,7 +325,7 @@ export const seedsData: Array<DBSchema<"seeds">> = [
     description:
       "静かに読書ができて昼食も取れて一日中滞在できるような屋外ブックカフェが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
-    sower_id: "1",
+    sower_id: "99d65bc7-e98d-4995-b204-afdb0a34c7d5",
     category_id: "1",
   },
   {
@@ -357,7 +357,7 @@ export const seedsData: Array<DBSchema<"seeds">> = [
     created_at: "2024-09-22T00:00:00Z",
     description: "地元の農産物を使った安くて美味しいレストランが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
-    sower_id: "1",
+    sower_id: "99d65bc7-e98d-4995-b204-afdb0a34c7d5",
     category_id: "3",
   },
   {
@@ -373,7 +373,7 @@ export const seedsData: Array<DBSchema<"seeds">> = [
     created_at: "2024-09-22T00:00:00Z",
     description: "若者向けの起業支援センターが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
-    sower_id: "1",
+    sower_id: "99d65bc7-e98d-4995-b204-afdb0a34c7d5",
     category_id: "6",
   },
   {
@@ -448,7 +448,7 @@ export const seedsData: Array<DBSchema<"seeds">> = [
     created_at: "2024-09-22T00:00:00Z",
     description: "地域の人々が集まれるコミュニティスペースが欲しい",
     location: { lon: 136.886326, lat: 35.172757 },
-    sower_id: "1",
+    sower_id: "9bdf4bd2-2a0d-4cfc-90da-9c01104fddc6",
     category_id: "6",
   },
 ];
