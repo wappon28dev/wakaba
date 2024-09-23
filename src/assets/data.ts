@@ -89,7 +89,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "屋上庭園を併設し、多様な休憩に対応できる複合施設。ヨガや読書スペース、カフェコーナーを設置。自然光を取り入れた開放的な空間設計。",
-    key_visual: "https://gyazo.com/9205914603b719a1933a1f422c09c70c",
+    key_visual: "https://i.gyazo.com/9205914603b719a1933a1f422c09c70c.jpg",
     name: "憩いの丘",
     project_id: "1",
     territory_id: "1",
@@ -103,7 +103,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "緑豊かな庭園の中に、コンパクトなブックカフェを設置。ハンモックやソファなど、ゆったりと読書を楽しめるスペースを多数用意。",
-    key_visual: "https://gyazo.com/0571d48414ff9a3558471f08481f4b96",
+    key_visual: "https://i.gyazo.com/0571d48414ff9a3558471f08481f4b96.jpg",
     name: "本の森カフェ",
     project_id: "2",
     territory_id: "1",
@@ -117,7 +117,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00-00-00Z",
     description:
       "自然の音に包まれ、瞑想やヨガに集中できる静かなスペース。人工芝や木陰など、自然素材を取り入れた癒やしの空間。",
-    key_visual: "https://gyazo.com/0fc7ef8bdbd73f6fb6ede2fe2e8acbd5",
+    key_visual: "https://i.gyazo.com/0fc7ef8bdbd73f6fb6ede2fe2e8acbd5.jpg",
     name: "静寂の庭",
     project_id: "3",
     territory_id: "1",
@@ -131,7 +131,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "地元の農産物を使い、安価で美味しい食事を提供するレストランをオープンする",
-    key_visual: "https://gyazo.com/a0f8e78fa4592e590c29130d3319bb92",
+    key_visual: "https://i.gyazo.com/a0f8e78fa4592e590c29130d3319bb92.jpg",
     name: "地元食材レストラン",
     project_id: "4",
     territory_id: "1",
@@ -145,7 +145,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "若者向けの起業支援センターを設立し、起業家育成と地域経済の活性化を促進します。",
-    key_visual: "https://gyazo.com/9d9c8aeb4a441f42f337c2076043accd",
+    key_visual: "https://i.gyazo.com/9d9c8aeb4a441f42f337c2076043accd.jpg",
     name: "若者向け起業支援センター設立",
     project_id: "5",
     territory_id: "1",
@@ -159,7 +159,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "地元の高齢者が運営する昔ながらの食堂をオープンし、地域の味を守り、世代間交流を促進します。",
-    key_visual: "https://gyazo.com/0491476f854e0db58d69b6d16af50392",
+    key_visual: "https://i.gyazo.com/0491476f854e0db58d69b6d16af50392.jpg",
     name: "昔ながらの食堂",
     project_id: "6",
     territory_id: "1",
@@ -173,7 +173,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "空き家をリノベーションし、コミュニティスペースとして活用することで、地域交流の活性化を目指します。",
-    key_visual: "https://gyazo.com/b11d5cb6fe109293e59dd0eb045daf00",
+    key_visual: "https://i.gyazo.com/b11d5cb6fe109293e59dd0eb045daf00.jpg",
     name: "空き家活用コミュニティスペース",
     project_id: "7",
     territory_id: "1",
@@ -187,7 +187,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "地元の食材を使った料理教室を定期的に開催し、食文化の継承と地域産業の活性化を目指します。",
-    key_visual: "https://gyazo.com/58649dde4c670eab667bfafbefb3b69e",
+    key_visual: "https://i.gyazo.com/58649dde4c670eab667bfafbefb3b69e.jpg",
     name: "地元食材料理教室",
     project_id: "8",
     territory_id: "1",
@@ -201,7 +201,7 @@ export const projectsData: Array<
     deadline: "2024-10-22T00:00:00Z",
     description:
       "地元の農家から直接新鮮な食材を仕入れ地域特産品を販売する、賑わいのあるマルシェ。",
-    key_visual: "https://gyazo.com/3d6f6702e717cb4930770a096bdcdba3",
+    key_visual: "https://i.gyazo.com/3d6f6702e717cb4930770a096bdcdba3.jpg",
     name: "地域特産品マルシェ",
     project_id: "9",
     territory_id: "1",
