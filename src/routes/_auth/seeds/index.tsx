@@ -118,35 +118,35 @@ export const Route = createFileRoute("/_auth/seeds/")({
             <>
               <ProjectCard
                 amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
+                key_visual="https://placehold.jp/300x150.png"
                 location="中区周辺"
                 name="タイトル"
                 status="wakaba"
               />
               <ProjectCard
                 amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
+                key_visual="https://placehold.jp/300x150.png"
                 location="中区周辺"
                 name="タイトル"
                 status="wakaba"
               />{" "}
               <ProjectCard
                 amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
+                key_visual="https://placehold.jp/300x150.png"
                 location="中区周辺"
                 name="タイトル"
                 status="wakaba"
               />{" "}
               <ProjectCard
                 amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
+                key_visual="https://placehold.jp/300x150.png"
                 location="中区周辺"
                 name="タイトル"
                 status="wakaba"
               />{" "}
               <ProjectCard
                 amountOfMoney={100000}
-                keyVisual="https://placehold.jp/300x150.png"
+                key_visual="https://placehold.jp/300x150.png"
                 location="中区周辺"
                 name="タイトル"
                 status="wakaba"
