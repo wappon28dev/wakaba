@@ -81,13 +81,13 @@ export const Route = createFileRoute("/_auth/projects/")({
             <Tabs.Root className={tabs.root} defaultValue="recommend">
               <Tabs.List className={tabs.list}>
                 <Tabs.Trigger className={tabs.trigger} value="recommend">
-                  おすすめ
+                  <p.p fontWeight="bold">おすすめ</p.p>
                 </Tabs.Trigger>
                 <Tabs.Trigger className={tabs.trigger} value="trending">
-                  急上昇
+                  <p.p fontWeight="bold">急上昇</p.p>
                 </Tabs.Trigger>
                 <Tabs.Trigger className={tabs.trigger} value="all">
-                  すべて
+                  <p.p fontWeight="bold">すべて</p.p>
                 </Tabs.Trigger>
               </Tabs.List>
               <Tabs.Content value="recommend">

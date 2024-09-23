@@ -78,7 +78,7 @@ export function ProjectCard({
                   ""}
             </HStack>
           </p.span>
-          <p.p fontSize="2xl">{name}</p.p>
+          <p.p fontSize="2xl" fontWeight="bold">{name}</p.p>
           <p.p fontSize="md">現在金額 ￥{amount_of_money}</p.p>
           <HStack>
             <Icon icon="mdi:star-outline" width={30} />
