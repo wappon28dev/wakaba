@@ -104,13 +104,11 @@ export const Route = createFileRoute("/_auth/seeds/")({
 
                       return (
                         <p.div key={seed.seed_id} minW={400} p={4} width="1/3">
-                          <Link to={`/projects/${seed.seed_id}`}>
-                            <SownSeed
-                              category={category}
-                              createdAt={formatCreatedAt(seed.created_at)}
-                              description={seed.description ?? ""}
-                            />
-                          </Link>
+                          <SownSeed
+                            category={category}
+                            createdAt={formatCreatedAt(seed.created_at)}
+                            description={seed.description ?? ""}
+                          />
                         </p.div>
                       );
                     })}
@@ -134,7 +132,14 @@ export const Route = createFileRoute("/_auth/seeds/")({
                         key_visual={_.key_visual ?? ""}
                         location={_.location}
                         name={_.name}
-                        status="wakaba"
+                        status={
+                          // eslint-disable-next-line
+                          _.project_id === "1"
+                            ? "tsubomi"
+                            : _.project_id === "7"
+                              ? "hana"
+                              : "wakaba"
+                        }
                       />
                     </Link>
                   ))}

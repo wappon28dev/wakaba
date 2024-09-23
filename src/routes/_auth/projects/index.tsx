@@ -54,7 +54,7 @@ export const Route = createFileRoute("/_auth/projects/")({
             <HStack>
               {projectsData.map((_) => (
                 <SwiperSlide key={_.project_id} zoom={false}>
-                  <Link key={_.project_id} to={`/projects/${_.project_id}`}>
+                  <Link to={`/projects/${_.project_id}`}>
                     <ProjectCard
                       amount_of_money={_.amount_of_money}
                       key_visual={_.key_visual ?? ""}

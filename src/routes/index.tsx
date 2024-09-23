@@ -98,15 +98,14 @@ export const Route = createFileRoute("/")({
               <p.p
                 color="wkb.bg"
                 fadeIn="5"
-                fontSize="100%"
-                maxWidth={{ base: "85%", sm: "70%" }}
+                fontSize="1.5rem"
                 mt="20px"
                 mx="auto"
                 textAlign="center"
               >
-                昔、あるところになかなか子どもが生まれない夫婦がいました。
-                でも、ある時、ようやくかわいらしい男の子が産まれました。
-                れどれ。あら、こぶなんてないじゃないの？」
+                意見を投稿して、住みやすい街を
+                <br />
+                作るアイデアの種を植えよう！
               </p.p>
               <Link to="/user">
                 <Button
@@ -186,7 +185,7 @@ export const Route = createFileRoute("/")({
                     height="100%"
                     width="100%"
                   >
-                    # カフェ
+                    # 休憩
                   </Button>
                 </p.a>
                 <p.a height={100} href="/projects?q=library" width="100%">
@@ -202,7 +201,7 @@ export const Route = createFileRoute("/")({
                     height="100%"
                     width="100%"
                   >
-                    # 図書館
+                    # 施設
                   </Button>
                 </p.a>
                 <p.a height={100} href="/projects?q=gym" width="100%">
@@ -218,7 +217,7 @@ export const Route = createFileRoute("/")({
                     height="100%"
                     width="100%"
                   >
-                    # 運動施設
+                    # 飲食
                   </Button>
                 </p.a>
               </p.div>

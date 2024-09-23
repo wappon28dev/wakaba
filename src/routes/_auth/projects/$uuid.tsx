@@ -218,7 +218,7 @@ function GridDetailInfo({
               py={4}
               rounded="md"
             >
-              <HStack gap={2} justify="center">
+              <HStack color="wkb-neutral.0" gap={2} justify="center">
                 <Icon icon={ICON[data.status]} width="2rem" />
                 <p.p color="wkb-neutral.0" fontSize="95%" fontWeight="bold">
                   {data.status === "wakaba" && "このWakabaを支援する"}
@@ -377,7 +377,6 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
       if (seed === undefined) throw new Error("No data5 found");
       return seed;
     });
-    if (data5 === undefined) throw new Error("No data5 found");
 
     const data: needs = {
       amount_of_money: data2.amount_of_money,
