@@ -5,7 +5,6 @@ import { Button } from "@/components/cva/Button";
 export function FruitCard({
   name,
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  key_visual,
   description,
   index,
 }: {
@@ -16,12 +15,6 @@ export function FruitCard({
 }): ReactElement {
   return (
     <VStack bg="wkb-neutral.100" p={4} rounded="md">
-      <p.img
-        alignSelf="start"
-        alt="Placeholder"
-        rounded="md"
-        src={key_visual}
-      />
       <HStack alignSelf="start" gap={2}>
         <p.p color="wkb-neutral.700" fontSize="2xl" fontWeight="bold">
           {name}
