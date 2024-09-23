@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useInView } from "react-intersection-observer";
 import { LogoComposite } from "@/components/Logo";
@@ -8,15 +8,15 @@ import { Expanded } from "@/components/cva/Expanded";
 export const Route = createFileRoute("/")({
   component: () => {
     const [ref1, inView1] = useInView({
-      rootMargin: "-500px",
+      rootMargin: "-200px",
       triggerOnce: true,
     });
     const [ref2, inView2] = useInView({
-      rootMargin: "-500px",
+      rootMargin: "-200px",
       triggerOnce: true,
     });
     const [ref3, inView3] = useInView({
-      rootMargin: "-500px",
+      rootMargin: "-200px",
       triggerOnce: true,
     });
 
@@ -108,21 +108,22 @@ export const Route = createFileRoute("/")({
                 でも、ある時、ようやくかわいらしい男の子が産まれました。
                 れどれ。あら、こぶなんてないじゃないの？」
               </p.p>
-
-              <Button
-                _hover={{
-                  background: "wkb.bg",
-                  shadow: "md",
-                }}
-                background="wkb.bg"
-                display="flex"
-                fontSize="150%"
-                fontWeight="bold"
-                mt="40px"
-                mx="auto"
-              >
-                実際に初めてみる
-              </Button>
+              <Link to="/user">
+                <Button
+                  _hover={{
+                    background: "wkb.bg",
+                    shadow: "md",
+                  }}
+                  background="wkb.bg"
+                  display="flex"
+                  fontSize="150%"
+                  fontWeight="bold"
+                  mt="40px"
+                  mx="auto"
+                >
+                  実際に初めてみる
+                </Button>
+              </Link>
             </p.div>
           )}
         </p.div>
