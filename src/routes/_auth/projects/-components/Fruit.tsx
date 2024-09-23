@@ -4,7 +4,9 @@ import { Button } from "@/components/cva/Button";
 
 export function FruitCard({
   name,
+  // @ts-expect-error - This is a mockup
   // eslint-disable-next-line @typescript-eslint/naming-convention
+  key_visual,
   description,
   index,
 }: {
