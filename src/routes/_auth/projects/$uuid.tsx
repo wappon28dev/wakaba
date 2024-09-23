@@ -75,14 +75,16 @@ type needs = {
           | undefined;
       }
     | undefined;
-  seeds: Array<{
-    category_id: string;
-    created_at: string;
-    description: string | null;
-    location: unknown;
-    seed_id: string;
-    sower_id: string;
-  }>;
+  seeds:
+    | Array<{
+        category_id: string;
+        created_at: string;
+        description: string | null;
+        location: unknown;
+        seed_id: string;
+        sower_id: string;
+      }>
+    | undefined;
 };
 
 function GridDetailInfo({
@@ -229,33 +231,35 @@ function GridDetailInfo({
             <p.p fontSize="xs" fontWeight="bold" mb={4}>
               以下の意見が集まって生成されました
             </p.p>
-            <VStack gap={4} mb={4} w="full">
-              {data.seeds.map((s) => (
-                <p.div
-                  key={s.seed_id}
-                  _even={{ ml: "auto", flexDirection: "row-reverse" }}
-                  _odd={{ mr: "auto", flexDirection: "row" }}
-                  alignItems="center"
-                  bg="wkb-neutral.100"
-                  display="flex"
-                  p={2}
-                  rounded="md"
-                >
-                  <Icon icon="material-symbols:account-circle" width={30} />
-                  <p.p
-                    fontSize="xs"
-                    lineClamp={3}
-                    maxW={200}
-                    overflow="hidden"
-                    px={2}
-                    textOverflow="ellipsis"
-                    w="100%"
+            {data.seeds !== undefined && data.seeds.length !== 0 && (
+              <VStack gap={4} mb={4} w="full">
+                {data.seeds.map((s) => (
+                  <p.div
+                    key={s.seed_id}
+                    _even={{ ml: "auto", flexDirection: "row-reverse" }}
+                    _odd={{ mr: "auto", flexDirection: "row" }}
+                    alignItems="center"
+                    bg="wkb-neutral.100"
+                    display="flex"
+                    p={2}
+                    rounded="md"
                   >
-                    {s.description}
-                  </p.p>
-                </p.div>
-              ))}
-            </VStack>
+                    <Icon icon="material-symbols:account-circle" width={30} />
+                    <p.p
+                      fontSize="xs"
+                      lineClamp={3}
+                      maxW={200}
+                      overflow="hidden"
+                      px={2}
+                      textOverflow="ellipsis"
+                      w="100%"
+                    >
+                      {s.description}
+                    </p.p>
+                  </p.div>
+                ))}
+              </VStack>
+            )}
 
             <Dialog.Root>
               <Dialog.Trigger
@@ -372,9 +376,9 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
 
     const data5 = data2.seed_id.map((s) => {
       const seed = seedsData.find((_) => _.seed_id === String(s));
-      if (seed === undefined) throw new Error("No data5 found");
       return seed;
     });
+    if (data5 === undefined) throw new Error("No data5 found");
 
     const data: needs = {
       amount_of_money: data2.amount_of_money,
@@ -401,7 +405,14 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
         reports: data3?.reports ?? undefined,
         fruits: data3?.fruits ?? undefined,
       },
-      seeds: data5,
+      seeds: data5.map((s) => ({
+        category_id: s?.category_id ?? "",
+        created_at: s?.created_at ?? "",
+        description: s?.description ?? "",
+        location: s?.location ?? {},
+        seed_id: s?.seed_id ?? "",
+        sower_id: s?.sower_id ?? "",
+      })),
     };
 
     const leftDays = Math.floor(
