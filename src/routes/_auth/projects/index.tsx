@@ -63,9 +63,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                       status={
                         // eslint-disable-next-line
                         _.project_id === "1"
-                          ? "seed"
+                          ? "tsubomi"
                           : _.project_id === "7"
-                            ? "tree"
+                            ? "hana"
                             : "wakaba"
                       }
                     />
@@ -108,9 +108,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                             status={
                               // eslint-disable-next-line
                               _.project_id === "1"
-                                ? "seed"
+                                ? "tsubomi"
                                 : _.project_id === "7"
-                                  ? "tree"
+                                  ? "hana"
                                   : "wakaba"
                             }
                           />
@@ -140,9 +140,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                             status={
                               // eslint-disable-next-line
                               _.project_id === "1"
-                                ? "seed"
+                                ? "tsubomi"
                                 : _.project_id === "7"
-                                  ? "tree"
+                                  ? "hana"
                                   : "wakaba"
                             }
                           />
@@ -164,9 +164,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                           status={
                             // eslint-disable-next-line
                             _.project_id === "1"
-                              ? "seed"
+                              ? "tsubomi"
                               : _.project_id === "7"
-                                ? "tree"
+                                ? "hana"
                                 : "wakaba"
                           }
                         />

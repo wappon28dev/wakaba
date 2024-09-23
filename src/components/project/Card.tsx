@@ -25,7 +25,7 @@ export function ProjectCard({
     lon: number;
   };
   amount_of_money: number;
-  status: "wakaba" | "seed" | "tree";
+  status: "wakaba" | "tsubomi" | "hana";
   key_visual: string;
 }): ReactElement {
   const swrLocation = useSWRImmutable("location", async () =>
@@ -85,7 +85,7 @@ export function ProjectCard({
             <Icon icon="mdi:share-variant" width={30} />
             <p.div alignItems="baseline" ml="auto">
               <Icon
-                height={status === "tree" ? "2rem" : "1.5rem"}
+                height={status === "hana" ? "2rem" : "1.5rem"}
                 icon={ICON[status]}
               />
             </p.div>

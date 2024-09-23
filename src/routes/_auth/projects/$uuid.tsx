@@ -29,7 +29,7 @@ type needs = {
   key_visual: string;
   name: string;
   project_id: string;
-  status: "wakaba" | "seed" | "tree";
+  status: "wakaba" | "tsubomi" | "hana";
   sponsor_data_id: string;
   description: string;
   location: {
@@ -140,7 +140,7 @@ function GridDetailInfo({
                 </HStack>
                 <p.div ml="auto">
                   <Icon
-                    height={data?.status === "tree" ? "2rem" : "1.5rem"}
+                    height={data?.status === "hana" ? "2rem" : "1.5rem"}
                     icon={ICON[data?.status]}
                   />
                 </p.div>
@@ -222,8 +222,8 @@ function GridDetailInfo({
                 <Icon icon={ICON[data.status]} width="2rem" />
                 <p.p color="wkb-neutral.0" fontSize="95%" fontWeight="bold">
                   {data.status === "wakaba" && "このWakabaを支援する"}
-                  {data.status === "seed" && "このSeedを支援する"}
-                  {data.status === "tree" && "このTreeを支援する"}
+                  {data.status === "tsubomi" && "このTsubomiを支援する"}
+                  {data.status === "hana" && "このHanaを支援する"}
                 </p.p>
               </HStack>
             </p.div>
@@ -390,9 +390,9 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
       status:
         // eslint-disable-next-line no-nested-ternary
         data2.project_id === "1"
-          ? "seed"
+          ? "tsubomi"
           : data2.project_id === "7"
-            ? "tree"
+            ? "hana"
             : "wakaba",
       description: data2.description,
       location: data2.location,
