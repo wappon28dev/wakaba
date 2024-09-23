@@ -15,11 +15,14 @@ import {
   seedsData,
 } from "@/assets/data";
 import { ICON } from "@/assets/icon";
+import { IconText } from "@/components/IconText";
 import { Loading } from "@/components/Loading";
+import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 import { svaDialog } from "@/components/sva/dialog";
 import { svaProgress } from "@/components/sva/progress";
 import { fetchAddressFromLocation } from "@/lib/services/address";
+import { getCapitalizedStr } from "@/lib/utils";
 import { S } from "@/lib/utils/patterns";
 
 type needs = {
@@ -203,31 +206,26 @@ function GridDetailInfo({
               </Progress.Root>
             )}
 
-            <p.div
+            <Button
               _hover={{
                 transform: "scale(1.05)",
-                transition: "transform 0.1s",
               }}
-              bg="wkb.primary"
-              mb={4}
-              mt={4}
+              my="4"
               onClick={() => {
                 scrollFruits();
               }}
-              px={2}
-              py={4}
-              rounded="md"
+              transition="transform 0.1s"
+              variant="filled"
             >
-              <HStack color="wkb-neutral.0" gap={2} justify="center">
-                <Icon icon={ICON[data.status]} width="2rem" />
-                <p.p color="wkb-neutral.0" fontSize="95%" fontWeight="bold">
-                  {data.status === "wakaba" && "このWakabaを支援する"}
-                  {data.status === "tsubomi" && "このTsubomiを支援する"}
-                  {data.status === "hana" && "このHanaを支援する"}
-                </p.p>
-              </HStack>
-            </p.div>
-
+              <IconText
+                fontSize="lg"
+                fontWeight="bold"
+                icon={ICON[data.status]}
+                justifyContent="center"
+              >
+                この {getCapitalizedStr(data.status)} を支援する
+              </IconText>
+            </Button>
             <p.p fontSize="xs" fontWeight="bold" mb={4}>
               以下の意見が集まって生成されました
             </p.p>

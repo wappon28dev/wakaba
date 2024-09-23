@@ -107,7 +107,7 @@ export const Route = createFileRoute("/")({
                 <br />
                 作るアイデアの種を植えよう！
               </p.p>
-              <Link to="/user">
+              <Link to="/seeds/new">
                 <Button
                   _hover={{
                     background: "wkb.bg",

@@ -12,24 +12,24 @@ export const Route = createFileRoute("/user/auth")({
 });
 
 function Page(): ReactElement {
-  const { session } = Route.useRouteContext();
+  const { session, hasAppReady } = Route.useRouteContext();
   const navigate = useNavigate();
   const [redirectTo, setRedirectTo] = useAtom($redirectTo);
 
   useEffect(() => {
-    if (session != null) {
-      void navigate({ to: redirectTo ?? "/" }).then(() => {
+    if (hasAppReady && session != null && redirectTo != null) {
+      void navigate({ to: redirectTo }).then(() => {
         toaster.success({
           id: "login-success",
           title: "正常にログインしました",
           description:
-            redirectTo != null ? `${redirectTo} へ遷移しました` : undefined,
+            redirectTo !== "/" ? `${redirectTo} へ遷移しました` : undefined,
           duration: 5000,
         });
         setRedirectTo(undefined);
       });
     }
-  }, [session]);
+  }, [redirectTo]);
 
   return (
     <Expanded items="center">
