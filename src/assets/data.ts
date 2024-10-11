@@ -280,9 +280,9 @@ export const sponsorDataData: Array<
     fruits: [
       {
         fruit_id: "4",
-        name: "支援1",
+        name: "5% OFFクーポン",
         created_at: "2024-09-22T00:00:00Z",
-        description: "支援1の説明",
+        description: "開店後、入場料1回5%OFFでご利用いただけます",
         amount_of_money: 1000,
         key_visual: "https://via.placeholder.com/150",
         project_id: "2",
@@ -290,9 +290,9 @@ export const sponsorDataData: Array<
       },
       {
         fruit_id: "5",
-        name: "支援2",
+        name: "10% OFFクーポン",
         created_at: "2024-09-22T00:00:00Z",
-        description: "支援2の説明",
+        description: "開店後、入場料1回10%OFFでご利用いただけます",
         amount_of_money: 3000,
         key_visual: "https://via.placeholder.com/150",
         project_id: "2",
@@ -300,9 +300,9 @@ export const sponsorDataData: Array<
       },
       {
         fruit_id: "6",
-        name: "支援3",
+        name: "入場料一生10%OFF",
         created_at: "2024-09-22T00:00:00Z",
-        description: "支援3の説明",
+        description: "開店後、屋上庭園の入場料を一生10%OFFでご利用いただけます",
         amount_of_money: 3000,
         key_visual: "https://via.placeholder.com/150",
         project_id: "2",
