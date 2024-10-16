@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useInView } from "react-intersection-observer";
+import obi from "@/assets/svg/background/obi.svg";
+import wakaba from "@/assets/svg/background/wakaba.svg";
 import { LogoComposite } from "@/components/Logo";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
@@ -8,15 +10,19 @@ import { Expanded } from "@/components/cva/Expanded";
 export const Route = createFileRoute("/")({
   component: () => {
     const [ref1, inView1] = useInView({
-      rootMargin: "-200px",
+      rootMargin: "-350px",
       triggerOnce: true,
     });
     const [ref2, inView2] = useInView({
-      rootMargin: "-200px",
+      rootMargin: "-350px",
       triggerOnce: true,
     });
     const [ref3, inView3] = useInView({
-      rootMargin: "-200px",
+      rootMargin: "-350px",
+      triggerOnce: true,
+    });
+    const [ref4, inView4] = useInView({
+      rootMargin: "350px",
       triggerOnce: true,
     });
 
@@ -25,10 +31,10 @@ export const Route = createFileRoute("/")({
         <p.div
           bg="gray.200"
           display="grid"
+          height={{ base: "400px", sm: "600px" }}
           placeItems="center"
           py="20"
           style={{
-            height: "60vh",
             position: "relative",
           }}
           w="100%"
@@ -48,23 +54,24 @@ export const Route = createFileRoute("/")({
         <p.div
           ref={ref1}
           display="grid"
-          height={{ base: "400px", sm: "700px" }}
+          height={{ base: "400px", sm: "600px" }}
           placeItems="center"
+          style={{
+            backgroundImage: `url(${obi})`,
+            backgroundSize: "20%",
+            backgroundPosition: "5% top",
+            backgroundRepeat: "no-repeat",
+          }}
         >
           {inView1 && (
             <p.div duration="1000" fadeIn="5" slideInY="10">
-              <p.h2
-                background="wkb.bg"
-                fontSize="300%"
-                fontWeight="bold"
-                textAlign="center"
-              >
+              <p.h2 fontSize="300%" fontWeight="bold" textAlign="center">
                 Wakabaとは
               </p.h2>
 
               <p.p
                 fontSize="100%"
-                maxWidth={{ base: "85%", sm: "70%" }}
+                maxWidth={{ base: "90%", sm: "70%" }}
                 mt="20px"
                 mx="auto"
                 textAlign="center"
@@ -78,51 +85,74 @@ export const Route = createFileRoute("/")({
         </p.div>
 
         <p.div
-          ref={ref2}
+          ref={ref4}
           background="wkb.primary"
           display="grid"
-          height={{ base: "500px", sm: "800px" }}
+          height={{ base: "400px", sm: "600px" }}
           placeItems="center"
         >
-          {inView2 && (
-            <p.div duration="1000" fadeIn="5" placeItems="center" slideInY="10">
-              <p.h2
-                color="wkb.bg"
-                fontSize="300%"
-                fontWeight="bold"
-                textAlign="center"
-              >
-                種を植える
-              </p.h2>
-
-              <p.p
-                color="wkb.bg"
-                fadeIn="5"
-                fontSize="1.5rem"
-                mt="20px"
-                mx="auto"
-                textAlign="center"
-              >
-                意見を投稿して、住みやすい街を
-                <br />
-                作るアイデアの種を植えよう！
-              </p.p>
-              <Link to="/seeds/new">
-                <Button
-                  _hover={{
-                    background: "wkb.bg",
-                    shadow: "md",
-                  }}
-                  background="wkb.bg"
-                  display="flex"
-                  fontSize="150%"
-                  fontWeight="bold"
-                  mt="40px"
-                  mx="auto"
+          {inView4 && (
+            <p.div
+              ref={ref2}
+              display="grid"
+              duration="3000"
+              fadeIn="5"
+              height="100%"
+              placeItems="center"
+              style={{
+                backgroundImage: `url(${wakaba})`,
+                backgroundSize: "60%",
+                backgroundPosition: "5% bottom",
+                backgroundRepeat: "no-repeat",
+              }}
+              width="100%"
+            >
+              {inView2 && (
+                <p.div
+                  duration="1000"
+                  fadeIn="5"
+                  placeItems="center"
+                  slideInY="10"
                 >
-                  実際に初めてみる
-                </Button>
-              </Link>
+                  <p.h2
+                    color="wkb.bg"
+                    fontSize="3rem"
+                    fontWeight="bold"
+                    textAlign="center"
+                  >
+                    種を植える
+                  </p.h2>
+
+                  <p.p
+                    color="wkb.bg"
+                    fadeIn="5"
+                    fontSize="1.5rem"
+                    mt="20px"
+                    mx="auto"
+                    textAlign="center"
+                  >
+                    意見を投稿して、住みやすい街を
+                    <br />
+                    作るアイデアの種を植えよう！
+                  </p.p>
+                  <Link to="/seeds/new">
+                    <Button
+                      _hover={{
+                        background: "wkb.bg",
+                        shadow: "md",
+                      }}
+                      background="wkb.bg"
+                      display="flex"
+                      fontSize="150%"
+                      fontWeight="bold"
+                      mt="40px"
+                      mx="auto"
+                    >
+                      実際に初めてみる
+                    </Button>
+                  </Link>
+                </p.div>
+              )}
             </p.div>
           )}
         </p.div>
