@@ -24,13 +24,18 @@ export const Route = createFileRoute("/_auth/projects/")({
       return null;
     }
 
+    // const scrollFruits = (): void => {
+    //   scrollRef?.current?.scrollIntoView();
+    // };
+
     return (
-      <HStack alignItems="start">
+      <HStack alignItems="start" w="full">
         <VStack
           bg="wkb-neutral.100"
           display="block"
           h="full"
-          w="500px"
+          minW="400px"
+          w="auto"
           xlDown={{
             display: "none",
           }}
@@ -43,19 +48,34 @@ export const Route = createFileRoute("/_auth/projects/")({
               みんなのプロジェクト
             </p.p>
             <VStack alignItems="start" gap={10} p={10}>
-              <Button color="wkb-neutral.0" fontSize="2xl" w="full">
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                w="full"
+              >
                 <HStack>
                   <Icon icon="akar-icons:heart" />
                   おすすめ
                 </HStack>
               </Button>
-              <Button color="wkb-neutral.0" fontSize="2xl" w="full">
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                w="full"
+              >
                 <HStack>
                   <Icon icon="akar-icons:fire" />
                   急上昇
                 </HStack>
               </Button>
-              <Button color="wkb-neutral.0" fontSize="2xl" w="full">
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                w="full"
+              >
                 <HStack>
                   <Icon icon="akar-icons:star" />
                   置き二位入り
@@ -65,8 +85,17 @@ export const Route = createFileRoute("/_auth/projects/")({
           </p.div>
         </VStack>
 
-        <VStack alignItems="center" maxW="1200px" w="100dvw">
-          <p.div maxW="1200px" w="100dvw">
+        <VStack alignItems="center" w="auto">
+          <p.div
+            display="none"
+            w="100dvw"
+            xlDown={{
+              display: "block",
+            }}
+            xlTo2xl={{
+              display: "block",
+            }}
+          >
             <Swiper
               autoplay
               breakpoints={{
@@ -117,7 +146,7 @@ export const Route = createFileRoute("/_auth/projects/")({
               display: "block",
             }}
           >
-            <p.div maxW="1200px" w="100%">
+            <p.div w="100%">
               <Tabs.Root className={tabs.root} defaultValue="recommend">
                 <Tabs.List className={tabs.list}>
                   <Tabs.Trigger className={tabs.trigger} value="recommend">
@@ -223,9 +252,21 @@ export const Route = createFileRoute("/_auth/projects/")({
             </p.div>
           </Flex>
 
+          {/* PCビュー */}
+
+          <p.p
+            fontSize="5xl"
+            fontWeight="bold"
+            p={36}
+            textAlign="center"
+            w="100%"
+          >
+            Projects
+          </p.p>
+
           <VStack
             display="block"
-            w="100%"
+            w="calc(100dvw - 410px)"
             xlDown={{
               display: "none",
             }}
@@ -233,76 +274,73 @@ export const Route = createFileRoute("/_auth/projects/")({
               display: "none",
             }}
           >
-            <p.div pl={8} py={8} w="100%">
+            <p.div pl={8} w="auto">
               <HorizontalScrolling title="おすすめ">
-                <HStack w="100%">
+                <HStack gap={40} w="auto">
                   {projectsData.map((_) => (
-                    <p.div key={_.project_id} w="500px">
-                      <ProjectCard
-                        amount_of_money={_.amount_of_money}
-                        key_visual={_.key_visual ?? ""}
-                        location={_.location}
-                        name={_.name}
-                        status={
-                          // eslint-disable-next-line
-                          _.project_id === "1"
-                            ? "tsubomi"
-                            : _.project_id === "7"
-                              ? "hana"
-                              : "wakaba"
-                        }
-                      />
-                    </p.div>
+                    <ProjectCard
+                      key={_.project_id}
+                      amount_of_money={_.amount_of_money}
+                      key_visual={_.key_visual ?? ""}
+                      location={_.location}
+                      name={_.name}
+                      status={
+                        // eslint-disable-next-line
+                        _.project_id === "1"
+                          ? "tsubomi"
+                          : _.project_id === "7"
+                            ? "hana"
+                            : "wakaba"
+                      }
+                    />
                   ))}
                 </HStack>
               </HorizontalScrolling>
             </p.div>
 
-            <p.div pl={8} py={8} w="100%">
+            <p.div pl={8} py={8} w="auto">
               <HorizontalScrolling title="急上昇">
-                <HStack w="100%">
+                <HStack gap={40} w="auto">
                   {projectsData.map((_) => (
-                    <p.div key={_.project_id} w="500px">
-                      <ProjectCard
-                        amount_of_money={_.amount_of_money}
-                        key_visual={_.key_visual ?? ""}
-                        location={_.location}
-                        name={_.name}
-                        status={
-                          // eslint-disable-next-line
-                          _.project_id === "1"
-                            ? "tsubomi"
-                            : _.project_id === "7"
-                              ? "hana"
-                              : "wakaba"
-                        }
-                      />
-                    </p.div>
+                    <ProjectCard
+                      key={_.project_id}
+                      amount_of_money={_.amount_of_money}
+                      key_visual={_.key_visual ?? ""}
+                      location={_.location}
+                      name={_.name}
+                      status={
+                        // eslint-disable-next-line
+                        _.project_id === "1"
+                          ? "tsubomi"
+                          : _.project_id === "7"
+                            ? "hana"
+                            : "wakaba"
+                      }
+                    />
                   ))}
                 </HStack>
               </HorizontalScrolling>
             </p.div>
 
-            <p.div pl={8} py={8} w="100%">
+            <p.div pl={8} py={8} w="auto">
               <HorizontalScrolling title="お気に入り">
-                <HStack w="100%">
+                <HStack gap={40} w="auto">
                   {projectsData.map((_) => (
-                    <p.div key={_.project_id} w="500px">
-                      <ProjectCard
-                        amount_of_money={_.amount_of_money}
-                        key_visual={_.key_visual ?? ""}
-                        location={_.location}
-                        name={_.name}
-                        status={
-                          // eslint-disable-next-line
-                          _.project_id === "1"
-                            ? "tsubomi"
-                            : _.project_id === "7"
-                              ? "hana"
-                              : "wakaba"
-                        }
-                      />
-                    </p.div>
+                    <ProjectCard
+                      key={_.project_id}
+                      amount_of_money={_.amount_of_money}
+                      key_visual={_.key_visual ?? ""}
+                      location={_.location}
+                      name={_.name}
+                      status={
+                        // eslint-disable-next-line
+                        _.project_id === "1"
+                          ? "tsubomi"
+                          : _.project_id === "7"
+                            ? "hana"
+                            : "wakaba"
+                      }
+                    />
                   ))}
                 </HStack>
               </HorizontalScrolling>

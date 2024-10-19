@@ -44,7 +44,7 @@ export function ProjectCard({
       m={4}
       mdDown={{ minW: "90%" }}
       minH={300}
-      minW={300}
+      minW={600}
       p={4}
       rounded="md"
       w="20%"
