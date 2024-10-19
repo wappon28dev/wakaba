@@ -6,6 +6,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { projectsData } from "@/assets/data";
 import { GridLayout } from "@/components/GridLayout";
+import { Button } from "@/components/cva/Button";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
 
@@ -41,24 +42,24 @@ export const Route = createFileRoute("/_auth/projects/")({
               みんなのプロジェクト
             </p.p>
             <VStack alignItems="start" gap={10} p={10}>
-              <p.p color="wkb-neutral.0" fontSize="2xl">
+              <Button color="wkb-neutral.0" fontSize="2xl" w="full">
                 <HStack>
                   <Icon icon="akar-icons:heart" />
                   おすすめ
                 </HStack>
-              </p.p>
-              <p.p color="wkb-neutral.0" fontSize="2xl">
+              </Button>
+              <Button color="wkb-neutral.0" fontSize="2xl" w="full">
                 <HStack>
                   <Icon icon="akar-icons:fire" />
                   急上昇
                 </HStack>
-              </p.p>
-              <p.p color="wkb-neutral.0" fontSize="2xl">
+              </Button>
+              <Button color="wkb-neutral.0" fontSize="2xl" w="full">
                 <HStack>
                   <Icon icon="akar-icons:star" />
                   置き二位入り
                 </HStack>
-              </p.p>
+              </Button>
             </VStack>
           </p.div>
         </VStack>

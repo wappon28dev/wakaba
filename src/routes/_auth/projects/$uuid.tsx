@@ -209,14 +209,10 @@ function GridDetailInfo({
             )}
 
             <Button
-              _hover={{
-                transform: "scale(1.05)",
-              }}
               my="4"
               onClick={() => {
                 scrollFruits();
               }}
-              transition="transform 0.1s"
               variant="filled"
             >
               <IconText
@@ -266,44 +262,42 @@ function GridDetailInfo({
                 className={dialog.trigger}
                 disabled={data.status === "wakaba"}
               >
-                <HStack
-                  _hover={{
-                    transform: "scale(1.05)",
-                    transition: "transform 0.1s",
-                  }}
+                <Button
                   alignContent="center"
                   bg="wkb-neutral.100"
                   display="flex"
-                  justify="center"
                   mb={4}
                   p={2}
                   rounded="md"
+                  w="full"
                 >
-                  {data.status !== "wakaba" &&
-                  data.sponsor !== undefined &&
-                  data.sponsor_data !== undefined ? (
-                    <>
-                      <p.img rounded="full" src={data.sponsor.icon} w={50} />
-                      <VStack alignItems="start" gap={0}>
-                        <p.p fontWeight="bold">{data.sponsor.name}</p.p>
-                        <p.div px={2}>
-                          <p.p
-                            fontSize="xs"
-                            h="100%"
-                            lineClamp={3}
-                            maxH={100}
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                          >
-                            {data.sponsor_data.motivation}
-                          </p.p>
-                        </p.div>
-                      </VStack>
-                    </>
-                  ) : (
-                    <p.p>スポンサー募集中</p.p>
-                  )}
-                </HStack>
+                  <HStack>
+                    {data.status !== "wakaba" &&
+                    data.sponsor !== undefined &&
+                    data.sponsor_data !== undefined ? (
+                      <>
+                        <p.img rounded="full" src={data.sponsor.icon} w={50} />
+                        <VStack alignItems="start" gap={0}>
+                          <p.p fontWeight="bold">{data.sponsor.name}</p.p>
+                          <p.div px={2}>
+                            <p.p
+                              fontSize="xs"
+                              h="100%"
+                              lineClamp={3}
+                              maxH={100}
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                            >
+                              {data.sponsor_data.motivation}
+                            </p.p>
+                          </p.div>
+                        </VStack>
+                      </>
+                    ) : (
+                      <p.p>スポンサー募集中</p.p>
+                    )}
+                  </HStack>
+                </Button>
               </Dialog.Trigger>
               <Portal>
                 <Dialog.Backdrop className={dialog.backdrop} />
