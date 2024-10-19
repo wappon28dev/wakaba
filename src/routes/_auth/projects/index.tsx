@@ -63,7 +63,8 @@ export const Route = createFileRoute("/_auth/projects/")({
             </VStack>
           </p.div>
         </VStack>
-        <VStack>
+
+        <VStack alignItems="center" w="100%">
           <p.div maxW="1200px" w="100dvw">
             <Swiper
               autoplay
