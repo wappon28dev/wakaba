@@ -2,6 +2,7 @@ import { Tabs } from "@ark-ui/react";
 import { Icon } from "@iconify/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Flex, HStack, styled as p, VStack } from "panda/jsx";
+import { useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { projectsData } from "@/assets/data";
@@ -18,15 +19,26 @@ import "swiper/css/scrollbar";
 
 export const Route = createFileRoute("/_auth/projects/")({
   component: () => {
+    const scrollRecommendRef = useRef<HTMLDivElement>(null);
+    const scrollTrendingRef = useRef<HTMLDivElement>(null);
+    const scrollStaredRef = useRef<HTMLDivElement>(null);
     const tabs = svaTabs();
 
     if (typeof window === "undefined") {
       return null;
     }
 
-    // const scrollFruits = (): void => {
-    //   scrollRef?.current?.scrollIntoView();
-    // };
+    const scrollRecommend = (): void => {
+      scrollRecommendRef?.current?.scrollIntoView();
+    };
+
+    const scrollTrending = (): void => {
+      scrollTrendingRef?.current?.scrollIntoView();
+    };
+
+    const scrollStared = (): void => {
+      scrollStaredRef?.current?.scrollIntoView();
+    };
 
     return (
       <HStack alignItems="start" w="full">
@@ -52,6 +64,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                 bg="transparent"
                 colorPalette="wkb.bg"
                 fontSize="2xl"
+                onClick={() => {
+                  scrollRecommend();
+                }}
                 w="full"
               >
                 <HStack>
@@ -63,6 +78,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                 bg="transparent"
                 colorPalette="wkb.bg"
                 fontSize="2xl"
+                onClick={() => {
+                  scrollTrending();
+                }}
                 w="full"
               >
                 <HStack>
@@ -74,6 +92,9 @@ export const Route = createFileRoute("/_auth/projects/")({
                 bg="transparent"
                 colorPalette="wkb.bg"
                 fontSize="2xl"
+                onClick={() => {
+                  scrollStared();
+                }}
                 w="full"
               >
                 <HStack>
@@ -103,7 +124,7 @@ export const Route = createFileRoute("/_auth/projects/")({
                   slidesPerView: 1,
                 },
                 768: {
-                  slidesPerView: 3,
+                  slidesPerView: 2,
                 },
               }}
               centeredSlides
@@ -155,7 +176,7 @@ export const Route = createFileRoute("/_auth/projects/")({
                   <Tabs.Trigger className={tabs.trigger} value="trending">
                     <p.p fontWeight="bold">急上昇</p.p>
                   </Tabs.Trigger>
-                  <Tabs.Trigger className={tabs.trigger} value="all">
+                  <Tabs.Trigger className={tabs.trigger} value="stared">
                     <p.p fontWeight="bold">すべて</p.p>
                   </Tabs.Trigger>
                 </Tabs.List>
@@ -221,7 +242,7 @@ export const Route = createFileRoute("/_auth/projects/")({
                     </>
                   </GridLayout>
                 </Tabs.Content>
-                <Tabs.Content value="all">
+                <Tabs.Content value="stared">
                   <GridLayout>
                     <>
                       {projectsData.reverse().map((_) => (
@@ -255,17 +276,25 @@ export const Route = createFileRoute("/_auth/projects/")({
           {/* PCビュー */}
 
           <p.p
+            display="block"
             fontSize="5xl"
             fontWeight="bold"
             p={36}
             textAlign="center"
             w="100%"
+            xlDown={{
+              display: "none",
+            }}
+            xlTo2xl={{
+              display: "none",
+            }}
           >
             Projects
           </p.p>
 
           <VStack
             display="block"
+            gap={8}
             w="calc(100dvw - 410px)"
             xlDown={{
               display: "none",
@@ -274,7 +303,7 @@ export const Route = createFileRoute("/_auth/projects/")({
               display: "none",
             }}
           >
-            <p.div pl={8} w="auto">
+            <p.div ref={scrollRecommendRef} pl={8} w="auto">
               <HorizontalScrolling title="おすすめ">
                 <HStack gap={40} w="auto">
                   {projectsData.map((_) => (
@@ -298,7 +327,7 @@ export const Route = createFileRoute("/_auth/projects/")({
               </HorizontalScrolling>
             </p.div>
 
-            <p.div pl={8} py={8} w="auto">
+            <p.div ref={scrollTrendingRef} pl={8} py={8} w="auto">
               <HorizontalScrolling title="急上昇">
                 <HStack gap={40} w="auto">
                   {projectsData.map((_) => (
@@ -322,7 +351,7 @@ export const Route = createFileRoute("/_auth/projects/")({
               </HorizontalScrolling>
             </p.div>
 
-            <p.div pl={8} py={8} w="auto">
+            <p.div ref={scrollStaredRef} pl={8} py={8} w="auto">
               <HorizontalScrolling title="お気に入り">
                 <HStack gap={40} w="auto">
                   {projectsData.map((_) => (
