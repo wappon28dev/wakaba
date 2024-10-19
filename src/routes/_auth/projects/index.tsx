@@ -70,8 +70,8 @@ export const Route = createFileRoute("/_auth/projects/")({
                 w="full"
               >
                 <HStack>
-                  <Icon icon="akar-icons:heart" />
-                  おすすめ
+                  <Icon icon="mdi:thumb-up" />
+                  人気
                 </HStack>
               </Button>
               <Button
@@ -84,7 +84,7 @@ export const Route = createFileRoute("/_auth/projects/")({
                 w="full"
               >
                 <HStack>
-                  <Icon icon="akar-icons:fire" />
+                  <Icon icon="mdi:chart-line-variant" />
                   急上昇
                 </HStack>
               </Button>
@@ -98,8 +98,8 @@ export const Route = createFileRoute("/_auth/projects/")({
                 w="full"
               >
                 <HStack>
-                  <Icon icon="akar-icons:star" />
-                  置き二位入り
+                  <Icon icon="mdi:star-outline" />
+                  お気に入り
                 </HStack>
               </Button>
             </VStack>
