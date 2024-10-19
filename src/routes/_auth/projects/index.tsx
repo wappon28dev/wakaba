@@ -6,6 +6,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { projectsData } from "@/assets/data";
 import { GridLayout } from "@/components/GridLayout";
+import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 import { Button } from "@/components/cva/Button";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/_auth/projects/")({
         <VStack
           bg="wkb-neutral.100"
           display="block"
-          h="100vh"
+          h="full"
           w="500px"
           xlDown={{
             display: "none",
@@ -64,7 +65,7 @@ export const Route = createFileRoute("/_auth/projects/")({
           </p.div>
         </VStack>
 
-        <VStack alignItems="center" w="100%">
+        <VStack alignItems="center" maxW="1200px" w="100dvw">
           <p.div maxW="1200px" w="100dvw">
             <Swiper
               autoplay
@@ -221,6 +222,92 @@ export const Route = createFileRoute("/_auth/projects/")({
               </Tabs.Root>
             </p.div>
           </Flex>
+
+          <VStack
+            display="block"
+            w="100%"
+            xlDown={{
+              display: "none",
+            }}
+            xlTo2xl={{
+              display: "none",
+            }}
+          >
+            <p.div pl={8} py={8} w="100%">
+              <HorizontalScrolling title="おすすめ">
+                <HStack w="100%">
+                  {projectsData.map((_) => (
+                    <p.div key={_.project_id} w="500px">
+                      <ProjectCard
+                        amount_of_money={_.amount_of_money}
+                        key_visual={_.key_visual ?? ""}
+                        location={_.location}
+                        name={_.name}
+                        status={
+                          // eslint-disable-next-line
+                          _.project_id === "1"
+                            ? "tsubomi"
+                            : _.project_id === "7"
+                              ? "hana"
+                              : "wakaba"
+                        }
+                      />
+                    </p.div>
+                  ))}
+                </HStack>
+              </HorizontalScrolling>
+            </p.div>
+
+            <p.div pl={8} py={8} w="100%">
+              <HorizontalScrolling title="急上昇">
+                <HStack w="100%">
+                  {projectsData.map((_) => (
+                    <p.div key={_.project_id} w="500px">
+                      <ProjectCard
+                        amount_of_money={_.amount_of_money}
+                        key_visual={_.key_visual ?? ""}
+                        location={_.location}
+                        name={_.name}
+                        status={
+                          // eslint-disable-next-line
+                          _.project_id === "1"
+                            ? "tsubomi"
+                            : _.project_id === "7"
+                              ? "hana"
+                              : "wakaba"
+                        }
+                      />
+                    </p.div>
+                  ))}
+                </HStack>
+              </HorizontalScrolling>
+            </p.div>
+
+            <p.div pl={8} py={8} w="100%">
+              <HorizontalScrolling title="お気に入り">
+                <HStack w="100%">
+                  {projectsData.map((_) => (
+                    <p.div key={_.project_id} w="500px">
+                      <ProjectCard
+                        amount_of_money={_.amount_of_money}
+                        key_visual={_.key_visual ?? ""}
+                        location={_.location}
+                        name={_.name}
+                        status={
+                          // eslint-disable-next-line
+                          _.project_id === "1"
+                            ? "tsubomi"
+                            : _.project_id === "7"
+                              ? "hana"
+                              : "wakaba"
+                        }
+                      />
+                    </p.div>
+                  ))}
+                </HStack>
+              </HorizontalScrolling>
+            </p.div>
+          </VStack>
         </VStack>
       </HStack>
     );
