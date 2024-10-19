@@ -103,6 +103,66 @@ export const Route = createFileRoute("/_auth/projects/")({
                 </HStack>
               </Button>
             </VStack>
+
+            <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
+              フィルター
+            </p.p>
+            <VStack alignItems="start" p={10}>
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                textAlign="start"
+                w="full"
+              >
+                休憩
+              </Button>
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                textAlign="start"
+                w="full"
+              >
+                環境
+              </Button>
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                textAlign="start"
+                w="full"
+              >
+                飲食
+              </Button>
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                textAlign="start"
+                w="full"
+              >
+                施設
+              </Button>
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                textAlign="start"
+                w="full"
+              >
+                移動
+              </Button>
+              <Button
+                bg="transparent"
+                colorPalette="wkb.bg"
+                fontSize="2xl"
+                textAlign="start"
+                w="full"
+              >
+                その他
+              </Button>
+            </VStack>
           </p.div>
         </VStack>
 
