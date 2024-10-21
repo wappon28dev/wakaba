@@ -1,4 +1,4 @@
-import { Dialog, Portal, Field } from "@ark-ui/react";
+import { Dialog, Portal, Field, DatePicker } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { HStack, styled as p, VStack } from "panda/jsx";
 
@@ -8,6 +8,7 @@ import {
   sponsorsData,
   seedsData,
 } from "@/assets/data";
+import { svaDatePicker } from "@/components/sva/datePicker";
 import { svaDialog } from "@/components/sva/dialog";
 import { svaTextArea } from "@/components/sva/textArea";
 
@@ -72,10 +73,13 @@ type needs = {
       }>
     | undefined;
 };
+
 const textArea = svaTextArea();
+const datePicker = svaDatePicker();
+
 function GridDetailInfo({ data }: { data: needs }): JSX.Element {
   return (
-    <div>
+    <p.div background="white">
       <p.img
         height={200}
         objectFit="cover"
@@ -83,18 +87,211 @@ function GridDetailInfo({ data }: { data: needs }): JSX.Element {
         src={data.key_visual}
         width="100%"
       />
-      <p.h1 fontSize="4xl" fontWeight="bold" p={7}>
-        {data.name}
-      </p.h1>
       <p.div px={10}>
-        <p.p fontSize="xl" pb={5}>
-          プロジェクトの説明
-        </p.p>
-        <Field.Root className={textArea.root}>
-          <Field.Textarea />
-        </Field.Root>
+        <p.h1 fontSize="4xl" fontWeight="bold" py={5}>
+          {data.name}
+        </p.h1>
+        <p.div px={5}>
+          <p.p fontSize="xl" fontWeight="bold">
+            プロジェクトの説明
+          </p.p>
+          <Field.Root className={textArea.root}>
+            <Field.Textarea />
+          </Field.Root>
+          <p.p fontSize="xl" fontWeight="bold" pt={5}>
+            募集終了時期
+          </p.p>
+          <DatePicker.Root className={datePicker.root}>
+            <DatePicker.Control className={datePicker.control}>
+              <DatePicker.Input className={datePicker.input} />
+              <DatePicker.Trigger className={datePicker.trigger}>
+                📅
+              </DatePicker.Trigger>
+              <DatePicker.ClearTrigger className={datePicker.clearTrigger}>
+                Clear
+              </DatePicker.ClearTrigger>
+            </DatePicker.Control>
+            <Portal>
+              <DatePicker.Positioner className={datePicker.positioner}>
+                <DatePicker.Content className={datePicker.content}>
+                  <DatePicker.YearSelect className={datePicker.yearSelect} />
+                  <DatePicker.MonthSelect className={datePicker.monthSelect} />
+                  <DatePicker.View className={datePicker.view} view="day">
+                    <DatePicker.Context>
+                      {(datePickers) => (
+                        <DatePicker.Table className={datePicker.table}>
+                          <DatePicker.TableHead
+                            className={datePicker.tableHead}
+                          >
+                            <DatePicker.TableRow
+                              className={datePicker.tableRow}
+                            >
+                              {datePickers.weekDays.map((weekDay) => (
+                                <DatePicker.TableHeader
+                                  key={weekDay.short}
+                                  className={datePicker.tableHeader}
+                                >
+                                  {weekDay.short}
+                                </DatePicker.TableHeader>
+                              ))}
+                            </DatePicker.TableRow>
+                          </DatePicker.TableHead>
+                          <DatePicker.TableBody
+                            className={datePicker.tableBody}
+                          >
+                            {datePickers.weeks.map((week) => (
+                              <DatePicker.TableRow
+                                key={week[0]?.day ?? "unknown"}
+                                className={datePicker.tableRow}
+                              >
+                                {week.map((day) => (
+                                  <DatePicker.TableCell
+                                    key={day.day}
+                                    className={datePicker.tableCell}
+                                    value={day}
+                                  >
+                                    <DatePicker.TableCellTrigger
+                                      className={datePicker.tableCellTrigger}
+                                    >
+                                      {day.day}
+                                    </DatePicker.TableCellTrigger>
+                                  </DatePicker.TableCell>
+                                ))}
+                              </DatePicker.TableRow>
+                            ))}
+                          </DatePicker.TableBody>
+                        </DatePicker.Table>
+                      )}
+                    </DatePicker.Context>
+                  </DatePicker.View>
+                  <DatePicker.View view="month">
+                    <DatePicker.Context>
+                      {(datePickers) => (
+                        <DatePicker.Table className={datePicker.table}>
+                          <DatePicker.TableBody
+                            className={datePicker.tableBody}
+                          >
+                            {datePickers
+                              .getMonthsGrid({ columns: 4, format: "short" })
+                              .map((months) => (
+                                <DatePicker.TableRow
+                                  key={months[0]?.label ?? "unknown"}
+                                  className={datePicker.tableRow}
+                                >
+                                  {months.map((month) => (
+                                    <DatePicker.TableCell
+                                      key={month.value}
+                                      className={datePicker.tableCell}
+                                      value={month.value}
+                                    >
+                                      <DatePicker.TableCellTrigger
+                                        className={datePicker.tableCellTrigger}
+                                      >
+                                        {month.label}
+                                      </DatePicker.TableCellTrigger>
+                                    </DatePicker.TableCell>
+                                  ))}
+                                </DatePicker.TableRow>
+                              ))}
+                          </DatePicker.TableBody>
+                        </DatePicker.Table>
+                      )}
+                    </DatePicker.Context>
+                  </DatePicker.View>
+                  <DatePicker.View className={datePicker.view} view="year">
+                    <DatePicker.Context>
+                      {(datePickers) => (
+                        <DatePicker.Table className={datePicker.table}>
+                          <DatePicker.TableBody
+                            className={datePicker.tableBody}
+                          >
+                            {datePickers
+                              .getYearsGrid({ columns: 4 })
+                              .map((years) => (
+                                <DatePicker.TableRow
+                                  key={years[0]?.label ?? "unknown"}
+                                  className={datePicker.tableRow}
+                                >
+                                  {years.map((year) => (
+                                    <DatePicker.TableCell
+                                      key={year.value}
+                                      className={datePicker.tableCell}
+                                      value={year.value}
+                                    >
+                                      <DatePicker.TableCellTrigger
+                                        className={datePicker.tableCellTrigger}
+                                      >
+                                        {year.label}
+                                      </DatePicker.TableCellTrigger>
+                                    </DatePicker.TableCell>
+                                  ))}
+                                </DatePicker.TableRow>
+                              ))}
+                          </DatePicker.TableBody>
+                        </DatePicker.Table>
+                      )}
+                    </DatePicker.Context>
+                  </DatePicker.View>
+                </DatePicker.Content>
+              </DatePicker.Positioner>
+            </Portal>
+          </DatePicker.Root>
+          <p.p fontSize="xl" fontWeight="bold" pt={5}>
+            建築予定地
+          </p.p>
+          <Field.Root className={textArea.root}>
+            <Field.Input />
+          </Field.Root>
+          <p.p fontSize="xl" fontWeight="bold" pt={5}>
+            モチベーション
+          </p.p>
+          <Field.Root className={textArea.root}>
+            <Field.Textarea />
+          </Field.Root>
+        </p.div>
       </p.div>
-    </div>
+      <p.div background="wkb-neutral.100" height={1000} mt={50} p={10}>
+        <p.h1 fontSize="4xl" fontWeight="bold">
+          返礼品
+        </p.h1>
+        <p.div
+          display="grid"
+          gap={5}
+          gridTemplateColumns={{
+            base: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          }}
+          p={5}
+        >
+          {["1000円プラン", "3000円プラン", "5000円プラン"].map((plan) => (
+            <p.div
+              key={plan}
+              background="white"
+              borderRadius="md"
+              p={4}
+              shadow="md"
+            >
+              <p.p color="wkb.primary" fontSize="xl" fontWeight="bold" pb={3}>
+                {plan}
+              </p.p>
+              <p.div>
+                <p.p fontSize="md">タイトル</p.p>
+                <Field.Root className={textArea.root}>
+                  <Field.Input />
+                </Field.Root>
+                <p.p fontSize="md" py={2}>
+                  説明
+                </p.p>
+                <Field.Root className={textArea.root}>
+                  <Field.Textarea />
+                </Field.Root>
+              </p.div>
+            </p.div>
+          ))}
+        </p.div>
+      </p.div>
+    </p.div>
   );
 }
 
@@ -103,7 +300,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
     const { uuid } = Route.useParams();
     const dialog = svaDialog();
     const data2 = projectsData.find((_) => _.project_id === uuid);
-    if (data2 === undefined) throw new Error("No data2 found");
+    if (data2 === undefined) throw new Error("No data found");
 
     const data3 = sponsorDataData.find(
       (_) => _.project_id === data2.project_id,
@@ -115,7 +312,8 @@ export const Route = createFileRoute("/company-form/$uuid")({
       const seed = seedsData.find((_) => _.seed_id === String(s));
       return seed;
     });
-    if (data5 === undefined) throw new Error("No data5 found");
+    if (data5 === undefined) throw new Error("No seeds found");
+
     const data: needs = {
       amount_of_money: data2.amount_of_money,
       created_at: data2.created_at,
@@ -124,13 +322,11 @@ export const Route = createFileRoute("/company-form/$uuid")({
       name: data2.name,
       project_id: data2.project_id,
       sponsor_data_id: "1",
-      status:
-        // eslint-disable-next-line no-nested-ternary
-        data2.project_id === "1"
-          ? "tsubomi"
-          : data2.project_id === "7"
-            ? "hana"
-            : "wakaba",
+      status: (() => {
+        if (data2.project_id === "1") return "tsubomi";
+        if (data2.project_id === "7") return "hana";
+        return "wakaba";
+      })(),
       description: data2.description,
       location: data2.location,
       sponsor: data4,

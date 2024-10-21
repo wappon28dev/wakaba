@@ -22,7 +22,6 @@ export const svaTextArea = sva({
       padding: "1rem",
       backgroundColor: "gray.200",
       borderRadius: "md",
-      boxShadow: "md",
     },
     textarea: {
       p: "2",
