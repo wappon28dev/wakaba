@@ -10,7 +10,8 @@ export function GridLayout({
     <p.div
       display="grid"
       gap={4}
-      gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+      gridTemplateColumns="repeat(auto-fill, minmax(600px, 1fr))"
+      smDown={{ gridTemplateColumns: "1fr" }}
     >
       {children}
     </p.div>

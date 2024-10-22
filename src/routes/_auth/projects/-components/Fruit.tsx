@@ -41,10 +41,6 @@ export function FruitCard({
         {description}
       </p.p>
       <Button
-        _hover={{
-          transform: "scale(1.05)",
-          transition: "transform 0.1s",
-        }}
         alignSelf="end"
         variant="filled"
       >
