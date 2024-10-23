@@ -1,6 +1,7 @@
-import { Dialog, Portal, Field, DatePicker } from "@ark-ui/react";
+import { Dialog, Portal, Field, DatePicker, NumberInput } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { HStack, styled as p, VStack } from "panda/jsx";
+import { useForm } from "react-hook-form";
 
 import {
   projectsData,
@@ -10,6 +11,7 @@ import {
 } from "@/assets/data";
 import { svaDatePicker } from "@/components/sva/datePicker";
 import { svaDialog } from "@/components/sva/dialog";
+import { svaNumberInput } from "@/components/sva/numberInput";
 import { svaTextArea } from "@/components/sva/textArea";
 
 type needs = {
@@ -76,6 +78,7 @@ type needs = {
 
 const textArea = svaTextArea();
 const datePicker = svaDatePicker();
+const numberInput = svaNumberInput();
 
 function GridDetailInfo({ data }: { data: needs }): JSX.Element {
   return (
@@ -91,169 +94,246 @@ function GridDetailInfo({ data }: { data: needs }): JSX.Element {
         <p.h1 fontSize="4xl" fontWeight="bold" py={5}>
           {data.name}
         </p.h1>
+
         <p.div px={5}>
-          <p.p fontSize="xl" fontWeight="bold">
-            プロジェクトの説明
-          </p.p>
-          <Field.Root className={textArea.root}>
-            <Field.Textarea />
-          </Field.Root>
-          <p.p fontSize="xl" fontWeight="bold" pt={5}>
-            募集終了時期
-          </p.p>
-          <DatePicker.Root className={datePicker.root}>
-            <DatePicker.Control className={datePicker.control}>
-              <DatePicker.Input className={datePicker.input} />
-              <DatePicker.Trigger className={datePicker.trigger}>
-                📅
-              </DatePicker.Trigger>
-              <DatePicker.ClearTrigger className={datePicker.clearTrigger}>
-                Clear
-              </DatePicker.ClearTrigger>
-            </DatePicker.Control>
-            <Portal>
-              <DatePicker.Positioner className={datePicker.positioner}>
-                <DatePicker.Content className={datePicker.content}>
-                  <DatePicker.YearSelect className={datePicker.yearSelect} />
-                  <DatePicker.MonthSelect className={datePicker.monthSelect} />
-                  <DatePicker.View className={datePicker.view} view="day">
-                    <DatePicker.Context>
-                      {(datePickers) => (
-                        <DatePicker.Table className={datePicker.table}>
-                          <DatePicker.TableHead
-                            className={datePicker.tableHead}
-                          >
-                            <DatePicker.TableRow
-                              className={datePicker.tableRow}
-                            >
-                              {datePickers.weekDays.map((weekDay) => (
-                                <DatePicker.TableHeader
-                                  key={weekDay.short}
-                                  className={datePicker.tableHeader}
-                                >
-                                  {weekDay.short}
-                                </DatePicker.TableHeader>
-                              ))}
-                            </DatePicker.TableRow>
-                          </DatePicker.TableHead>
-                          <DatePicker.TableBody
-                            className={datePicker.tableBody}
-                          >
-                            {datePickers.weeks.map((week) => (
-                              <DatePicker.TableRow
-                                key={week[0]?.day ?? "unknown"}
-                                className={datePicker.tableRow}
+          <p.div py={5}>
+            <p.p display="inline" fontSize="xl" fontWeight="bold">
+              プロジェクトの説明
+            </p.p>
+            <p.p
+              color="red.500"
+              display="inline"
+              fontSize="xl"
+              fontWeight="none"
+              pl={1}
+            >
+              ※
+            </p.p>
+            <Field.Root className={textArea.root}>
+              <Field.Textarea />
+            </Field.Root>
+          </p.div>
+          <p.div
+            display="grid"
+            gap={5}
+            gridTemplateColumns={{
+              md: "repeat(1, 1fr)",
+              lg: "repeat(2, 1fr)",
+            }}
+          >
+            <p.div py={5}>
+              <p.p display="inline" fontSize="xl" fontWeight="bold" pt={5}>
+                募集終了時期
+              </p.p>
+              <p.p
+                color="red.500"
+                display="inline"
+                fontSize="xl"
+                fontWeight="none"
+                pl={1}
+              >
+                ※
+              </p.p>
+
+              <DatePicker.Root className={datePicker.root}>
+                <DatePicker.Control className={datePicker.control}>
+                  <DatePicker.Input className={datePicker.input} />
+                  <DatePicker.Trigger className={datePicker.trigger}>
+                    📅
+                  </DatePicker.Trigger>
+                  <DatePicker.ClearTrigger className={datePicker.clearTrigger}>
+                    Clear
+                  </DatePicker.ClearTrigger>
+                </DatePicker.Control>
+                <Portal>
+                  <DatePicker.Positioner className={datePicker.positioner}>
+                    <DatePicker.Content className={datePicker.content}>
+                      <DatePicker.YearSelect
+                        className={datePicker.yearSelect}
+                      />
+                      <DatePicker.MonthSelect
+                        className={datePicker.monthSelect}
+                      />
+                      <DatePicker.View className={datePicker.view} view="day">
+                        <DatePicker.Context>
+                          {(datePickers) => (
+                            <DatePicker.Table className={datePicker.table}>
+                              <DatePicker.TableHead
+                                className={datePicker.tableHead}
                               >
-                                {week.map((day) => (
-                                  <DatePicker.TableCell
-                                    key={day.day}
-                                    className={datePicker.tableCell}
-                                    value={day}
+                                <DatePicker.TableRow
+                                  className={datePicker.tableRow}
+                                >
+                                  {datePickers.weekDays.map((weekDay) => (
+                                    <DatePicker.TableHeader
+                                      key={weekDay.short}
+                                      className={datePicker.tableHeader}
+                                    >
+                                      {weekDay.short}
+                                    </DatePicker.TableHeader>
+                                  ))}
+                                </DatePicker.TableRow>
+                              </DatePicker.TableHead>
+                              <DatePicker.TableBody
+                                className={datePicker.tableBody}
+                              >
+                                {datePickers.weeks.map((week) => (
+                                  <DatePicker.TableRow
+                                    key={week[0]?.day ?? "unknown"}
+                                    className={datePicker.tableRow}
                                   >
-                                    <DatePicker.TableCellTrigger
-                                      className={datePicker.tableCellTrigger}
-                                    >
-                                      {day.day}
-                                    </DatePicker.TableCellTrigger>
-                                  </DatePicker.TableCell>
+                                    {week.map((day) => (
+                                      <DatePicker.TableCell
+                                        key={day.day}
+                                        className={datePicker.tableCell}
+                                        value={day}
+                                      >
+                                        <DatePicker.TableCellTrigger
+                                          className={
+                                            datePicker.tableCellTrigger
+                                          }
+                                        >
+                                          {day.day}
+                                        </DatePicker.TableCellTrigger>
+                                      </DatePicker.TableCell>
+                                    ))}
+                                  </DatePicker.TableRow>
                                 ))}
-                              </DatePicker.TableRow>
-                            ))}
-                          </DatePicker.TableBody>
-                        </DatePicker.Table>
-                      )}
-                    </DatePicker.Context>
-                  </DatePicker.View>
-                  <DatePicker.View view="month">
-                    <DatePicker.Context>
-                      {(datePickers) => (
-                        <DatePicker.Table className={datePicker.table}>
-                          <DatePicker.TableBody
-                            className={datePicker.tableBody}
-                          >
-                            {datePickers
-                              .getMonthsGrid({ columns: 4, format: "short" })
-                              .map((months) => (
-                                <DatePicker.TableRow
-                                  key={months[0]?.label ?? "unknown"}
-                                  className={datePicker.tableRow}
-                                >
-                                  {months.map((month) => (
-                                    <DatePicker.TableCell
-                                      key={month.value}
-                                      className={datePicker.tableCell}
-                                      value={month.value}
+                              </DatePicker.TableBody>
+                            </DatePicker.Table>
+                          )}
+                        </DatePicker.Context>
+                      </DatePicker.View>
+                      <DatePicker.View view="month">
+                        <DatePicker.Context>
+                          {(datePickers) => (
+                            <DatePicker.Table className={datePicker.table}>
+                              <DatePicker.TableBody
+                                className={datePicker.tableBody}
+                              >
+                                {datePickers
+                                  .getMonthsGrid({
+                                    columns: 4,
+                                    format: "short",
+                                  })
+                                  .map((months) => (
+                                    <DatePicker.TableRow
+                                      key={months[0]?.label ?? "unknown"}
+                                      className={datePicker.tableRow}
                                     >
-                                      <DatePicker.TableCellTrigger
-                                        className={datePicker.tableCellTrigger}
-                                      >
-                                        {month.label}
-                                      </DatePicker.TableCellTrigger>
-                                    </DatePicker.TableCell>
+                                      {months.map((month) => (
+                                        <DatePicker.TableCell
+                                          key={month.value}
+                                          className={datePicker.tableCell}
+                                          value={month.value}
+                                        >
+                                          <DatePicker.TableCellTrigger
+                                            className={
+                                              datePicker.tableCellTrigger
+                                            }
+                                          >
+                                            {month.label}
+                                          </DatePicker.TableCellTrigger>
+                                        </DatePicker.TableCell>
+                                      ))}
+                                    </DatePicker.TableRow>
                                   ))}
-                                </DatePicker.TableRow>
-                              ))}
-                          </DatePicker.TableBody>
-                        </DatePicker.Table>
-                      )}
-                    </DatePicker.Context>
-                  </DatePicker.View>
-                  <DatePicker.View className={datePicker.view} view="year">
-                    <DatePicker.Context>
-                      {(datePickers) => (
-                        <DatePicker.Table className={datePicker.table}>
-                          <DatePicker.TableBody
-                            className={datePicker.tableBody}
-                          >
-                            {datePickers
-                              .getYearsGrid({ columns: 4 })
-                              .map((years) => (
-                                <DatePicker.TableRow
-                                  key={years[0]?.label ?? "unknown"}
-                                  className={datePicker.tableRow}
-                                >
-                                  {years.map((year) => (
-                                    <DatePicker.TableCell
-                                      key={year.value}
-                                      className={datePicker.tableCell}
-                                      value={year.value}
+                              </DatePicker.TableBody>
+                            </DatePicker.Table>
+                          )}
+                        </DatePicker.Context>
+                      </DatePicker.View>
+                      <DatePicker.View className={datePicker.view} view="year">
+                        <DatePicker.Context>
+                          {(datePickers) => (
+                            <DatePicker.Table className={datePicker.table}>
+                              <DatePicker.TableBody
+                                className={datePicker.tableBody}
+                              >
+                                {datePickers
+                                  .getYearsGrid({ columns: 4 })
+                                  .map((years) => (
+                                    <DatePicker.TableRow
+                                      key={years[0]?.label ?? "unknown"}
+                                      className={datePicker.tableRow}
                                     >
-                                      <DatePicker.TableCellTrigger
-                                        className={datePicker.tableCellTrigger}
-                                      >
-                                        {year.label}
-                                      </DatePicker.TableCellTrigger>
-                                    </DatePicker.TableCell>
+                                      {years.map((year) => (
+                                        <DatePicker.TableCell
+                                          key={year.value}
+                                          className={datePicker.tableCell}
+                                          value={year.value}
+                                        >
+                                          <DatePicker.TableCellTrigger
+                                            className={
+                                              datePicker.tableCellTrigger
+                                            }
+                                          >
+                                            {year.label}
+                                          </DatePicker.TableCellTrigger>
+                                        </DatePicker.TableCell>
+                                      ))}
+                                    </DatePicker.TableRow>
                                   ))}
-                                </DatePicker.TableRow>
-                              ))}
-                          </DatePicker.TableBody>
-                        </DatePicker.Table>
-                      )}
-                    </DatePicker.Context>
-                  </DatePicker.View>
-                </DatePicker.Content>
-              </DatePicker.Positioner>
-            </Portal>
-          </DatePicker.Root>
-          <p.p fontSize="xl" fontWeight="bold" pt={5}>
-            建築予定地
-          </p.p>
-          <Field.Root className={textArea.root}>
-            <Field.Input />
-          </Field.Root>
-          <p.p fontSize="xl" fontWeight="bold" pt={5}>
-            モチベーション
-          </p.p>
-          <Field.Root className={textArea.root}>
-            <Field.Textarea />
-          </Field.Root>
+                              </DatePicker.TableBody>
+                            </DatePicker.Table>
+                          )}
+                        </DatePicker.Context>
+                      </DatePicker.View>
+                    </DatePicker.Content>
+                  </DatePicker.Positioner>
+                </Portal>
+              </DatePicker.Root>
+            </p.div>
+            <p.div py={5}>
+              <p.p display="inline" fontSize="xl" fontWeight="bold">
+                建築予定地
+              </p.p>
+              <p.p
+                color="red.500"
+                display="inline"
+                fontSize="xl"
+                fontWeight="none"
+                pl={1}
+              >
+                ※
+              </p.p>
+              <Field.Root className={textArea.root}>
+                <Field.Input />
+              </Field.Root>
+            </p.div>
+          </p.div>
+          <p.div py={5}>
+            <p.p display="inline" fontSize="xl" fontWeight="bold">
+              モチベーション
+            </p.p>
+            <p.p
+              color="red.500"
+              display="inline"
+              fontSize="xl"
+              fontWeight="none"
+              pl={1}
+            >
+              ※
+            </p.p>
+            <Field.Root className={textArea.root}>
+              <Field.Textarea />
+            </Field.Root>
+          </p.div>
         </p.div>
       </p.div>
-      <p.div background="wkb-neutral.100" height={1000} mt={50} p={10}>
-        <p.h1 fontSize="4xl" fontWeight="bold">
+      <p.div background="wkb-neutral.100" mt={50} p={10}>
+        <p.h1 display="inline" fontSize="4xl" fontWeight="bold">
           返礼品
         </p.h1>
+        <p.p
+          color="red.500"
+          display="inline"
+          fontSize="xl"
+          fontWeight="none"
+          pl={1}
+        >
+          ※
+        </p.p>
         <p.div
           display="grid"
           gap={5}
@@ -272,7 +352,13 @@ function GridDetailInfo({ data }: { data: needs }): JSX.Element {
               p={4}
               shadow="md"
             >
-              <p.p color="wkb.primary" fontSize="xl" fontWeight="bold" pb={3}>
+              <p.p
+                color="wkb.primary"
+                fontSize="2xl"
+                fontWeight="bold"
+                pb={10}
+                pt={3}
+              >
                 {plan}
               </p.p>
               <p.div>
@@ -280,7 +366,7 @@ function GridDetailInfo({ data }: { data: needs }): JSX.Element {
                 <Field.Root className={textArea.root}>
                   <Field.Input />
                 </Field.Root>
-                <p.p fontSize="md" py={2}>
+                <p.p fontSize="md" pb={2} pt={10}>
                   説明
                 </p.p>
                 <Field.Root className={textArea.root}>
@@ -289,6 +375,21 @@ function GridDetailInfo({ data }: { data: needs }): JSX.Element {
               </p.div>
             </p.div>
           ))}
+        </p.div>
+      </p.div>
+      <p.div background="wkb.primary">
+        <p.div px={10}>
+          <p.h1 color="wkb.bg" fontSize="4xl" fontWeight="bold" pb={5} pt={16}>
+            目標金額
+          </p.h1>
+          <p.div pb={20} px={5}>
+            <NumberInput.Root className={numberInput.root}>
+              <NumberInput.Input className={numberInput.input} />
+              <p.p fontSize="2xl" fontWeight="bold" pl={3} pr={5}>
+                円
+              </p.p>
+            </NumberInput.Root>
+          </p.div>
         </p.div>
       </p.div>
     </p.div>
@@ -350,53 +451,57 @@ export const Route = createFileRoute("/company-form/$uuid")({
     return (
       <p.div>
         <GridDetailInfo data={data} />
-        <Dialog.Root>
-          <Dialog.Trigger className={dialog.trigger}>
-            <HStack
-              _hover={{
-                transform: "scale(1.05)",
-                transition: "transform 0.1s",
-              }}
-              alignContent="center"
-              bg="wkb.primary"
-              color="wkb-neutral.0"
-              display="flex"
-              justify="center"
-              mb={4}
-              p={2}
-              rounded="md"
-            >
-              <VStack alignItems="start" gap={0}>
-                <p.p fontWeight="bold">変更を適用</p.p>
-              </VStack>
-            </HStack>
-          </Dialog.Trigger>
-          <Portal>
-            <Dialog.Backdrop className={dialog.backdrop} />
-            <Dialog.Positioner>
-              <Dialog.Content className={dialog.content}>
+        <p.div py={20}>
+          <Dialog.Root>
+            <p.div display="flex" justifyContent="center">
+              <Dialog.Trigger className={dialog.trigger}>
                 <HStack
+                  _hover={{
+                    transform: "scale(1.05)",
+                    transition: "transform 0.1s",
+                  }}
                   alignContent="center"
+                  bg="wkb.primary"
+                  color="wkb-neutral.0"
                   display="flex"
                   justify="center"
-                  maxH="70%"
-                  maxW="70%"
-                  minH={300}
-                  minW={300}
+                  mb={4}
+                  p={2}
                   rounded="md"
                 >
-                  <p.img rounded="full" w={50} />
-                  <VStack alignItems="start" gap={0}>
-                    <p.p fontWeight="bold">{data.sponsor?.name}</p.p>
-                    <p.div px={2}>
-                      <p.p fontSize="xs">{data.sponsor_data?.motivation}</p.p>
-                    </p.div>
-                  </VStack>
+                  <p.p fontSize="2xl" fontWeight="bold">
+                    変更を適用
+                  </p.p>
                 </HStack>
-              </Dialog.Content>
-            </Dialog.Positioner>
-          </Portal>
-        </Dialog.Root>
+              </Dialog.Trigger>
+            </p.div>
+            <Portal>
+              <Dialog.Backdrop className={dialog.backdrop} />
+              <Dialog.Positioner>
+                <Dialog.Content className={dialog.content}>
+                  <HStack
+                    alignContent="center"
+                    display="flex"
+                    justify="center"
+                    maxH="90%"
+                    maxW="90%"
+                    minH={300}
+                    minW={300}
+                    rounded="md"
+                  >
+                    <p.img rounded="full" w={50} />
+                    <VStack alignItems="start" gap={0}>
+                      <p.p fontWeight="bold">{data.sponsor?.name}</p.p>
+                      <p.div px={2}>
+                        <p.p fontSize="xs">{data.sponsor_data?.motivation}</p.p>
+                      </p.div>
+                    </VStack>
+                  </HStack>
+                </Dialog.Content>
+              </Dialog.Positioner>
+            </Portal>
+          </Dialog.Root>
+        </p.div>
       </p.div>
     );
   },
