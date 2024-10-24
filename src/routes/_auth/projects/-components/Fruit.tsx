@@ -40,10 +40,7 @@ export function FruitCard({
       <p.p color="wkb-neutral.700" fontSize="sm">
         {description}
       </p.p>
-      <Button
-        alignSelf="end"
-        variant="filled"
-      >
+      <Button alignSelf="end" variant="filled">
         支援する
       </Button>
     </VStack>
