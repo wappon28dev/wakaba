@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import wakaba from "@/assets/svg/background/wakaba.svg";
 import { Button } from "@/components/cva/Button";
 import { svaField } from "@/components/sva/field";
 import { fetchAddressFromLocation } from "@/lib/services/address";
@@ -61,7 +62,7 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
     const onSubmit = (data: IFormInput): void => {
       let hasError = false;
 
-      if ((data.category_id.length === 0) || data.category_id.length === 0) {
+      if (data.category_id.length === 0 || data.category_id.length === 0) {
         toaster.error({
           id: "category-error",
           title: "エラー",
@@ -83,7 +84,6 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
 
       if (hasError) return;
 
-      console.log("フォームデータ:", data);
       reset();
       toaster.success({
         id: "login-success",
@@ -93,7 +93,15 @@ export const Route = createFileRoute("/_auth/seeds/new/")({
     };
 
     return (
-      <p.div>
+      <p.div
+        style={{
+          backgroundImage: `url(${wakaba})`,
+          backgroundSize: "200px",
+          backgroundPosition: "90% bottom",
+          backgroundRepeat: "no-repeat",
+        }}
+        width="100%"
+      >
         <p.div py={50}>
           <p.div p={30}>
             <p.h2
