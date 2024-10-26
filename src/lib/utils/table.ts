@@ -12,8 +12,10 @@ import {
   type TableSchemaOf,
   type TableConfig,
   type TableError,
+  type TableConfigOf,
+  type TableBrandedId,
+  type TableResult,
 } from "@/types/table";
-import { type Brand } from "@/types/utils";
 
 // https://postgrest.org/en/stable/references/errors.html#group-1-api-request
 export const queryErrorCode = {
@@ -22,12 +24,13 @@ export const queryErrorCode = {
 };
 
 export abstract class Table<
+  Config extends TableConfig,
   Schema extends object,
   SchemaResolved extends object = Schema,
 > {
   constructor(
     public data: Schema,
-    protected config: TableConfig,
+    protected config: Config,
   ) {}
 
   public resolveRelations?(): ResultAsync<SchemaResolved, TableError>;
@@ -93,14 +96,14 @@ export abstract class Table<
   protected transform = Table.transform;
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  static getFactories<T extends Table<any, any>, C extends TableConfig>(
+  static getFactories<T extends Table<any, any>>(
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     this: void,
     TableClass: new (data: TableSchemaOf<T>) => T,
-    config: C,
+    config: TableConfigOf<T>,
   ) {
     return {
-      fetchAll: (): ResultAsync<T[], TableError> =>
+      fetchAll: (): TableResult<T[]> =>
         ResultAsync.fromSafePromise(supabase.from(config.tableName).select())
           .andThen(Table.transform)
           .map((data) => data.map((d) => new TableClass(d as TableSchemaOf<T>)))
@@ -108,9 +111,7 @@ export abstract class Table<
             Table.transformError(config, "factories.fetchAll", error),
           ),
 
-      from: (
-        id: Brand<string, C["primaryKeyName"]>,
-      ): ResultAsync<T, TableError> =>
+      from: (id: TableBrandedId<T>): TableResult<T> =>
         ResultAsync.fromSafePromise(
           supabase
             .from(config.tableName)

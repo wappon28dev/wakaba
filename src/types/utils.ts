@@ -31,3 +31,10 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
   // eslint-disable-next-line @typescript-eslint/ban-types
 } & {};
+
+export type OptionalKeys<T> = Exclude<
+  {
+    [K in keyof T]: object extends { [P in K]: T[K] } ? K : never;
+  }[keyof T],
+  undefined
+>;

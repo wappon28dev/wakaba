@@ -7,7 +7,7 @@ import {
   type Table2schema,
   type TableConfig,
   type TableSchemaOf,
-  type TableError,
+  type TableResult,
 } from "@/types/table";
 
 const config = {
@@ -27,14 +27,14 @@ type SchemaResolved = Schema & {
   sponsor: Sponsor;
 };
 
-export class SponsorData extends Table<Schema, SchemaResolved> {
+export class SponsorData extends Table<typeof config, Schema, SchemaResolved> {
   constructor(data: Schema) {
     super(data, config);
   }
 
-  static factories = this.getFactories(Sponsor, config);
+  static factories = this.getFactories(SponsorData, config);
 
-  public override resolveRelations(): ResultAsync<SchemaResolved, TableError> {
+  public override resolveRelations(): TableResult<SchemaResolved> {
     return ResultAsync.fromSafePromise(
       supabase
         .from(config.tableName)

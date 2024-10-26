@@ -7,7 +7,7 @@ import {
   type Table2schema,
   type TableConfig,
   type TableSchemaOf,
-  type TableError,
+  type TableResult,
 } from "@/types/table";
 import { type Override } from "@/types/utils";
 
@@ -45,14 +45,14 @@ type SchemaResolved = Override<
   }
 >;
 
-export class Seed extends Table<Schema, SchemaResolved> {
+export class Seed extends Table<typeof config, Schema, SchemaResolved> {
   constructor(data: Schema) {
     super(data, config);
   }
 
   static factories = Table.getFactories(Seed, config);
 
-  public override resolveRelations(): ResultAsync<SchemaResolved, TableError> {
+  public override resolveRelations(): TableResult<SchemaResolved> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("seeds")

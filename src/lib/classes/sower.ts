@@ -6,9 +6,11 @@ import {
   type UserId,
   type TableSchemaOf,
   type Table2schema,
-  type TableError,
+  type TableResult,
+  type TableInsertOf,
+  type TableBrandedId,
 } from "@/types/table";
-import { type Override, type OmitStrict } from "@/types/utils";
+import { type Override } from "@/types/utils";
 
 const config = {
   className: "Sower",
@@ -21,17 +23,35 @@ type Schema = Override<
   Table2schema<typeof config>,
   {
     user_id: UserId;
+    sower_id: TableBrandedId<Sower>;
   }
 >;
 
-export class Sower extends Table<Schema> {
+export class Sower extends Table<typeof config, Schema> {
   constructor(data: Schema) {
     super(data, config);
   }
 
-  static factories = this.getFactories(Sower, config);
+  static factories = {
+    ...this.getFactories(Sower, config),
+    fromUser(userId: UserId): TableResult<Sower> {
+      return ResultAsync.fromSafePromise(
+        supabase
+          .from("sowers")
+          .select()
+          .eq("user_id", userId)
+          .returns<TableSchemaOf<Sower>>()
+          .single(),
+      )
+        .andThen(Table.transform)
+        .map((data) => new Sower(data))
+        .mapErr((error) =>
+          Table.transformError(config, "factories.fromUser", error),
+        );
+    },
+  };
 
-  public fetchOwnSeeds(): ResultAsync<Seed[], TableError> {
+  public fetchOwnSeeds(): TableResult<Seed[]> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("seeds")
@@ -48,15 +68,13 @@ export class Sower extends Table<Schema> {
       .mapErr(this.transformError("fetchOwnSeeds"));
   }
 
-  public sowSeed(
-    sowData: OmitStrict<Seed["data"], "sower_id">,
-  ): ResultAsync<Seed, TableError> {
+  public sowSeed(sowData: TableInsertOf<Seed>): TableResult<Seed> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("seeds")
         .insert({
-          sower_id: this.data.sower_id,
           ...sowData,
+          sower_id: this.data.sower_id,
         })
         .select()
         .returns<TableSchemaOf<Seed>>()

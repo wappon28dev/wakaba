@@ -25,7 +25,7 @@ type Schema = Override<
   }
 >;
 
-export class Territory extends Table<Schema> {
+export class Territory extends Table<typeof config, Schema> {
   constructor(data: Schema) {
     super(data, config);
   }

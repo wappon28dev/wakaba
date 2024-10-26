@@ -9,14 +9,13 @@ import { S } from "@/lib/utils/patterns";
 import { Table } from "@/lib/utils/table";
 import { notifyErrorInToast, toaster } from "@/lib/utils/toast";
 import { type UserMetadata } from "@/types/auth";
-import { type TablesInsert } from "@/types/supabase.gen";
 import {
   type UserId,
   type TableSchemaOf,
   type TableConfig,
-  type TableError,
+  type TableResult,
+  type TableInsertOf,
 } from "@/types/table";
-import { type OmitStrict } from "@/types/utils";
 
 const config = {
   className: "User",
@@ -58,15 +57,13 @@ export class User {
     });
   }
 
-  public registerAsASower(
-    sowerData: OmitStrict<TablesInsert<"sowers">, "user_id">,
-  ): ResultAsync<Sower, TableError> {
+  public registerAsASower(sowerData: TableInsertOf<Sower>): TableResult<Sower> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("sowers")
         .insert({
-          user_id: this.id,
           ...sowerData,
+          user_id: this.id,
         })
         .select()
         .single(),
@@ -79,14 +76,14 @@ export class User {
   }
 
   public registerAsASponsor(
-    sponsorData: OmitStrict<TablesInsert<"sponsors">, "user_id">,
-  ): ResultAsync<Sponsor, TableError> {
+    sponsorData: TableInsertOf<Sponsor>,
+  ): TableResult<Sponsor> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("sponsors")
         .insert({
-          user_id: this.id,
           ...sponsorData,
+          user_id: this.id,
         })
         .select()
         .single(),
@@ -95,6 +92,17 @@ export class User {
       .map((data) => new Sponsor(data as TableSchemaOf<Sponsor>))
       .mapErr((error) =>
         Table.transformError(config, "registerAsASponsor", error),
+      );
+  }
+
+  public fetchOwnComments(): TableResult<Comment[]> {
+    return ResultAsync.fromSafePromise(
+      supabase.from("comments").select().eq("user_id", this.id).select(),
+    )
+      .andThen(Table.transform)
+      .map((data) => data.map((d) => new Comment(d as TableSchemaOf<Comment>)))
+      .mapErr((error) =>
+        Table.transformError(config, "fetchOwnComments", error),
       );
   }
 }

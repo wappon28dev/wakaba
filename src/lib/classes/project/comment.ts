@@ -6,7 +6,7 @@ import {
   type TableSchemaOf,
   type TableConfig,
   type Table2schema,
-  type TableError,
+  type TableResult,
 } from "@/types/table";
 
 const config = {
@@ -24,14 +24,14 @@ type SchemaResolved = Schema & {
   project: Project;
 };
 
-export class Comment extends Table<Schema, SchemaResolved> {
+export class Comment extends Table<typeof config, Schema, SchemaResolved> {
   constructor(data: Schema) {
     super(data, config);
   }
 
   static factories = Table.getFactories(Comment, config);
 
-  public override resolveRelations(): ResultAsync<SchemaResolved, TableError> {
+  public override resolveRelations(): TableResult<SchemaResolved> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("comments")

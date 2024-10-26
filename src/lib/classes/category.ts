@@ -10,7 +10,7 @@ const config = {
 
 type Schema = Table2schema<typeof config>;
 
-export class Category extends Table<Schema> {
+export class Category extends Table<typeof config, Schema> {
   constructor(data: Schema) {
     super(data, config);
   }
