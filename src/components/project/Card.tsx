@@ -82,8 +82,8 @@ export function ProjectCard({
           .with(S.Error, ({ error }) => {
             notifyErrorInToast(
               "swrLocation",
-              "住所の取得中にエラーが発生しました",
               new Error(error as string),
+              "住所の取得中にエラーが発生しました",
             );
             return (
               <p.p color="wkb.secondary">

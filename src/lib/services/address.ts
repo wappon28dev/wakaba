@@ -1,7 +1,4 @@
-import {
-  fetchResultWithError,
-  type RequestResultWithError,
-} from "@/lib/utils/fetch";
+import { fetchResultWithError, type RequestResult } from "@/lib/utils/fetch";
 
 type Param = {
   lat: number;
@@ -133,15 +130,15 @@ type APIError = {
   };
 };
 
-export async function fetchAddressFromLocation(
+export function fetchAddressFromLocation(
   param: Param,
-): Promise<RequestResultWithError<Response, APIError>> {
+): RequestResult<Response, APIError> {
   const searchParams = new URLSearchParams({
     lat: param.lat.toString(),
     lon: param.lon.toString(),
   });
 
-  return await fetchResultWithError<Response, APIError>(
+  return fetchResultWithError<Response, APIError>(
     `/address?${searchParams.toString()}`,
   );
 }
