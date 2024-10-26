@@ -221,6 +221,7 @@ function GridDetailInfo({
                 icon={ICON[data.status]}
                 justifyContent="center"
               >
+                {}
                 この {getCapitalizedStr(data.status)} を支援する
               </IconText>
             </Button>
@@ -354,7 +355,7 @@ function GridDetailInfo({
     .otherwise(({ error }) => <p.p>{error.Error.Message}</p.p>);
 }
 
-export const Route = createFileRoute("/_auth/projects/$uuid")({
+export const Route = createFileRoute("/projects/$uuid")({
   component: () => {
     const { uuid } = Route.useParams();
     const scrollRef = useRef<HTMLDivElement>(null);

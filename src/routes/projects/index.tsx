@@ -316,7 +316,7 @@ function ProjectsTabs(): ReactElement {
   );
 }
 
-export const Route = createFileRoute("/_auth/projects/")({
+export const Route = createFileRoute("/projects/")({
   component: () => {
     const scrollRecommendRef = useRef<HTMLDivElement>(null);
     const scrollTrendingRef = useRef<HTMLDivElement>(null);
