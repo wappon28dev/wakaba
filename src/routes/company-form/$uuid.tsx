@@ -1,6 +1,6 @@
 import { Dialog, Portal, Field, DatePicker, NumberInput } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { HStack, styled as p, VStack } from "panda/jsx";
+import { HStack, styled as p } from "panda/jsx";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
@@ -10,8 +10,9 @@ import {
   sponsorsData,
   seedsData,
 } from "@/assets/data";
+import { Button } from "@/components/cva/Button";
 import { svaDatePicker } from "@/components/sva/datePicker";
-import { svaDialog } from "@/components/sva/dialog";
+import { svaFormDialog } from "@/components/sva/formDialog";
 import { svaNumberInput } from "@/components/sva/numberInput";
 import { svaTextArea } from "@/components/sva/textArea";
 
@@ -84,7 +85,7 @@ const numberInput = svaNumberInput();
 export const Route = createFileRoute("/company-form/$uuid")({
   component: () => {
     const { uuid } = Route.useParams();
-    const dialog = svaDialog();
+    const dialog = svaFormDialog();
     const data2 = projectsData.find((_) => _.project_id === uuid);
     if (data2 === undefined) throw new Error("No data found");
 
@@ -134,7 +135,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
     };
 
     type CompanyForm = {
-      date: string;
       description: string;
       description_1000: string;
       description_3000: string;
@@ -150,7 +150,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
     const { register, handleSubmit } = useForm<CompanyForm>();
 
     const [formData, setFormData] = useState<CompanyForm>({
-      date: "",
       description: "",
       deadline: "",
       location: "",
@@ -166,6 +165,8 @@ export const Route = createFileRoute("/company-form/$uuid")({
 
     const onSubmit: SubmitHandler<CompanyForm> = (temp: CompanyForm) => {
       setFormData(temp);
+      console.log(temp);
+      console.log(formData);
     };
 
     return (
@@ -184,7 +185,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
               src={data.key_visual}
               width="100%"
             />
-            <p.div px={10}>
+            <p.div px={20}>
               <p.h1 fontSize="4xl" fontWeight="bold" py={5}>
                 {data.name}
               </p.h1>
@@ -205,7 +206,14 @@ export const Route = createFileRoute("/company-form/$uuid")({
                   </p.p>
                   <Field.Root className={textArea.root}>
                     <Field.Textarea
+                      className={textArea.textarea}
                       {...register("description", { required: true })}
+                      onChange={(e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }));
+                      }}
                     />
                   </Field.Root>
                 </p.div>
@@ -240,7 +248,13 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       <DatePicker.Control className={datePicker.control}>
                         <DatePicker.Input
                           className={datePicker.input}
-                          {...register("date", { required: true })}
+                          {...register("deadline", { required: true })}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              deadline: e.target.value,
+                            }));
+                          }}
                         />
                         <DatePicker.Trigger className={datePicker.trigger}>
                           📅
@@ -419,7 +433,14 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     </p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Input
+                        className={textArea.input}
                         {...register("location", { required: true })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            location: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                   </p.div>
@@ -439,7 +460,14 @@ export const Route = createFileRoute("/company-form/$uuid")({
                   </p.p>
                   <Field.Root className={textArea.root}>
                     <Field.Textarea
+                      className={textArea.textarea}
                       {...register("motivation", { required: true })}
+                      onChange={(e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          motivation: e.target.value,
+                        }));
+                      }}
                     />
                   </Field.Root>
                 </p.div>
@@ -463,10 +491,13 @@ export const Route = createFileRoute("/company-form/$uuid")({
                 gap={5}
                 gridTemplateColumns={{
                   base: "1fr",
-                  md: "repeat(2, 1fr)",
-                  lg: "repeat(3, 1fr)",
+                  sm: "repeat(1, 1fr)",
+                  md: "repeat(1, 1fr)",
+                  lg: "repeat(2, 1fr)",
+                  xl: "repeat(3, 1fr)",
                 }}
                 p={5}
+                px={16}
               >
                 <p.div background="white" borderRadius="md" p={4} shadow="md">
                   <p.p
@@ -482,7 +513,14 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <p.p fontSize="md">タイトル</p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Input
+                        className={textArea.input}
                         {...register(`title_1000`, { required: true })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            title_1000: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
@@ -490,9 +528,16 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     </p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Textarea
+                        className={textArea.textarea}
                         {...register(`description_1000`, {
                           required: true,
                         })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            description_1000: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                   </p.div>
@@ -511,7 +556,14 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <p.p fontSize="md">タイトル</p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Input
+                        className={textArea.input}
                         {...register(`title_3000`, { required: true })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            title_3000: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
@@ -519,9 +571,16 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     </p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Textarea
+                        className={textArea.textarea}
                         {...register(`description_3000`, {
                           required: true,
                         })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            description_3000: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                   </p.div>
@@ -540,7 +599,14 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <p.p fontSize="md">タイトル</p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Input
+                        className={textArea.input}
                         {...register(`title_5000`, { required: true })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            title_5000: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
@@ -548,9 +614,16 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     </p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Textarea
+                        className={textArea.textarea}
                         {...register(`description_5000`, {
                           required: true,
                         })}
+                        onChange={(e) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            description_5000: e.target.value,
+                          }));
+                        }}
                       />
                     </Field.Root>
                   </p.div>
@@ -568,18 +641,23 @@ export const Route = createFileRoute("/company-form/$uuid")({
                 >
                   目標金額
                 </p.h1>
-                <p.div pb={20} px={5}>
+                <p.div pb={20} pt={12} px={16}>
                   <NumberInput.Root className={numberInput.root}>
                     <NumberInput.Input
                       className={numberInput.input}
                       {...register("amountOfMoney", { required: true })}
+                      onChange={(e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          amountOfMoney: Number(e.target.value),
+                        }));
+                      }}
                     />
-                    <p.p fontSize="2xl" fontWeight="bold" pl={3} pr={5}>
+                    <p.p fontSize="4xl" fontWeight="bold" pl={3} pr={5}>
                       円
                     </p.p>
                   </NumberInput.Root>
                 </p.div>
-                <input type="submit" />
               </p.div>
             </p.div>
           </p.div>
@@ -602,34 +680,46 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     p={2}
                     rounded="md"
                   >
-                    <p.p fontSize="2xl" fontWeight="bold">
+                    <Button color="wkb-bg" fontSize="2xl" type="submit">
                       変更を適用
-                    </p.p>
+                    </Button>
                   </HStack>
                 </Dialog.Trigger>
               </p.div>
               <Portal>
                 <Dialog.Backdrop className={dialog.backdrop} />
-                <Dialog.Positioner>
+                <Dialog.Positioner className={dialog.positioner}>
                   <Dialog.Content className={dialog.content}>
-                    <HStack
-                      alignContent="center"
-                      display="flex"
-                      justify="center"
-                      maxH="90%"
-                      maxW="90%"
-                      minH={300}
-                      minW={300}
-                      rounded="md"
-                    >
-                      <p.img rounded="full" w={50} />
-                      <VStack alignItems="start" gap={0}>
-                        <p.p fontWeight="bold">{data.sponsor?.name}</p.p>
-                        <p.div px={2}>
-                          <p.p fontSize="xs">{formData.title_1000}</p.p>
-                        </p.div>
-                      </VStack>
-                    </HStack>
+                    {Object.entries(formData).some(
+                      ([, value]) =>
+                        (typeof value === "string" && value === "") ||
+                        (typeof value === "number" && value === 0),
+                    ) ? (
+                      <p.p color="red.500" fontSize="xl">
+                        以下の項目を入力してください:
+                        <ul>
+                          {Object.entries(formData)
+                            .filter(([, value]) => value === "" || value === 0)
+                            .map(([key]) => (
+                              <li key={key}>{key}</li>
+                            ))}
+                        </ul>
+                      </p.p>
+                    ) : (
+                      <p.div>
+                        <p.p fontSize="xl">{formData.description}</p.p>
+                        <p.p fontSize="xl">{formData.title_1000}</p.p>
+                        <p.p fontSize="xl">{formData.title_3000}</p.p>
+                        <p.p fontSize="xl">{formData.title_5000}</p.p>
+                        <p.p fontSize="xl">{formData.description_1000}</p.p>
+                        <p.p fontSize="xl">{formData.description_3000}</p.p>
+                        <p.p fontSize="xl">{formData.description_5000}</p.p>
+                        <p.p fontSize="xl">{formData.deadline}</p.p>
+                        <p.p fontSize="xl">{formData.location}</p.p>
+                        <p.p fontSize="xl">{formData.motivation}</p.p>
+                        <p.p fontSize="xl">{formData.amountOfMoney}</p.p>
+                      </p.div>
+                    )}
                   </Dialog.Content>
                 </Dialog.Positioner>
               </Portal>

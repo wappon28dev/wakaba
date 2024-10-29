@@ -11,6 +11,7 @@ export const svaNumberInput = sva({
       borderRadius: "md",
       backgroundColor: "wkb.bg",
       textAlign: "right",
+      width: "100%",
       _hover: {
         borderColor: "gray.400",
       },
@@ -19,7 +20,7 @@ export const svaNumberInput = sva({
       },
     },
     input: {
-      fontSize: "4xl",
+      fontSize: "6xl",
       color: "gray.700",
       textAlign: "right",
       width: "100%",

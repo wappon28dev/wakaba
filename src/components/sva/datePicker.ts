@@ -10,10 +10,9 @@ export const svaDatePicker = sva({
       alignItems: "center",
       gap: "8px",
       padding: "8px",
-      border: "1px solid",
-      borderColor: "gray.300",
       borderRadius: "md",
-      backgroundColor: "white",
+      backgroundColor: "wkb.bg",
+      shadow: "md",
       _hover: {
         borderColor: "gray.400",
       },
@@ -24,6 +23,7 @@ export const svaDatePicker = sva({
     input: {
       fontSize: "16px",
       color: "gray.700",
+      bg: "wkb.bg",
       padding: "0 8px",
       width: "100%",
       _focus: {
@@ -80,10 +80,10 @@ export const svaDatePicker = sva({
       width: "100%",
     },
     tableCell: {
-      width: "14.285%", // 7日分で100%を均等に分ける
+      width: "14.285%",
       height: "36px",
-      textAlign: "center", // テキストを中央揃え
-      verticalAlign: "middle", // 縦方向も中央揃え
+      textAlign: "center",
+      verticalAlign: "middle",
       cursor: "pointer",
       _hover: {
         backgroundColor: "gray.100",
@@ -97,8 +97,7 @@ export const svaDatePicker = sva({
       fontWeight: "bold",
       color: "gray.500",
       display: "flex",
-      justifyContent: "space-between",
-      width: "100%",
+      width: "1%",
     },
     prevTrigger: {
       display: "flex",
