@@ -36,7 +36,6 @@ export abstract class Table<
   public resolveRelations?(): ResultAsync<SchemaResolved, TableError>;
 
   static transformError(
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     this: void,
     config: TableConfig,
     caller: string,
@@ -78,7 +77,6 @@ export abstract class Table<
   }
 
   static transform<S>(
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     this: void,
     { data, error }: PostgrestSingleResponse<S>,
   ): Result<S, PostgrestError> {
@@ -97,7 +95,6 @@ export abstract class Table<
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   static getFactories<T extends Table<any, any>>(
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     this: void,
     TableClass: new (data: TableSchemaOf<T>) => T,
     config: TableConfigOf<T>,

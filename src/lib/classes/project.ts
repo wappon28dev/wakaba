@@ -13,7 +13,7 @@ import {
   type Table2schema,
   type TableResult,
 } from "@/types/table";
-import { type Override } from "@/types/utils";
+import { type Nullable, type Override } from "@/types/utils";
 
 const config = {
   className: "Project",
@@ -35,15 +35,15 @@ type SchemaResolved = Override<
   }
 >;
 
-type ProjectRelated = {
-  sponsorData: SponsorData;
+type SchemaReferenced = {
+  sponsorData: Nullable<SponsorData>;
   reports: Report[];
   fruits: Fruit[];
   pledges: Pledge[];
   comments: Comment[];
 };
 
-type ProjectStatus = "seed" | "tsubomi" | "wakaba" | "tree" | "hana";
+type ProjectStatus = "wakaba" | "tsubomi" | "hana";
 
 export class Project extends Table<typeof config, Schema, SchemaResolved> {
   constructor(data: Schema) {
@@ -52,9 +52,25 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
 
   static factories = Table.getFactories(Project, config);
 
-  public getStatus(): ProjectStatus {
-    throw new Error(`Not implemented: ${this.config.className}.getStatus`);
+  static calcStatus(this: void, referenced: SchemaReferenced): ProjectStatus {
+    const { sponsorData, pledges } = referenced;
+    if (sponsorData == null) {
+      return "wakaba" as const;
+    }
+
+    const totalPledge = pledges.reduce(
+      (acc, pledge) => acc + pledge.data.amount_of_money,
+      0,
+    );
+
+    if (totalPledge >= sponsorData.data.target_amount_of_money) {
+      return "hana" as const;
+    }
+
+    return "tsubomi" as const;
   }
+
+  public calcStatus = Project.calcStatus;
 
   public override resolveRelations(): TableResult<SchemaResolved> {
     return ResultAsync.fromSafePromise(
@@ -74,16 +90,20 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
       .mapErr(this.transformError("resolveRelations"));
   }
 
-  public resolveReferenced(): TableResult<ProjectRelated> {
+  public resolveReferenced(): TableResult<SchemaReferenced> {
     const sponsorData = ResultAsync.fromSafePromise(
       supabase
         .from("sponsor_data")
         .select("*")
-        .eq("project_id", this.data.project_id)
-        .single(),
+        .eq("project_id", this.data.project_id),
     )
       .andThen(this.transform)
-      .map((data) => new SponsorData(data as TableSchemaOf<SponsorData>))
+      .map((data) => data.at(0))
+      .map((data) =>
+        data != null
+          ? new SponsorData(data as TableSchemaOf<SponsorData>)
+          : null,
+      )
       .mapErr(this.transformError("resolveReferenced"));
 
     const others = ResultAsync.fromSafePromise(
