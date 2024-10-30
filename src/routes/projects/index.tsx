@@ -354,34 +354,25 @@ export const Route = createFileRoute("/projects/")({
 
           {/* PCビュー */}
 
-          <p.div>
-            <p.p
-              display="block"
-              fontSize="5xl"
-              fontWeight="bold"
-              p={36}
-              textAlign="center"
-              w="100%"
-              xlDown={{
-                display: "none",
-              }}
-              xlTo2xl={{
-                display: "none",
-              }}
-            >
+
+          <p.div
+            display="block"
+            mdDown={{
+              display: "none",
+            }}
+            w="100%"
+          >
+            <p.p fontSize="5xl" fontWeight="bold" p={36} textAlign="center">
               Projects
             </p.p>
 
             <VStack
               display="block"
+              mdDown={{
+                display: "none",
+              }}
               gap={8}
               w="calc(100dvw - 410px)"
-              xlDown={{
-                display: "none",
-              }}
-              xlTo2xl={{
-                display: "none",
-              }}
             >
               <p.div ref={scrollRecommendRef} pl={8} w="auto">
                 <HorizontalScrolling title="おすすめ">
