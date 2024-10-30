@@ -354,7 +354,6 @@ export const Route = createFileRoute("/projects/")({
 
           {/* PCビュー */}
 
-
           <p.div
             display="block"
             mdDown={{
@@ -368,10 +367,10 @@ export const Route = createFileRoute("/projects/")({
 
             <VStack
               display="block"
+              gap={8}
               mdDown={{
                 display: "none",
               }}
-              gap={8}
               w="calc(100dvw - 410px)"
             >
               <p.div ref={scrollRecommendRef} pl={8} w="auto">
