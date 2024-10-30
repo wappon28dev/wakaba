@@ -448,7 +448,19 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_seeds_in_territory: {
+        Args: {
+          territory_id: string;
+        };
+        Returns: Array<{
+          category_id: string;
+          created_at: string;
+          description: string | null;
+          location: unknown;
+          seed_id: string;
+          sower_id: string;
+        }>;
+      };
     };
     Enums: {
       [_ in never]: never;
