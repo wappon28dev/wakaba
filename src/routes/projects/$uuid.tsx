@@ -94,7 +94,7 @@ function GridDetailInfo({
   scrollRef,
 }: {
   data: needs;
-  leftDays: number;
+  leftDays: string;
   percentage: number;
   scrollRef: React.RefObject<HTMLDivElement>;
 }): ReactElement {
@@ -140,7 +140,7 @@ function GridDetailInfo({
                     {data?.name}
                   </p.p>
                   <p.span fontSize={10} fontWeight="normal">
-                    残り{leftDays}日
+                    {leftDays}
                   </p.span>
                 </HStack>
                 <p.div ml="auto">
@@ -209,14 +209,10 @@ function GridDetailInfo({
             )}
 
             <Button
-              _hover={{
-                transform: "scale(1.05)",
-              }}
               my="4"
               onClick={() => {
                 scrollFruits();
               }}
-              transition="transform 0.1s"
               variant="filled"
             >
               <IconText
@@ -225,6 +221,7 @@ function GridDetailInfo({
                 icon={ICON[data.status]}
                 justifyContent="center"
               >
+                {}
                 この {getCapitalizedStr(data.status)} を支援する
               </IconText>
             </Button>
@@ -266,44 +263,42 @@ function GridDetailInfo({
                 className={dialog.trigger}
                 disabled={data.status === "wakaba"}
               >
-                <HStack
-                  _hover={{
-                    transform: "scale(1.05)",
-                    transition: "transform 0.1s",
-                  }}
+                <Button
                   alignContent="center"
                   bg="wkb-neutral.100"
                   display="flex"
-                  justify="center"
                   mb={4}
                   p={2}
                   rounded="md"
+                  w="full"
                 >
-                  {data.status !== "wakaba" &&
-                  data.sponsor !== undefined &&
-                  data.sponsor_data !== undefined ? (
-                    <>
-                      <p.img rounded="full" src={data.sponsor.icon} w={50} />
-                      <VStack alignItems="start" gap={0}>
-                        <p.p fontWeight="bold">{data.sponsor.name}</p.p>
-                        <p.div px={2}>
-                          <p.p
-                            fontSize="xs"
-                            h="100%"
-                            lineClamp={3}
-                            maxH={100}
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                          >
-                            {data.sponsor_data.motivation}
-                          </p.p>
-                        </p.div>
-                      </VStack>
-                    </>
-                  ) : (
-                    <p.p>スポンサー募集中</p.p>
-                  )}
-                </HStack>
+                  <HStack>
+                    {data.status !== "wakaba" &&
+                    data.sponsor !== undefined &&
+                    data.sponsor_data !== undefined ? (
+                      <>
+                        <p.img rounded="full" src={data.sponsor.icon} w={50} />
+                        <VStack alignItems="start" gap={0}>
+                          <p.p fontWeight="bold">{data.sponsor.name}</p.p>
+                          <p.div px={2}>
+                            <p.p
+                              fontSize="xs"
+                              h="100%"
+                              lineClamp={3}
+                              maxH={100}
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                            >
+                              {data.sponsor_data.motivation}
+                            </p.p>
+                          </p.div>
+                        </VStack>
+                      </>
+                    ) : (
+                      <p.p>スポンサー募集中</p.p>
+                    )}
+                  </HStack>
+                </Button>
               </Dialog.Trigger>
               <Portal>
                 <Dialog.Backdrop className={dialog.backdrop} />
@@ -360,10 +355,11 @@ function GridDetailInfo({
     .otherwise(({ error }) => <p.p>{error.Error.Message}</p.p>);
 }
 
-export const Route = createFileRoute("/_auth/projects/$uuid")({
+export const Route = createFileRoute("/projects/$uuid")({
   component: () => {
     const { uuid } = Route.useParams();
     const scrollRef = useRef<HTMLDivElement>(null);
+    const rtf = new Intl.RelativeTimeFormat("jp", { style: "short" });
 
     const data2 = projectsData.find((_) => _.project_id === uuid);
     if (data2 === undefined) throw new Error("No data2 found");
@@ -415,12 +411,15 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
       })),
     };
 
-    const leftDays = Math.floor(
-      (new Date(data.deadline).getTime() - new Date().getTime()) /
-        1000 /
-        60 /
-        60 /
-        24,
+    const leftDays = rtf.format(
+      Math.floor(
+        (new Date(data.deadline).getTime() - new Date().getTime()) /
+          1000 /
+          60 /
+          60 /
+          24,
+      ),
+      "day",
     );
     const percentage = Math.floor(
       (data.amount_of_money /

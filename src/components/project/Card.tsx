@@ -44,7 +44,7 @@ export function ProjectCard({
       m={4}
       mdDown={{ minW: "90%" }}
       minH={300}
-      minW={300}
+      minW={600}
       p={4}
       rounded="md"
       w="20%"
@@ -82,8 +82,8 @@ export function ProjectCard({
           .with(S.Error, ({ error }) => {
             notifyErrorInToast(
               "swrLocation",
-              "住所の取得中にエラーが発生しました",
               new Error(error as string),
+              "住所の取得中にエラーが発生しました",
             );
             return (
               <p.p color="wkb.secondary">

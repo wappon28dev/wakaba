@@ -23,3 +23,18 @@ export type PartialRecursive<T> = {
       ? PartialRecursive<T[P]>
       : T[P];
 };
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type Brand<K, T> = K & { __brand: T };
+// ref: https://www.totaltypescript.com/concepts/the-prettify-helper
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+} & {};
+
+export type OptionalKeys<T> = Exclude<
+  {
+    [K in keyof T]: object extends { [P in K]: T[K] } ? K : never;
+  }[keyof T],
+  undefined
+>;

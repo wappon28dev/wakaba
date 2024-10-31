@@ -20,32 +20,27 @@
       "./functions/tsconfig.json"
     ]
   },
-  "plugins": [
-    "react",
-    "unused-imports",
-    "react-refresh"
-  ],
+  "plugins": ["react", "unused-imports", "react-refresh"],
   "rules": {
     "no-restricted-imports": [
       "error",
       {
-        "patterns": [
-          "../*"
-        ]
+        "patterns": ["../*"]
       }
     ],
-    "@typescript-eslint/consistent-type-definitions": [
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/no-invalid-void-type": [
       "error",
-      "type"
+      {
+        "allowAsThisParameter": true
+      }
     ],
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-uses-react": "off",
     "no-underscore-dangle": "off",
     "react/jsx-props-no-spreading": "off",
-    "import/no-extraneous-dependencies": [
-      "off"
-    ],
+    "import/no-extraneous-dependencies": ["off"],
     "react/no-unstable-nested-components": "off",
     "react/jsx-sort-props": "warn",
     "react/require-default-props": "off",

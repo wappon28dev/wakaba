@@ -40,14 +40,7 @@ export function FruitCard({
       <p.p color="wkb-neutral.700" fontSize="sm">
         {description}
       </p.p>
-      <Button
-        _hover={{
-          transform: "scale(1.05)",
-          transition: "transform 0.1s",
-        }}
-        alignSelf="end"
-        variant="filled"
-      >
+      <Button alignSelf="end" variant="filled">
         支援する
       </Button>
     </VStack>
