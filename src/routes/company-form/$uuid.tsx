@@ -15,6 +15,7 @@ import { svaDatePicker } from "@/components/sva/datePicker";
 import { svaFormDialog } from "@/components/sva/formDialog";
 import { svaNumberInput } from "@/components/sva/numberInput";
 import { svaTextArea } from "@/components/sva/textArea";
+import { toaster } from "@/lib/utils/toast";
 
 type needs = {
   amount_of_money: number;
@@ -147,7 +148,11 @@ export const Route = createFileRoute("/company-form/$uuid")({
       motivation: string;
       amountOfMoney: number;
     };
-    const { register, handleSubmit } = useForm<CompanyForm>();
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<CompanyForm>();
 
     const [formData, setFormData] = useState<CompanyForm>({
       description: "",
@@ -215,6 +220,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         }));
                       }}
                     />
+                    {errors.description != null &&
+                      toaster.error({
+                        id: "description",
+                        title: "エラー",
+                        description: "プロジェクトの説明を入力してください",
+                      })}
                   </Field.Root>
                 </p.div>
                 <p.div
@@ -256,6 +267,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                             }));
                           }}
                         />
+                        {errors.deadline != null &&
+                          toaster.error({
+                            id: "deadline",
+                            title: "エラー",
+                            description: "募集終了時期を入力してください",
+                          })}
                         <DatePicker.Trigger className={datePicker.trigger}>
                           📅
                         </DatePicker.Trigger>
@@ -442,6 +459,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.location != null &&
+                        toaster.error({
+                          id: "location",
+                          title: "エラー",
+                          description: "建築予定地を入力してください",
+                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -469,6 +492,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         }));
                       }}
                     />
+                    {errors.motivation != null &&
+                      toaster.error({
+                        id: "motivation",
+                        title: "エラー",
+                        description: "モチベーションを入力してください",
+                      })}
                   </Field.Root>
                 </p.div>
               </p.div>
@@ -522,6 +551,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.title_1000 != null &&
+                        toaster.error({
+                          id: "title_1000",
+                          title: "エラー",
+                          description: "タイトルを入力してください",
+                        })}
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
                       説明
@@ -539,6 +574,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.description_1000 != null &&
+                        toaster.error({
+                          id: "description_1000",
+                          title: "エラー",
+                          description: "説明を入力してください",
+                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -565,6 +606,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.title_3000 != null &&
+                        toaster.error({
+                          id: "title_3000",
+                          title: "エラー",
+                          description: "タイトルを入力してください",
+                        })}
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
                       説明
@@ -582,6 +629,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.description_3000 != null &&
+                        toaster.error({
+                          id: "description_3000",
+                          title: "エラー",
+                          description: "説明を入力してください",
+                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -608,6 +661,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.title_5000 != null &&
+                        toaster.error({
+                          id: "title_5000",
+                          title: "エラー",
+                          description: "タイトルを入力してください",
+                        })}
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
                       説明
@@ -625,6 +684,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                           }));
                         }}
                       />
+                      {errors.description_5000 != null &&
+                        toaster.error({
+                          id: "description_5000",
+                          title: "エラー",
+                          description: "説明を入力してください",
+                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -653,6 +718,12 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         }));
                       }}
                     />
+                    {errors.amountOfMoney != null &&
+                      toaster.error({
+                        id: "amountOfMoney",
+                        title: "エラー",
+                        description: "目標金額を入力してください",
+                      })}
                     <p.p fontSize="4xl" fontWeight="bold" pl={3} pr={5}>
                       円
                     </p.p>
@@ -681,7 +752,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     rounded="md"
                   >
                     <Button color="wkb-bg" fontSize="2xl" type="submit">
-                      変更を適用
+                      <div role="button">変更を適用</div>
                     </Button>
                   </HStack>
                 </Dialog.Trigger>
@@ -694,18 +765,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       ([, value]) =>
                         (typeof value === "string" && value === "") ||
                         (typeof value === "number" && value === 0),
-                    ) ? (
-                      <p.p color="red.500" fontSize="xl">
-                        以下の項目を入力してください:
-                        <ul>
-                          {Object.entries(formData)
-                            .filter(([, value]) => value === "" || value === 0)
-                            .map(([key]) => (
-                              <li key={key}>{key}</li>
-                            ))}
-                        </ul>
-                      </p.p>
-                    ) : (
+                    ) ? null : (
                       <p.div>
                         <p.p fontSize="xl">{formData.description}</p.p>
                         <p.p fontSize="xl">{formData.title_1000}</p.p>

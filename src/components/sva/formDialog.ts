@@ -22,8 +22,6 @@ export const svaFormDialog = sva({
       zIndex: "modalContent",
       top: "50%",
       left: "50%",
-      width: "90%",
-      height: "90%",
       transform: "translate(-50%, -50%)",
       rounded: "md",
       // fade in animation
@@ -52,6 +50,11 @@ export const svaFormDialog = sva({
       right: 0,
       bottom: 0,
       zIndex: "modal",
+    },
+    closeTrigger: {
+      right: "sm",
+      top: "sm",
+      color: "wkb.primary",
     },
   },
 });
