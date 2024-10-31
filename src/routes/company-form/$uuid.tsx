@@ -168,6 +168,23 @@ export const Route = createFileRoute("/company-form/$uuid")({
       description_5000: "",
     });
 
+    let triggerDisable = true;
+    if (
+      formData.description !== "" &&
+      formData.deadline !== "" &&
+      formData.location !== "" &&
+      formData.motivation !== "" &&
+      formData.amountOfMoney !== 0 &&
+      formData.title_1000 !== "" &&
+      formData.title_3000 !== "" &&
+      formData.title_5000 !== "" &&
+      formData.description_1000 !== "" &&
+      formData.description_3000 !== "" &&
+      formData.description_5000 !== ""
+    ) {
+      triggerDisable = false;
+    }
+
     const onSubmit: SubmitHandler<CompanyForm> = (temp: CompanyForm) => {
       setFormData(temp);
       console.log(temp);
@@ -736,7 +753,10 @@ export const Route = createFileRoute("/company-form/$uuid")({
           <p.div py={20}>
             <Dialog.Root>
               <p.div display="flex" justifyContent="center">
-                <Dialog.Trigger className={dialog.trigger}>
+                <Dialog.Trigger
+                  className={dialog.trigger}
+                  disabled={triggerDisable}
+                >
                   <HStack
                     _hover={{
                       transform: "scale(1.05)",
