@@ -129,8 +129,8 @@ function Asking({
       toaster.remove(ID);
       notifyErrorInToast(
         "swrProject",
-        "プロジェクトの生成に失敗しました",
         new Error("Failed to create project", { cause: error }),
+        "プロジェクトの生成に失敗しました",
       );
 
       return error;

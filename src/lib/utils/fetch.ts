@@ -1,73 +1,58 @@
-import { err, ok, ResultAsync, type Result } from "neverthrow";
+/* eslint-disable no-console */
+import { err, ok, ResultAsync } from "neverthrow";
 
-export type RequestResult<S extends object> = ResultAsync<
-  S,
-  | {
-      type: "NETWORK_ERROR";
-      error: Error;
-    }
-  | {
-      type: "INVALID_RESPONSE";
-      response: Response;
-    }
->;
-export type RequestResultWithError<S extends object, E extends object> = Result<
-  S,
-  | {
-      type: "NETWORK_ERROR";
-      error: Error;
-    }
-  | {
-      type: "INVALID_RESPONSE";
-      error: E;
-    }
->;
+export type RequestError<E extends object | Error = Error> =
+  | { type: "NETWORK_ERROR"; error: Error }
+  | { type: "RESPONSE_ERROR"; error: E };
+
+export type RequestResult<
+  S extends object,
+  E extends object = Response,
+> = ResultAsync<S, RequestError<E>>;
+
+function parseJson<S extends object>(res: Response): ResultAsync<S, never> {
+  return ResultAsync.fromPromise(res.json() as Promise<S>, (e) => {
+    throw new Error("Failed to parse JSON: ", { cause: e });
+  });
+}
+
+function handleNetworkError(
+  error: unknown,
+): Extract<RequestError, { type: "NETWORK_ERROR" }> {
+  console.error(error);
+  return {
+    type: "NETWORK_ERROR",
+    error: new Error(error as string),
+  } as const;
+}
 
 export function fetchResult<S extends object>(
   ...args: Parameters<typeof fetch>
 ): RequestResult<S> {
-  return ResultAsync.fromPromise(
-    fetch(...args),
-    (e) =>
-      ({
-        type: "NETWORK_ERROR",
-        error: new Error(e as string),
-      }) as const,
-  )
+  return ResultAsync.fromPromise(fetch(...args), handleNetworkError)
     .andThen((res) => {
       if (!res.ok) {
-        return err({
-          type: "INVALID_RESPONSE",
-          response: res,
-        } as const);
+        console.error(res);
+        return err({ type: "RESPONSE_ERROR", error: res } as const);
       }
+
       return ok(res);
     })
-    .andThen((res) =>
-      ResultAsync.fromPromise(res.json() as Promise<S>, (e) => {
-        throw e;
-      }),
-    );
+    .andThen((res) => parseJson<S>(res));
 }
 
-export async function fetchResultWithError<S extends object, E extends object>(
+export function fetchResultWithError<S extends object, E extends object>(
   ...args: Parameters<typeof fetch>
-): Promise<RequestResultWithError<S, E>> {
-  return await fetch(...args)
-    .then(async (res) => {
+): RequestResult<S, E> {
+  return ResultAsync.fromPromise(fetch(...args), handleNetworkError).andThen(
+    (res) => {
       if (!res.ok) {
-        return err({
-          type: "INVALID_RESPONSE",
-          error: (await res.json()) as E,
-        } as const);
+        return parseJson<E>(res).andThen((error) =>
+          err({ type: "RESPONSE_ERROR", error } as const),
+        );
       }
 
-      return ok((await res.json()) as S);
-    })
-    .catch((error) =>
-      err({
-        type: "NETWORK_ERROR",
-        error,
-      } as const),
-    );
+      return parseJson<S>(res);
+    },
+  );
 }

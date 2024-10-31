@@ -94,7 +94,7 @@ function GridDetailInfo({
   scrollRef,
 }: {
   data: needs;
-  leftDays: number;
+  leftDays: string;
   percentage: number;
   scrollRef: React.RefObject<HTMLDivElement>;
 }): ReactElement {
@@ -140,7 +140,7 @@ function GridDetailInfo({
                     {data?.name}
                   </p.p>
                   <p.span fontSize={10} fontWeight="normal">
-                    残り{leftDays}日
+                    {leftDays}
                   </p.span>
                 </HStack>
                 <p.div ml="auto">
@@ -221,6 +221,7 @@ function GridDetailInfo({
                 icon={ICON[data.status]}
                 justifyContent="center"
               >
+                {}
                 この {getCapitalizedStr(data.status)} を支援する
               </IconText>
             </Button>
@@ -354,10 +355,11 @@ function GridDetailInfo({
     .otherwise(({ error }) => <p.p>{error.Error.Message}</p.p>);
 }
 
-export const Route = createFileRoute("/_auth/projects/$uuid")({
+export const Route = createFileRoute("/projects/$uuid")({
   component: () => {
     const { uuid } = Route.useParams();
     const scrollRef = useRef<HTMLDivElement>(null);
+    const rtf = new Intl.RelativeTimeFormat("jp", { style: "short" });
 
     const data2 = projectsData.find((_) => _.project_id === uuid);
     if (data2 === undefined) throw new Error("No data2 found");
@@ -409,12 +411,15 @@ export const Route = createFileRoute("/_auth/projects/$uuid")({
       })),
     };
 
-    const leftDays = Math.floor(
-      (new Date(data.deadline).getTime() - new Date().getTime()) /
-        1000 /
-        60 /
-        60 /
-        24,
+    const leftDays = rtf.format(
+      Math.floor(
+        (new Date(data.deadline).getTime() - new Date().getTime()) /
+          1000 /
+          60 /
+          60 /
+          24,
+      ),
+      "day",
     );
     const percentage = Math.floor(
       (data.amount_of_money /

@@ -1,4 +1,4 @@
-import { type DBSchema } from "@/types/supabase";
+import { type Tables } from "@/types/supabase.gen";
 
 export const promptText = `
 いくつかのカテゴリ分けされたプレーンテキストの意見を渡します｡
@@ -37,7 +37,7 @@ descriptionにはどんなプロジェクトか､どんなことができて､
 \`\`\`
 `;
 
-export const categoriesData: Array<DBSchema<"categories">> = [
+export const categoriesData: Array<Tables<"categories">> = [
   {
     category_id: "1",
     name: "休憩",
@@ -77,7 +77,7 @@ export const categoriesData: Array<DBSchema<"categories">> = [
 ];
 
 export const projectsData: Array<
-  DBSchema<"projects"> & {
+  Tables<"projects"> & {
     amount_of_money: number;
     seed_id: number[];
     location: { lon: number; lat: number };
@@ -212,9 +212,9 @@ export const projectsData: Array<
 ];
 
 export const sponsorDataData: Array<
-  DBSchema<"sponsor_data"> & {
-    reports?: Array<DBSchema<"reports">>;
-    fruits: Array<DBSchema<"fruits">>;
+  Tables<"sponsor_data"> & {
+    reports?: Array<Tables<"reports">>;
+    fruits: Array<Tables<"fruits">>;
   }
 > = [
   {
@@ -312,7 +312,7 @@ export const sponsorDataData: Array<
   },
 ];
 
-export const seedsData: Array<DBSchema<"seeds">> = [
+export const seedsData: Array<Tables<"seeds">> = [
   {
     seed_id: "1",
     created_at: "2024-09-22T00:00:00Z",
@@ -455,7 +455,7 @@ export const seedsData: Array<DBSchema<"seeds">> = [
   },
 ];
 
-export const sponsorsData: Array<DBSchema<"sponsors">> = [
+export const sponsorsData: Array<Tables<"sponsors">> = [
   {
     sponsor_id: "1",
     name: "スポンサー1",

@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.6
+-- Dumped from database version 15.1 (Ubuntu 15.1-1.pgdg20.04+1)
 -- Dumped by pg_dump version 15.7 (Ubuntu 15.7-1.pgdg20.04+1)
 
 SET statement_timeout = 0;
@@ -233,11 +233,12 @@ INSERT INTO "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "r
 --
 
 INSERT INTO "public"."categories" ("category_id", "name", "description", "created_at") VALUES
-	('028f6af1-aec0-4147-bb53-f08ef8970819', 'Technology', 'Everything related to technological advancements.', '2024-09-19 13:39:13.12144+00'),
-	('98132643-8bdd-4500-9873-1d7ed7608cc5', 'Health', 'Health tips, medical advice, and wellness.', '2024-09-19 13:39:13.12144+00'),
-	('aec8a694-230f-469e-a697-06913da0b1ac', 'Education', 'Learning resources and educational content.', '2024-09-19 13:39:13.12144+00'),
-	('77340e0d-a702-43e6-9c4c-98f466b4c37c', 'Sports', 'News and updates about various sports.', '2024-09-19 13:39:13.12144+00'),
-	('92b2567c-d97b-408a-98dd-1a93809899cb', 'Entertainment', 'Movies, music, and everything entertaining.', '2024-09-19 13:39:13.12144+00');
+	('55b46fee-ad75-4072-97b8-787ca0284c1d', '休憩', '休憩に関するカテゴリ', '2024-09-22 00:00:00+00'),
+	('616055b7-21e8-40f5-8187-6491a26c00ba', '環境', '環境に関するカテゴリ', '2024-09-22 00:00:00+00'),
+	('170569ca-f55d-4665-bdfc-676b176567cc', '飲食', '飲食に関するカテゴリ', '2024-09-22 00:00:00+00'),
+	('9aa01bda-c0a8-4385-be5c-c1fed719b51b', '施設', '施設に関するカテゴリ', '2024-09-22 00:00:00+00'),
+	('6ee4371e-7218-4cf5-9421-3d65e405af22', '移動', '移動に関するカテゴリ', '2024-09-22 00:00:00+00'),
+	('ec2a86cd-19e2-41ba-b3d1-ea687582506a', 'その他', 'その他のカテゴリ', '2024-09-22 00:00:00+00');
 
 
 --
@@ -245,11 +246,7 @@ INSERT INTO "public"."categories" ("category_id", "name", "description", "create
 --
 
 INSERT INTO "public"."territories" ("territory_id", "zone", "created_at") VALUES
-	('18a6e433-4e74-42e5-a6ba-54c4b8e7601b', '0103000020E6100000010000000500000095D4096822766140C74B378941D84140DC4603780B786140C74B378941D84140DC4603780B786140A3923A014DD4414095D4096822766140A3923A014DD4414095D4096822766140C74B378941D84140', '2024-09-19 14:39:13.402192+00'),
-	('faef1cc3-a147-4e63-9db6-11727f9ae250', '0103000020E61000000100000005000000D881734694F860401A51DA1B7C814140D881734694F86040DC4603780B84414048BF7D1D38F96040DC4603780B84414048BF7D1D38F960401A51DA1B7C814140D881734694F860401A51DA1B7C814140', '2024-09-19 14:39:13.402192+00'),
-	('712bf15c-5724-469b-a68e-064c401f2854', '0103000020E61000000100000005000000D34D621058AB6140728A8EE4F2874540448B6CE7FBAB6140728A8EE4F2874540448B6CE7FBAB6140AF94658863854540D34D621058AB6140AF94658863854540D34D621058AB6140728A8EE4F2874540', '2024-09-19 14:39:13.402192+00'),
-	('b263fd89-d62d-4c06-9ca1-44005d3f0e76', '0103000020E61000000100000005000000B459F5B9DA4C60407AC7293A92CB40402497FF907E4D60407AC7293A92CB40402497FF907E4D6040B7D100DE02C94040B459F5B9DA4C6040B7D100DE02C94040B459F5B9DA4C60407AC7293A92CB4040', '2024-09-19 14:39:13.402192+00'),
-	('f2689784-c20f-4995-9220-856dbf913d58', '0103000020E61000000100000005000000B7D100DE021D6140AC1C5A643B974140280F0BB5A61D6140AC1C5A643B974140280F0BB5A61D6140E9263108AC944140B7D100DE021D6140E9263108AC944140B7D100DE021D6140AC1C5A643B974140', '2024-09-19 14:39:13.402192+00');
+	('dcc2053e-306d-4b2d-9704-47686925e626', '010300000001000000090000000ADEEBFFF78C6140257FE662C21E374000000000008363405F775F3A52423E40F3D71A00607D6340560C5707400F4640F6211400087C624047D73B92811148400000000000676140A50F02976C874640F3D71A0060536040FB00497DFE094840F3D71A00609E5F40F1FDC34C9167464000000000808D5F40D8B969334EA33E400ADEEBFFF78C6140257FE662C21E3740', '2024-10-30 02:38:28.179252+00');
 
 
 --
@@ -257,33 +254,21 @@ INSERT INTO "public"."territories" ("territory_id", "zone", "created_at") VALUES
 --
 
 INSERT INTO "public"."projects" ("project_id", "name", "key_visual", "deadline", "created_at", "territory_id", "category_id", "description") VALUES
-	('2211e5a6-42c6-4fdf-ab67-867ffad2e15a', 'Urban Garden Revamp', 'http://example.com/urban-garden.jpg', '2024-12-31 23:59:59+00', '2024-09-19 14:42:29.97925+00', '18a6e433-4e74-42e5-a6ba-54c4b8e7601b', '028f6af1-aec0-4147-bb53-f08ef8970819', 'Everything related to technological advancements.'),
-	('8d7fc323-df5a-4843-8ceb-44d2f660323d', 'Historic Site Restoration', 'http://example.com/historic-site.jpg', '2025-06-30 23:59:59+00', '2024-09-19 14:42:29.97925+00', 'faef1cc3-a147-4e63-9db6-11727f9ae250', '98132643-8bdd-4500-9873-1d7ed7608cc5', 'Health tips, medical advice, and wellness.'),
-	('f1f7ebf9-d294-40d6-8c09-f6b23bedac73', 'Community Center Upgrade', 'http://example.com/community-center.jpg', '2024-11-15 23:59:59+00', '2024-09-19 14:42:29.97925+00', '712bf15c-5724-469b-a68e-064c401f2854', 'aec8a694-230f-469e-a697-06913da0b1ac', 'Learning resources and educational content.'),
-	('1e8208ab-fca5-48dd-8a73-ef88dc25686b', 'Riverfront Development', 'http://example.com/riverfront.jpg', '2025-03-31 23:59:59+00', '2024-09-19 14:42:29.97925+00', 'b263fd89-d62d-4c06-9ca1-44005d3f0e76', '77340e0d-a702-43e6-9c4c-98f466b4c37c', 'News and updates about various sports.'),
-	('eb69da44-2e61-4cb5-afdb-992fd8800515', 'City Park Expansion', 'http://example.com/city-park.jpg', '2024-10-31 23:59:59+00', '2024-09-19 14:42:29.97925+00', 'f2689784-c20f-4995-9220-856dbf913d58', '92b2567c-d97b-408a-98dd-1a93809899cb', 'Movies, music, and everything entertaining.'),
-	('469d3b32-333e-466a-8e50-ad57dfd6714e', 'Library Renovation', 'http://example.com/library-renovation.jpg', '2025-02-28 23:59:59+00', '2024-09-19 14:42:29.97925+00', '18a6e433-4e74-42e5-a6ba-54c4b8e7601b', '028f6af1-aec0-4147-bb53-f08ef8970819', 'Everything related to technological advancements.'),
-	('9fa62295-5170-406f-9e90-f7f4945ce0b2', 'New Sports Complex', 'http://example.com/sports-complex.jpg', '2025-05-31 23:59:59+00', '2024-09-19 14:42:29.97925+00', 'faef1cc3-a147-4e63-9db6-11727f9ae250', '77340e0d-a702-43e6-9c4c-98f466b4c37c', 'News and updates about various sports.'),
-	('31dc8b85-d629-4c5e-823d-0223ed87a6a9', 'Cultural Arts Center', 'http://example.com/arts-center.jpg', '2024-12-01 23:59:59+00', '2024-09-19 14:42:29.97925+00', '712bf15c-5724-469b-a68e-064c401f2854', '92b2567c-d97b-408a-98dd-1a93809899cb', 'Movies, music, and everything entertaining.'),
-	('27e625e3-6937-4aec-8dfb-440607c7a742', 'Seaside Promenade', 'http://example.com/seaside.jpg', '2025-07-15 23:59:59+00', '2024-09-19 14:42:29.97925+00', 'b263fd89-d62d-4c06-9ca1-44005d3f0e76', '92b2567c-d97b-408a-98dd-1a93809899cb', 'Movies, music, and everything entertaining.'),
-	('61701873-e8c5-4974-bdc4-121385dc9448', 'Tech Hub Construction', 'http://example.com/tech-hub.jpg', '2024-09-30 23:59:59+00', '2024-09-19 14:42:29.97925+00', 'f2689784-c20f-4995-9220-856dbf913d58', '028f6af1-aec0-4147-bb53-f08ef8970819', 'Everything related to technological advancements.');
+	('08a78db3-f61b-4aac-bf7c-cad2fc45ebad', '憩いの丘', 'https://i.gyazo.com/9205914603b719a1933a1f422c09c70c.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '55b46fee-ad75-4072-97b8-787ca0284c1d', '屋上庭園を併設し、多様な休憩に対応できる複合施設。ヨガや読書スペース、カフェコーナーを設置。自然光を取り入れた開放的な空間設計。'),
+	('ad6d65e3-4299-4425-b724-192ebb253ebd', '本の森カフェ', 'https://i.gyazo.com/0571d48414ff9a3558471f08481f4b96.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '55b46fee-ad75-4072-97b8-787ca0284c1d', '緑豊かな庭園の中に、コンパクトなブックカフェを設置。ハンモックやソファなど、ゆったりと読書を楽しめるスペースを多数用意。'),
+	('8d6bd040-6d4c-40d1-b674-807684596ff1', '静寂の庭', 'https://i.gyazo.com/0fc7ef8bdbd73f6fb6ede2fe2e8acbd5.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '55b46fee-ad75-4072-97b8-787ca0284c1d', '自然の音に包まれ、瞑想やヨガに集中できる静かなスペース。人工芝や木陰など、自然素材を取り入れた癒やしの空間。'),
+	('3a0ac0d1-f241-4786-9109-e878cb25faa1', '地元食材レストラン', 'https://i.gyazo.com/a0f8e78fa4592e590c29130d3319bb92.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '170569ca-f55d-4665-bdfc-676b176567cc', '地元の農産物を使い、安価で美味しい食事を提供するレストランをオープンする'),
+	('d86d0ecf-e218-4eff-9ca0-daa3d2c0a02c', '若者向け起業支援センター設立', 'https://i.gyazo.com/9d9c8aeb4a441f42f337c2076043accd.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', 'ec2a86cd-19e2-41ba-b3d1-ea687582506a', '若者向けの起業支援センターを設立し、起業家育成と地域経済の活性化を促進します。'),
+	('95cce956-dd32-4e19-9f24-b8ceed6535c8', '昔ながらの食堂', 'https://i.gyazo.com/0491476f854e0db58d69b6d16af50392.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '170569ca-f55d-4665-bdfc-676b176567cc', '地元の高齢者が運営する昔ながらの食堂をオープンし、地域の味を守り、世代間交流を促進します。'),
+	('326385d2-9d5b-400b-804f-9fabec785679', '空き家活用コミュニティスペース', 'https://i.gyazo.com/b11d5cb6fe109293e59dd0eb045daf00.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '616055b7-21e8-40f5-8187-6491a26c00ba', '空き家をリノベーションし、コミュニティスペースとして活用することで、地域交流の活性化を目指します。'),
+	('d43d73b1-0a2e-48d5-922c-9d0b8000ac06', '地元食材料理教室', 'https://i.gyazo.com/58649dde4c670eab667bfafbefb3b69e.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '170569ca-f55d-4665-bdfc-676b176567cc', '地元の食材を使った料理教室を定期的に開催し、食文化の継承と地域産業の活性化を目指します。'),
+	('cfc6182b-27a0-48a8-88fc-3c37b6d2a05c', '地域特産品マルシェ', 'https://i.gyazo.com/3d6f6702e717cb4930770a096bdcdba3.jpg', '2025-02-28 23:59:59+00', '2024-10-30 16:22:50.279232+00', 'dcc2053e-306d-4b2d-9704-47686925e626', '9aa01bda-c0a8-4385-be5c-c1fed719b51b', '地元の農家から直接新鮮な食材を仕入れ地域特産品を販売する、賑わいのあるマルシェ。');
 
 
 --
 -- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."comments" ("comment_id", "project_id", "user_id", "body", "created_at") VALUES
-	('2f6a2283-ac73-40e2-9d31-5e077cdc5996', '2211e5a6-42c6-4fdf-ab67-867ffad2e15a', '71bc2eea-f598-4e80-98a9-67e7fe0462d7', 'Great progress on the urban garden project. Keep up the good work!', '2024-09-19 18:16:48.271736+00'),
-	('44c12c00-dd16-4221-ab0b-40f02a4c6c25', '8d7fc323-df5a-4843-8ceb-44d2f660323d', '52dee3ee-2800-47f1-bf97-90ee67e59af3', 'Excited to see the historic building being restored.', '2024-09-19 18:16:48.271736+00'),
-	('b43877cc-0be6-4c89-a559-69d6d4c943cc', 'f1f7ebf9-d294-40d6-8c09-f6b23bedac73', '55e03f57-72be-49af-8bf6-29dd4ad98cbd', 'The community center is looking fantastic! Can’t wait to visit.', '2024-09-19 18:16:48.271736+00'),
-	('f741a8c9-be65-4c0d-b43d-e8e274faef8b', '1e8208ab-fca5-48dd-8a73-ef88dc25686b', '100e8cbb-4a43-4db8-b33f-95af8c7da82e', 'Is there any update on the riverfront project?', '2024-09-19 18:16:48.271736+00'),
-	('3d63e7ee-007c-4ba2-a593-ea04d039ac53', 'eb69da44-2e61-4cb5-afdb-992fd8800515', '41b728b9-bac4-4789-813c-e689d467f2e2', 'Love the enhancements made to the city park!', '2024-09-19 18:16:48.271736+00'),
-	('448f43d6-f867-418d-a2ec-677a23001a64', '469d3b32-333e-466a-8e50-ad57dfd6714e', '261dfd76-6990-4b24-b3f4-a53f4fc3a687', 'Library renovations are coming along nicely.', '2024-09-19 18:16:48.271736+00'),
-	('ebc994a9-8c2c-40cd-81ac-573ca5025ff6', '9fa62295-5170-406f-9e90-f7f4945ce0b2', '71bc2eea-f598-4e80-98a9-67e7fe0462d7', 'The new sports complex will be a great addition to the community.', '2024-09-19 18:16:48.271736+00'),
-	('1d6d80a8-719a-4490-96d3-fd75ba86f544', '31dc8b85-d629-4c5e-823d-0223ed87a6a9', '52dee3ee-2800-47f1-bf97-90ee67e59af3', 'Cultural arts center is shaping up well. Will there be more updates soon?', '2024-09-19 18:16:48.271736+00'),
-	('94b3091b-ba25-458b-93e1-f5821c5c2b11', '27e625e3-6937-4aec-8dfb-440607c7a742', '55e03f57-72be-49af-8bf6-29dd4ad98cbd', 'Looking forward to the seaside promenade completion!', '2024-09-19 18:16:48.271736+00'),
-	('37a8eb15-c8d0-49a5-aa0f-15d217053f76', '61701873-e8c5-4974-bdc4-121385dc9448', '100e8cbb-4a43-4db8-b33f-95af8c7da82e', 'Tech hub development is exciting! Any new partnerships announced?', '2024-09-19 18:16:48.271736+00');
 
 
 --
@@ -301,16 +286,18 @@ INSERT INTO "public"."sponsors" ("sponsor_id", "name", "icon", "description", "c
 --
 
 INSERT INTO "public"."fruits" ("fruit_id", "project_id", "sponsor_id", "name", "key_visual", "description", "created_at", "amount_of_money") VALUES
-	('ec64dec1-2b43-456d-8fef-01b1bdc2dbaf', '2211e5a6-42c6-4fdf-ab67-867ffad2e15a', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Urban Garden Planting', 'http://example.com/urban-garden-visual.jpg', 'Contribution to urban garden planting efforts.', '2024-09-19 14:53:45.490298+00', 20000),
-	('c5b5893b-c77d-4abe-aa85-cc56f708153b', '8d7fc323-df5a-4843-8ceb-44d2f660323d', '16315abb-4a72-4d54-bd9d-b38288591f10', 'Historic Restoration Fund', 'http://example.com/historic-restoration.jpg', 'Funds for restoring historical landmarks.', '2024-09-19 14:53:45.490298+00', 50000),
-	('310d0ff6-5d97-4ea0-b41f-b79eeee51ab8', 'f1f7ebf9-d294-40d6-8c09-f6b23bedac73', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', 'Community Center Support', 'http://example.com/community-center-support.jpg', 'Support for upgrading community centers.', '2024-09-19 14:53:45.490298+00', 30000),
-	('4719fe9a-f730-4ec3-905f-7b8d73d6c28a', '1e8208ab-fca5-48dd-8a73-ef88dc25686b', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Riverfront Beautification', 'http://example.com/riverfront-beautification.jpg', 'Investment in riverfront beautification projects.', '2024-09-19 14:53:45.490298+00', 40000),
-	('4136ca2e-d63f-4ac8-b763-5ec3f8b3c0e9', 'eb69da44-2e61-4cb5-afdb-992fd8800515', '16315abb-4a72-4d54-bd9d-b38288591f10', 'City Park Enhancement', 'http://example.com/city-park-enhancement.jpg', 'Funding for enhancing city parks.', '2024-09-19 14:53:45.490298+00', 25000),
-	('0ac13bab-5cb1-4913-b176-b8d66357c845', '469d3b32-333e-466a-8e50-ad57dfd6714e', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', 'Library Renovation Drive', 'http://example.com/library-renovation.jpg', 'Drive to renovate and upgrade local libraries.', '2024-09-19 14:53:45.490298+00', 35000),
-	('4365ddb7-7689-4836-802f-724696c27541', '9fa62295-5170-406f-9e90-f7f4945ce0b2', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Sports Complex Funding', 'http://example.com/sports-complex.jpg', 'Funding for constructing a new sports complex.', '2024-09-19 14:53:45.490298+00', 60000),
-	('c982d05f-baf5-475f-9666-35fcaa061728', '31dc8b85-d629-4c5e-823d-0223ed87a6a9', '16315abb-4a72-4d54-bd9d-b38288591f10', 'Cultural Arts Center', 'http://example.com/cultural-arts-center.jpg', 'Support for building a cultural arts center.', '2024-09-19 14:53:45.490298+00', 55000),
-	('b7c494d3-6833-46f5-90d5-570425fb67c2', '27e625e3-6937-4aec-8dfb-440607c7a742', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', 'Seaside Promenade Project', 'http://example.com/seaside-promenade.jpg', 'Contribution to the development of a seaside promenade.', '2024-09-19 14:53:45.490298+00', 70000),
-	('ee3acb86-93f0-4fcb-9ee5-65eac6e36c3a', '61701873-e8c5-4974-bdc4-121385dc9448', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Tech Hub Construction', 'http://example.com/tech-hub.jpg', 'Funding for the construction of a new tech hub.', '2024-09-19 14:53:45.490298+00', 80000);
+	('7b97f30b-60f1-45bb-95cf-0551bc2f47c2', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '5% OFFクーポン"', 'https://via.placeholder.com/150', '開店後、入場料1回5%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 1000),
+	('20037de8-06b9-43b6-a8a4-da0c1bfb7f82', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '10% OFFクーポン', 'https://via.placeholder.com/150', '開店後、入場料1回10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 3000),
+	('9add13ed-0e72-4b01-8a30-c6debec42d91', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '入場料一生10%OFF', 'https://via.placeholder.com/150', '開店後、屋上庭園の入場料を一生10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 5000),
+	('8b21b481-18c1-4738-afd3-224e32709ef1', 'ad6d65e3-4299-4425-b724-192ebb253ebd', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '5% OFFクーポン"', 'https://via.placeholder.com/150', '開店後、入場料1回5%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 1000),
+	('8f6ea420-8a6c-44a3-82f1-ebab6a9e4dbb', 'ad6d65e3-4299-4425-b724-192ebb253ebd', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '10% OFFクーポン', 'https://via.placeholder.com/150', '開店後、入場料1回10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 3000),
+	('2154ee46-a342-432b-8a83-8e5c2cb05b56', 'ad6d65e3-4299-4425-b724-192ebb253ebd', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '入場料一生10%OFF', 'https://via.placeholder.com/150', '開店後、屋上庭園の入場料を一生10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 5000),
+	('8fc335a0-d022-4c63-bc5f-c8c72d365da8', '8d6bd040-6d4c-40d1-b674-807684596ff1', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '5% OFFクーポン"', 'https://via.placeholder.com/150', '開店後、入場料1回5%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 1000),
+	('bef652d2-f543-4c7d-8b83-68a6d55686aa', '8d6bd040-6d4c-40d1-b674-807684596ff1', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '10% OFFクーポン', 'https://via.placeholder.com/150', '開店後、入場料1回10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 3000),
+	('c6654f3f-1848-48c0-8e99-97009a73bb4a', '8d6bd040-6d4c-40d1-b674-807684596ff1', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '入場料一生10%OFF', 'https://via.placeholder.com/150', '開店後、屋上庭園の入場料を一生10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 5000),
+	('28c20b86-e45d-4617-b559-3d881c07d9b5', '3a0ac0d1-f241-4786-9109-e878cb25faa1', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '5% OFFクーポン"', 'https://via.placeholder.com/150', '開店後、入場料1回5%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 1000),
+	('1cbca837-7936-4712-a2e2-9fbf7cad098e', '3a0ac0d1-f241-4786-9109-e878cb25faa1', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '10% OFFクーポン', 'https://via.placeholder.com/150', '開店後、入場料1回10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 3000),
+	('ceae7b3d-2a74-4d97-974a-ecd8585499ec', '3a0ac0d1-f241-4786-9109-e878cb25faa1', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '入場料一生10%OFF', 'https://via.placeholder.com/150', '開店後、屋上庭園の入場料を一生10%OFFでご利用いただけます', '2024-10-30 16:53:46.045505+00', 5000);
 
 
 --
@@ -328,16 +315,18 @@ INSERT INTO "public"."sowers" ("user_id", "name", "birthday", "created_at", "sow
 --
 
 INSERT INTO "public"."pledges" ("pledges_id", "sower_id", "project_id", "amount_of_money", "created_at") VALUES
-	('8207b2b5-b5b4-4a75-8051-7414b3e02e13', 'e263d5ab-09d6-4b61-9296-265df25f78df', '2211e5a6-42c6-4fdf-ab67-867ffad2e15a', 5000, '2024-09-19 14:56:24.911673+00'),
-	('7b7b2a02-bb53-4600-bd76-8a8de9f55ecd', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '8d7fc323-df5a-4843-8ceb-44d2f660323d', 10000, '2024-09-19 14:56:24.911673+00'),
-	('e796ad84-0256-482a-adbb-241ca4f8f3da', '735749af-cdbe-4d6d-9e5c-24cbca33607f', 'f1f7ebf9-d294-40d6-8c09-f6b23bedac73', 7500, '2024-09-19 14:56:24.911673+00'),
-	('318bd259-a7c6-4f46-8b99-6a5eb4a0e9df', 'e263d5ab-09d6-4b61-9296-265df25f78df', '1e8208ab-fca5-48dd-8a73-ef88dc25686b', 3000, '2024-09-19 14:56:24.911673+00'),
-	('5e376c0f-5528-4bbe-8aed-755c0b7033c7', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', 'eb69da44-2e61-4cb5-afdb-992fd8800515', 15000, '2024-09-19 14:56:24.911673+00'),
-	('e0a984d4-f439-460a-8280-25add30cb1e7', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '469d3b32-333e-466a-8e50-ad57dfd6714e', 12000, '2024-09-19 14:56:24.911673+00'),
-	('8d132808-0d9b-4d11-b6bf-50aff4d5f9ed', 'e263d5ab-09d6-4b61-9296-265df25f78df', '9fa62295-5170-406f-9e90-f7f4945ce0b2', 6000, '2024-09-19 14:56:24.911673+00'),
-	('a49be745-c355-4c00-8c22-ec17fac74e5e', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '31dc8b85-d629-4c5e-823d-0223ed87a6a9', 8000, '2024-09-19 14:56:24.911673+00'),
-	('a3528686-f10d-4fc2-83b7-1b38305a9dd0', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '27e625e3-6937-4aec-8dfb-440607c7a742', 9000, '2024-09-19 14:56:24.911673+00'),
-	('8764000f-27de-4f7c-9594-cbd152daf291', 'e263d5ab-09d6-4b61-9296-265df25f78df', '61701873-e8c5-4974-bdc4-121385dc9448', 5000, '2024-09-19 14:56:24.911673+00');
+	('73720029-0f67-4dca-b183-b54ad276f789', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', 1000, '2024-10-30 17:10:03.866143+00'),
+	('f58851a5-5f21-4771-8859-12b67491acbd', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', 3000, '2024-10-30 17:10:03.866143+00'),
+	('cdce420f-bfc5-4234-a21f-ad560197b333', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', 5000, '2024-10-30 17:10:03.866143+00'),
+	('d86e027f-060a-42ca-88e4-5a580149d488', 'e263d5ab-09d6-4b61-9296-265df25f78df', 'ad6d65e3-4299-4425-b724-192ebb253ebd', 1000, '2024-10-30 17:10:03.866143+00'),
+	('730edf43-6a85-4461-90b7-90324760bbb1', 'e263d5ab-09d6-4b61-9296-265df25f78df', 'ad6d65e3-4299-4425-b724-192ebb253ebd', 3000, '2024-10-30 17:10:03.866143+00'),
+	('488106d0-7d98-4b5d-92ac-ed43f09c7b67', 'e263d5ab-09d6-4b61-9296-265df25f78df', 'ad6d65e3-4299-4425-b724-192ebb253ebd', 5000, '2024-10-30 17:10:03.866143+00'),
+	('d5cccb2b-3307-4b67-a4a8-c7279ec867bf', 'e263d5ab-09d6-4b61-9296-265df25f78df', '8d6bd040-6d4c-40d1-b674-807684596ff1', 1000, '2024-10-30 17:10:03.866143+00'),
+	('792417d7-a35f-48be-b661-ca9f079cd1b6', 'e263d5ab-09d6-4b61-9296-265df25f78df', '8d6bd040-6d4c-40d1-b674-807684596ff1', 3000, '2024-10-30 17:10:03.866143+00'),
+	('2123261e-1e57-4f69-9998-7df4f92acec8', 'e263d5ab-09d6-4b61-9296-265df25f78df', '8d6bd040-6d4c-40d1-b674-807684596ff1', 5000, '2024-10-30 17:10:03.866143+00'),
+	('6d8df58a-f515-44e1-badf-ecabb9fc1862', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '3a0ac0d1-f241-4786-9109-e878cb25faa1', 1000, '2024-10-30 17:10:03.866143+00'),
+	('b53f748e-0886-4d79-bd4a-71426d69f427', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '3a0ac0d1-f241-4786-9109-e878cb25faa1', 3000, '2024-10-30 17:10:03.866143+00'),
+	('c85ced95-7e9b-40db-8fd2-4fb00078b4f1', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '3a0ac0d1-f241-4786-9109-e878cb25faa1', 5000, '2024-10-30 17:10:03.866143+00');
 
 
 --
@@ -345,16 +334,10 @@ INSERT INTO "public"."pledges" ("pledges_id", "sower_id", "project_id", "amount_
 --
 
 INSERT INTO "public"."reports" ("report_id", "project_id", "sponsor_id", "title", "key_visual", "body", "created_at") VALUES
-	('3b27e5f1-9802-4633-a268-70673a70d4cb', '2211e5a6-42c6-4fdf-ab67-867ffad2e15a', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Urban Garden Progress Report', 'http://example.com/urban-garden-report.jpg', 'This report details the progress of the urban garden project.', '2024-09-19 16:44:26.114429+00'),
-	('ea67c377-4eb8-427c-b060-dacb7aa347db', '8d7fc323-df5a-4843-8ceb-44d2f660323d', '16315abb-4a72-4d54-bd9d-b38288591f10', 'Historic Restoration Update', 'http://example.com/historic-restoration-update.jpg', 'An update on the restoration work for historical landmarks.', '2024-09-19 16:44:26.114429+00'),
-	('8741f737-1022-48ae-adbc-d497430b0e5e', 'f1f7ebf9-d294-40d6-8c09-f6b23bedac73', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', 'Community Center Milestones', 'http://example.com/community-center-milestones.jpg', 'Milestones achieved in the community center support project.', '2024-09-19 16:44:26.114429+00'),
-	('3e4a4557-36a6-4b74-a963-7f3304d2b99f', '1e8208ab-fca5-48dd-8a73-ef88dc25686b', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Riverfront Beautification Status', 'http://example.com/riverfront-status.jpg', 'Current status of the riverfront beautification project.', '2024-09-19 16:44:26.114429+00'),
-	('de23c600-75df-4417-b024-2b2a1304ceda', 'eb69da44-2e61-4cb5-afdb-992fd8800515', '16315abb-4a72-4d54-bd9d-b38288591f10', 'City Park Enhancements Report', 'http://example.com/city-park-enhancements.jpg', 'Details of enhancements made to city parks.', '2024-09-19 16:44:26.114429+00'),
-	('708955f5-a6ae-4770-b9a0-964b930ebe9f', '469d3b32-333e-466a-8e50-ad57dfd6714e', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', 'Library Renovation Progress', 'http://example.com/library-renovation-progress.jpg', 'Progress report on library renovations.', '2024-09-19 16:44:26.114429+00'),
-	('fe2228da-3628-489a-b574-603213153a20', '9fa62295-5170-406f-9e90-f7f4945ce0b2', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Sports Complex Development', 'http://example.com/sports-complex-development.jpg', 'Update on the construction of the new sports complex.', '2024-09-19 16:44:26.114429+00'),
-	('5804b8b9-2328-41a9-8ee1-9793c48c580d', '31dc8b85-d629-4c5e-823d-0223ed87a6a9', '16315abb-4a72-4d54-bd9d-b38288591f10', 'Cultural Arts Center Progress', 'http://example.com/cultural-arts-center-progress.jpg', 'Report on the development of the cultural arts center.', '2024-09-19 16:44:26.114429+00'),
-	('2c583848-6fb0-4aba-98c7-8665afe6e4d2', '27e625e3-6937-4aec-8dfb-440607c7a742', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', 'Seaside Promenade Update', 'http://example.com/seaside-promenade-update.jpg', 'Current update on the seaside promenade project.', '2024-09-19 16:44:26.114429+00'),
-	('46d63967-2998-44f5-9b40-8605d99a34b2', '61701873-e8c5-4974-bdc4-121385dc9448', '692a0913-e6d2-482f-9780-cdccee0e7c8d', 'Tech Hub Construction Status', 'http://example.com/tech-hub-construction.jpg', 'Status of the construction of the tech hub.', '2024-09-19 16:44:26.114429+00');
+	('03d5efa2-6263-4e59-ab2b-99889a77ee3d', '08a78db3-f61b-4aac-bf7c-cad2fc45ebad', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '施工開始のお知らせ1', 'https://via.placeholder.com/150', 'ご支援ありがとうございます!!本日､業者に発注致しました施工が始まりました｡今しばらく開店までお待ち下さい｡', '2024-10-30 16:45:59.584087+00'),
+	('d9fc9530-fae2-4884-ba69-cabf4f3b9071', 'ad6d65e3-4299-4425-b724-192ebb253ebd', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '施工開始のお知らせ2', 'https://via.placeholder.com/150', 'ご支援ありがとうございます!!本日､業者に発注致しました施工が始まりました｡今しばらく開店までお待ち下さい｡', '2024-10-30 16:45:59.584087+00'),
+	('00950ed4-915e-41c9-b966-a282aede4930', '8d6bd040-6d4c-40d1-b674-807684596ff1', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '施工開始のお知らせ3', 'https://via.placeholder.com/150', 'ご支援ありがとうございます!!本日､業者に発注致しました施工が始まりました｡今しばらく開店までお待ち下さい｡', '2024-10-30 16:45:59.584087+00'),
+	('7a7e5985-5d9c-4cee-b6cb-829da68cf941', '3a0ac0d1-f241-4786-9109-e878cb25faa1', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '施工開始のお知らせ4', 'https://via.placeholder.com/150', 'ご支援ありがとうございます!!本日､業者に発注致しました施工が始まりました｡今しばらく開店までお待ち下さい｡', '2024-10-30 16:45:59.584087+00');
 
 
 --
@@ -362,16 +345,23 @@ INSERT INTO "public"."reports" ("report_id", "project_id", "sponsor_id", "title"
 --
 
 INSERT INTO "public"."seeds" ("seed_id", "location", "created_at", "description", "sower_id", "category_id") VALUES
-	('618ed141-9b81-4014-b367-6cb35b2004c8', '0101000020E610000095D4096822766140C74B378941D84140', '2024-09-19 14:35:24.528222+00', 'Seed in Tokyo', 'e263d5ab-09d6-4b61-9296-265df25f78df', '028f6af1-aec0-4147-bb53-f08ef8970819'),
-	('e101330d-278e-43f7-ac51-c9ff07528906', '0101000020E61000009A779CA223976140ADFA5C6DC52E4240', '2024-09-19 14:35:24.528222+00', 'Seed in Ibaraki', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', 'aec8a694-230f-469e-a697-06913da0b1ac'),
-	('ab0b74cb-c2d1-4f5b-bc7e-67032b864af1', '0101000020E6100000D881734694F860401A51DA1B7C814140', '2024-09-19 14:35:24.528222+00', 'Seed in Kyoto', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '77340e0d-a702-43e6-9c4c-98f466b4c37c'),
-	('ca0e3eb6-f920-4366-8c6f-fc91f7db2b0d', '0101000020E6100000D34D621058AB6140728A8EE4F2874540', '2024-09-19 14:35:24.528222+00', 'Seed in Sapporo', 'e263d5ab-09d6-4b61-9296-265df25f78df', '028f6af1-aec0-4147-bb53-f08ef8970819'),
-	('09a4cc5a-19b1-40ad-a22c-7289fba8f146', '0101000020E610000024287E8CB9776140A3923A014DD44140', '2024-09-19 14:35:24.528222+00', 'Seed near Tokyo Tower', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '98132643-8bdd-4500-9873-1d7ed7608cc5'),
-	('e8d5c69b-2c95-48a7-8e65-fc68f3b5c151', '0101000020E6100000A301BC0512F060401B9E5E29CB584140', '2024-09-19 14:35:24.528222+00', 'Seed in Osaka', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '77340e0d-a702-43e6-9c4c-98f466b4c37c'),
-	('a28bc800-29d7-4283-bd42-8e237fa074ba', '0101000020E6100000B459F5B9DA4C60407AC7293A92CB4040', '2024-09-19 14:35:24.528222+00', 'Seed in Fukuoka', 'e263d5ab-09d6-4b61-9296-265df25f78df', '92b2567c-d97b-408a-98dd-1a93809899cb'),
-	('0decd920-d137-482f-9a2e-85cfbd56a7d1', '0101000020E6100000F853E3A59B7861407B14AE47E1DA4140', '2024-09-19 14:35:24.528222+00', 'Seed near Tokyo Skytree', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '028f6af1-aec0-4147-bb53-f08ef8970819'),
-	('703c31f5-f323-42d6-beae-ac1f1c308f54', '0101000020E6100000CD3B4ED1918E60400C93A98251314140', '2024-09-19 14:35:24.528222+00', 'Seed in Hiroshima', '735749af-cdbe-4d6d-9e5c-24cbca33607f', 'aec8a694-230f-469e-a697-06913da0b1ac'),
-	('d91d7ae5-5eca-4022-980d-a053d1e46d21', '0101000020E6100000B7D100DE021D6140AC1C5A643B974140', '2024-09-19 14:35:24.528222+00', 'Seed in Nagoya', 'e263d5ab-09d6-4b61-9296-265df25f78df', '92b2567c-d97b-408a-98dd-1a93809899cb');
+	('2eeebad4-b11b-40e8-a9f0-0291f53a04b7', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '大人も子どもも楽しめる屋上庭園のあるパーク施設が欲しい', 'e263d5ab-09d6-4b61-9296-265df25f78df', '55b46fee-ad75-4072-97b8-787ca0284c1d'),
+	('4b10d290-9060-48e0-84bc-647ea7a476b3', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '静かに読書ができて昼食も取れて一日中滞在できるような屋外ブックカフェが欲しい', 'e263d5ab-09d6-4b61-9296-265df25f78df', '55b46fee-ad75-4072-97b8-787ca0284c1d'),
+	('ede2e7ae-9393-4b99-9672-69934e1b838e', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '静かに瞑想やヨガができる屋外スペースが欲しい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '55b46fee-ad75-4072-97b8-787ca0284c1d'),
+	('05f08e17-27c3-427b-ab1d-595004eb757a', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', 'ゆったりできる公園にハンモックエリアを作ってほしい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '55b46fee-ad75-4072-97b8-787ca0284c1d'),
+	('063e9c4f-ba5b-4c05-882f-954d4b6630f3', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地面に寝っ転がれる人工芝の広がる場所がほしい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '9aa01bda-c0a8-4385-be5c-c1fed719b51b'),
+	('8aa2e8b2-3341-4cf4-a262-dca64f36477f', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地元の農産物を使った安くて美味しいレストランが欲しい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '170569ca-f55d-4665-bdfc-676b176567cc'),
+	('55ffb9fe-d8be-41e7-b1a9-eb486cc2054e', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '近くの新鮮な野菜を使ったレストランが欲しい', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '170569ca-f55d-4665-bdfc-676b176567cc'),
+	('2ff15abf-f1a2-4ec4-9773-ac322c797492', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '若者向けの起業支援センターが欲しい', '735749af-cdbe-4d6d-9e5c-24cbca33607f', 'ec2a86cd-19e2-41ba-b3d1-ea687582506a'),
+	('16632ed8-e4bf-4a7c-9b9c-991f7abcdebb', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', 'アットホームな雰囲気の地元の農産物を使った安くて美味しいレストランが欲しい', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '170569ca-f55d-4665-bdfc-676b176567cc'),
+	('86fe9e0f-1429-4457-be15-6d3a5d4b4262', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '若者から高齢者まで幅広い世代がコミュニティスペースを増やしてほしい', '735749af-cdbe-4d6d-9e5c-24cbca33607f', '616055b7-21e8-40f5-8187-6491a26c00ba'),
+	('4f2e5d8a-d27c-4ce0-b1c4-d839052a6998', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地元の食材を使った料理教室が定期的に開かれる場所が欲しい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '9aa01bda-c0a8-4385-be5c-c1fed719b51b'),
+	('940c5bf6-6d62-401c-b794-d1be104138c8', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地元の農家と直接つながる朝市を定期的に開催してほしい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', '170569ca-f55d-4665-bdfc-676b176567cc'),
+	('24fc487c-8bfc-41e3-b646-588d8ed76c2d', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '多世代が交流できるコミュニティガーデンが欲しい', '7123cf6e-6b33-408f-890c-40fff0ccfb4d', 'ec2a86cd-19e2-41ba-b3d1-ea687582506a'),
+	('afceb4a0-0611-48d3-97af-c9cac9e4e393', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地元の伝統料理など高齢者が運営する昔ながらの食堂が欲しい', 'e263d5ab-09d6-4b61-9296-265df25f78df', '9aa01bda-c0a8-4385-be5c-c1fed719b51b'),
+	('2c0ca6f9-7cd1-4a38-8996-60ab44d9295f', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地域の経済を学生の力で活性化させたい', 'e263d5ab-09d6-4b61-9296-265df25f78df', 'ec2a86cd-19e2-41ba-b3d1-ea687582506a'),
+	('f33f365b-c166-464d-8cd1-acfe80eaf224', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地域の農家や漁師などの生産者と直接顔をあわせて､特産品を販売する常設マルシェが欲しい', 'e263d5ab-09d6-4b61-9296-265df25f78df', '9aa01bda-c0a8-4385-be5c-c1fed719b51b'),
+	('8ab96b56-14ac-4a15-9b93-81b05037a769', '0101000000355EBA498C786140CE6DC2BD32D74140', '2024-10-30 16:03:19.39814+00', '地域の人々が集まれるコミュニティスペースが欲しい', 'e263d5ab-09d6-4b61-9296-265df25f78df', 'ec2a86cd-19e2-41ba-b3d1-ea687582506a');
 
 
 --
@@ -379,16 +369,10 @@ INSERT INTO "public"."seeds" ("seed_id", "location", "created_at", "description"
 --
 
 INSERT INTO "public"."sponsor_data" ("project_id", "sponsor_id", "created_at", "motivation", "location", "target_amount_of_money") VALUES
-	('2211e5a6-42c6-4fdf-ab67-867ffad2e15a', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '2024-09-19 14:47:41.370719+00', 'Support urban green spaces', '0101000020E610000095D4096822766140C74B378941D84140', 500000),
-	('8d7fc323-df5a-4843-8ceb-44d2f660323d', '16315abb-4a72-4d54-bd9d-b38288591f10', '2024-09-19 14:47:41.370719+00', 'Preserve historical landmarks', '0101000020E6100000D881734694F860401A51DA1B7C814140', 750000),
-	('f1f7ebf9-d294-40d6-8c09-f6b23bedac73', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '2024-09-19 14:47:41.370719+00', 'Enhance community facilities', '0101000020E6100000D34D621058AB6140728A8EE4F2874540', 600000),
-	('1e8208ab-fca5-48dd-8a73-ef88dc25686b', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '2024-09-19 14:47:41.370719+00', 'Support riverfront beautification', '0101000020E6100000B459F5B9DA4C60407AC7293A92CB4040', 800000),
-	('eb69da44-2e61-4cb5-afdb-992fd8800515', '16315abb-4a72-4d54-bd9d-b38288591f10', '2024-09-19 14:47:41.370719+00', 'Expand city park areas', '0101000020E6100000B7D100DE021D6140AC1C5A643B974140', 550000),
-	('469d3b32-333e-466a-8e50-ad57dfd6714e', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '2024-09-19 14:47:41.370719+00', 'Renovate the local library', '0101000020E6100000F853E3A59B7861407B14AE47E1DA4140', 450000),
-	('9fa62295-5170-406f-9e90-f7f4945ce0b2', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '2024-09-19 14:47:41.370719+00', 'Build a new sports complex', '0101000020E6100000CD3B4ED1918E60400C93A98251314140', 700000),
-	('31dc8b85-d629-4c5e-823d-0223ed87a6a9', '16315abb-4a72-4d54-bd9d-b38288591f10', '2024-09-19 14:47:41.370719+00', 'Construct a cultural arts center', '0101000020E6100000A301BC0512F060401B9E5E29CB584140', 650000),
-	('27e625e3-6937-4aec-8dfb-440607c7a742', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '2024-09-19 14:47:41.370719+00', 'Develop a seaside promenade', '0101000020E6100000448B6CE7FBAB6140AF94658863854540', 900000),
-	('61701873-e8c5-4974-bdc4-121385dc9448', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '2024-09-19 14:47:41.370719+00', 'Build a new tech hub', '0101000020E61000002497FF907E4D6040B7D100DE02C94040', 550000);
+	('08a78db3-f61b-4aac-bf7c-cad2fc45ebad', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '2024-10-30 16:42:07.03445+00', 'スポンサー1のモチベーション', '0101000000355EBA498C786140CE6DC2BD32D74140', 20000),
+	('ad6d65e3-4299-4425-b724-192ebb253ebd', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '2024-10-30 16:42:07.03445+00', 'スポンサー1のモチベーション', '0101000000355EBA498C786140CE6DC2BD32D74140', 15000),
+	('8d6bd040-6d4c-40d1-b674-807684596ff1', '7a8b06bf-0acb-40e0-89ec-5de2574ef460', '2024-10-30 16:42:07.03445+00', 'スポンサー1のモチベーション', '0101000000355EBA498C786140CE6DC2BD32D74140', 4000),
+	('3a0ac0d1-f241-4786-9109-e878cb25faa1', '692a0913-e6d2-482f-9780-cdccee0e7c8d', '2024-10-30 16:42:07.03445+00', 'スポンサー1のモチベーション', '0101000000355EBA498C786140CE6DC2BD32D74140', 100000);
 
 
 --

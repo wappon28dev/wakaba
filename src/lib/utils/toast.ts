@@ -1,4 +1,5 @@
 import { createToaster } from "@ark-ui/react";
+import { type Nullable } from "@/types/utils";
 
 export const toaster = createToaster({
   placement: "bottom-end",
@@ -9,15 +10,16 @@ export const toaster = createToaster({
 
 export function notifyErrorInToast(
   caller: string,
-  title: string,
   error: Error,
+  title: string,
+  hint?: Nullable<string>,
 ): void {
   toaster.error({
     id: `handleToasterError-${title}`,
     title,
-    description: error.message,
+    description: hint,
   });
 
   // eslint-disable-next-line no-console
-  console.warn(`[${caller}]: ${title}`, error);
+  console.error(`[${caller}]: ${title}`, error, error.cause);
 }
