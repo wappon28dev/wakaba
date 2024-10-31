@@ -1,38 +1,76 @@
 import { Tabs } from "@ark-ui/react";
 import { Icon } from "@iconify/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Flex, HStack, styled as p, VStack } from "panda/jsx";
-import { type ReactElement, useRef } from "react";
+import { css } from "panda/css";
+import { Center, Flex, HStack, styled as p, VStack } from "panda/jsx";
+import { type ReactElement } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { projectsData } from "@/assets/data";
+import { type SWRResponse } from "swr";
+import useSWRImmutable from "swr/immutable";
+import { match } from "ts-pattern";
+import { ErrorScreen } from "@/components/ErrorScreen";
 import { GridLayout } from "@/components/GridLayout";
 import { HorizontalScrolling } from "@/components/HorizontalScrolling";
-import { Button } from "@/components/cva/Button";
+import { Loading } from "@/components/Loading";
+import { cvaButton } from "@/components/cva/Button";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
+import { Project } from "@/lib/classes/project";
+import { S } from "@/lib/utils/patterns";
+import { notifyTableErrorInToast } from "@/lib/utils/table";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-function SideBar({
-  scrollRecommend,
-  scrollStared,
-  scrollTrending,
+function ProjectCardRenderer({
+  swrProjects,
+  projectsMapper = (projects) => projects,
+  title = "プロジェクト",
 }: {
-  scrollRecommend: () => void;
-  scrollStared: () => void;
-  scrollTrending: () => void;
-}): ReactElement {
+  swrProjects: SWRResponse<Project[]>;
+  projectsMapper?: (projects: Project[]) => Project[];
+  title?: string;
+}): ReactElement | ReactElement[] {
+  return match(swrProjects)
+    .with(S.Loading, () => (
+      <Center py="50rem" w="100%">
+        <Loading>
+          <p.p>{title}を読み込み中…</p.p>
+        </Loading>
+      </Center>
+    ))
+    .with(S.Success, ({ data }) =>
+      projectsMapper(data).map((project) => (
+        <Link
+          key={project.data.project_id}
+          to={`/projects/${project.data.project_id}`}
+        >
+          <ProjectCard project={project} />
+        </Link>
+      )),
+    )
+    .otherwise(() => <ErrorScreen title={`${title}の取得`} />);
+}
+
+const sideBarButton = css(cvaButton.raw(), {
+  bg: "transparent",
+  colorPalette: "wkb.bg",
+  fontSize: "2xl",
+  textAlign: "left",
+  w: "full",
+});
+
+function SideBar(): ReactElement {
   return (
     <VStack
       bg="wkb-neutral.100"
       display="block"
-      h="full"
-      minW="400px"
-      w="auto"
+      position="sticky"
+      top="75px"
+      w="400px"
       xlDown={{
         display: "none",
       }}
@@ -45,115 +83,47 @@ function SideBar({
           みんなのプロジェクト
         </p.p>
         <VStack alignItems="start" gap={10} p={10}>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            onClick={() => {
-              scrollRecommend();
-            }}
-            w="full"
-          >
+          <p.button className={sideBarButton}>
             <HStack>
               <Icon icon="mdi:thumb-up" />
               人気
             </HStack>
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            onClick={() => {
-              scrollTrending();
-            }}
-            w="full"
-          >
+          </p.button>
+          <p.button className={sideBarButton}>
             <HStack>
               <Icon icon="mdi:chart-line-variant" />
               急上昇
             </HStack>
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            onClick={() => {
-              scrollStared();
-            }}
-            w="full"
-          >
+          </p.button>
+          <p.button className={sideBarButton}>
             <HStack>
               <Icon icon="mdi:star-outline" />
               お気に入り
             </HStack>
-          </Button>
+          </p.button>
         </VStack>
 
         <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
           フィルター
         </p.p>
         <VStack alignItems="start" p={10}>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            textAlign="start"
-            w="full"
-          >
-            休憩
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            textAlign="start"
-            w="full"
-          >
-            環境
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            textAlign="start"
-            w="full"
-          >
-            飲食
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            textAlign="start"
-            w="full"
-          >
-            施設
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            textAlign="start"
-            w="full"
-          >
-            移動
-          </Button>
-          <Button
-            bg="transparent"
-            colorPalette="wkb.bg"
-            fontSize="2xl"
-            textAlign="start"
-            w="full"
-          >
-            その他
-          </Button>
+          <p.button className={sideBarButton}>休憩</p.button>
+          <p.button className={sideBarButton}>環境</p.button>
+          <p.button className={sideBarButton}>飲食</p.button>
+          <p.button className={sideBarButton}>施設</p.button>
+          <p.button className={sideBarButton}>移動</p.button>
+          <p.button className={sideBarButton}>その他</p.button>
         </VStack>
       </p.div>
     </VStack>
   );
 }
 
-function ProjectsCarousel(): ReactElement {
+function ProjectsCarousel({
+  swrProjects,
+}: {
+  swrProjects: SWRResponse<Project[]>;
+}): ReactElement {
   return (
     <p.div
       display="none"
@@ -180,34 +150,36 @@ function ProjectsCarousel(): ReactElement {
         modules={[Navigation]}
         navigation
       >
-        <HStack>
-          {projectsData.map((_) => (
-            <SwiperSlide key={_.project_id} zoom={false}>
-              <Link to={`/projects/${_.project_id}`}>
-                <ProjectCard
-                  amount_of_money={_.amount_of_money}
-                  key_visual={_.key_visual ?? ""}
-                  location={_.location}
-                  name={_.name}
-                  status={
-                    // eslint-disable-next-line
-                    _.project_id === "1"
-                      ? "tsubomi"
-                      : _.project_id === "7"
-                        ? "hana"
-                        : "wakaba"
-                  }
-                />
-              </Link>
-            </SwiperSlide>
+        {match(swrProjects)
+          .with(S.Loading, () => (
+            <Center py="40" w="100%">
+              <Loading>
+                <p.p>プロジェクトを読み込み中…</p.p>
+              </Loading>
+            </Center>
+          ))
+          .with(S.Success, ({ data }) =>
+            data.map((project) => (
+              <SwiperSlide key={project.data.project_id} zoom={false}>
+                <Link to={`/projects/${project.data.project_id}`}>
+                  <ProjectCard project={project} />
+                </Link>
+              </SwiperSlide>
+            )),
+          )
+          .otherwise(() => (
+            <ErrorScreen title="プロジェクトの取得" />
           ))}
-        </HStack>
       </Swiper>
     </p.div>
   );
 }
 
-function ProjectsTabs(): ReactElement {
+function ProjectsTabs({
+  swrProjects,
+}: {
+  swrProjects: SWRResponse<Project[]>;
+}): ReactElement {
   const tabs = svaTabs();
   return (
     <Flex
@@ -235,79 +207,35 @@ function ProjectsTabs(): ReactElement {
           </Tabs.List>
           <Tabs.Content value="recommend">
             <GridLayout>
-              <>
-                {projectsData
-                  .sort((a, b) => b.amount_of_money - a.amount_of_money)
-                  .map((_) => (
-                    <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                      <ProjectCard
-                        amount_of_money={_.amount_of_money}
-                        key_visual={_.key_visual ?? ""}
-                        location={_.location}
-                        name={_.name}
-                        status={
-                          // eslint-disable-next-line
-                          _.project_id === "1"
-                            ? "tsubomi"
-                            : _.project_id === "7"
-                              ? "hana"
-                              : "wakaba"
-                        }
-                      />
-                    </Link>
-                  ))}
-              </>
+              <ProjectCardRenderer
+                projectsMapper={
+                  // TODO: .sort(async (a, b) => await b.data.amount_of_money - a.data.amount_of_money)
+                  (projects) => projects
+                }
+                swrProjects={swrProjects}
+              />
             </GridLayout>
           </Tabs.Content>
           <Tabs.Content value="trending">
             <GridLayout>
-              <>
-                {projectsData
-                  .sort((a, b) => Number(a.category_id) - Number(b.category_id))
-                  .map((_) => (
-                    <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                      <ProjectCard
-                        key={_.project_id}
-                        amount_of_money={_.amount_of_money}
-                        key_visual={_.key_visual ?? ""}
-                        location={_.location}
-                        name={_.name}
-                        status={
-                          // eslint-disable-next-line
-                          _.project_id === "1"
-                            ? "tsubomi"
-                            : _.project_id === "7"
-                              ? "hana"
-                              : "wakaba"
-                        }
-                      />
-                    </Link>
-                  ))}
-              </>
+              <ProjectCardRenderer
+                projectsMapper={
+                  // TODO: .sort((a, b) => Number(a.category_id) - Number(b.category_id))
+                  (projects) => projects
+                }
+                swrProjects={swrProjects}
+              />
             </GridLayout>
           </Tabs.Content>
           <Tabs.Content value="stared">
             <GridLayout>
-              <>
-                {projectsData.reverse().map((_) => (
-                  <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                    <ProjectCard
-                      amount_of_money={_.amount_of_money}
-                      key_visual={_.key_visual ?? ""}
-                      location={_.location}
-                      name={_.name}
-                      status={
-                        // eslint-disable-next-line
-                        _.project_id === "1"
-                          ? "tsubomi"
-                          : _.project_id === "7"
-                            ? "hana"
-                            : "wakaba"
-                      }
-                    />
-                  </Link>
-                ))}
-              </>
+              <ProjectCardRenderer
+                projectsMapper={
+                  // TODO: .sort((a, b) => Number(a.category_id) - Number(b.category_id))
+                  (projects) => projects
+                }
+                swrProjects={swrProjects}
+              />
             </GridLayout>
           </Tabs.Content>
         </Tabs.Root>
@@ -316,142 +244,92 @@ function ProjectsTabs(): ReactElement {
   );
 }
 
+function PC({
+  swrProjects,
+}: {
+  swrProjects: SWRResponse<Project[]>;
+}): ReactElement {
+  return (
+    <p.div
+      display="block"
+      mdDown={{
+        display: "none",
+      }}
+      w="100%"
+    >
+      <p.p fontSize="5xl" fontWeight="bold" p={36} textAlign="center">
+        Projects
+      </p.p>
+
+      <VStack
+        display="block"
+        gap={8}
+        mdDown={{
+          display: "none",
+        }}
+        w="calc(100dvw - 410px)"
+      >
+        <p.div pl={8} w="auto">
+          <HorizontalScrolling title="おすすめ">
+            <HStack gap={40} w="auto">
+              <ProjectCardRenderer
+                projectsMapper={(projects) => projects.reverse()}
+                swrProjects={swrProjects}
+                title="おすすめ"
+              />
+            </HStack>
+          </HorizontalScrolling>
+        </p.div>
+
+        <p.div pl={8} py={8} w="auto">
+          <HorizontalScrolling title="急上昇">
+            <HStack gap={40} w="auto">
+              <ProjectCardRenderer
+                projectsMapper={(projects) => projects.reverse()}
+                swrProjects={swrProjects}
+                title="急上昇"
+              />
+            </HStack>
+          </HorizontalScrolling>
+        </p.div>
+
+        <p.div pl={8} py={8} w="auto">
+          <HorizontalScrolling title="お気に入り">
+            <HStack gap={40} w="auto">
+              <ProjectCardRenderer
+                projectsMapper={(projects) => projects.reverse()}
+                swrProjects={swrProjects}
+                title="お気に入り"
+              />
+            </HStack>
+          </HorizontalScrolling>
+        </p.div>
+      </VStack>
+    </p.div>
+  );
+}
+
 export const Route = createFileRoute("/projects/")({
   component: () => {
-    const scrollRecommendRef = useRef<HTMLDivElement>(null);
-    const scrollTrendingRef = useRef<HTMLDivElement>(null);
-    const scrollStaredRef = useRef<HTMLDivElement>(null);
-
-    if (typeof window === "undefined") {
-      return null;
-    }
-
-    const scrollRecommend = (): void => {
-      scrollRecommendRef?.current?.scrollIntoView();
-    };
-
-    const scrollTrending = (): void => {
-      scrollTrendingRef?.current?.scrollIntoView();
-    };
-
-    const scrollStared = (): void => {
-      scrollStaredRef?.current?.scrollIntoView();
-    };
+    const swrProjects = useSWRImmutable("projects", async () =>
+      (
+        await Project.factories
+          .fetchAll()
+          .mapErr(notifyTableErrorInToast("swrProjects"))
+      )._unsafeUnwrap(),
+    );
 
     return (
       <HStack alignItems="start" w="full">
-        <SideBar
-          scrollRecommend={scrollRecommend}
-          scrollStared={scrollStared}
-          scrollTrending={scrollTrending}
-        />
+        <SideBar />
 
         <VStack alignItems="center" w="auto">
           {/* スマホビュー */}
-          <ProjectsCarousel />
-
-          <ProjectsTabs />
+          <ProjectsCarousel swrProjects={swrProjects} />
+          <ProjectsTabs swrProjects={swrProjects} />
 
           {/* PCビュー */}
-
-          <p.div
-            display="block"
-            mdDown={{
-              display: "none",
-            }}
-            w="100%"
-          >
-            <p.p fontSize="5xl" fontWeight="bold" p={36} textAlign="center">
-              Projects
-            </p.p>
-
-            <VStack
-              display="block"
-              gap={8}
-              mdDown={{
-                display: "none",
-              }}
-              w="calc(100dvw - 410px)"
-            >
-              <p.div ref={scrollRecommendRef} pl={8} w="auto">
-                <HorizontalScrolling title="おすすめ">
-                  <HStack gap={40} w="auto">
-                    {projectsData.map((_) => (
-                      <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                        <ProjectCard
-                          key={_.project_id}
-                          amount_of_money={_.amount_of_money}
-                          key_visual={_.key_visual ?? ""}
-                          location={_.location}
-                          name={_.name}
-                          status={
-                            // eslint-disable-next-line
-                            _.project_id === "1"
-                              ? "tsubomi"
-                              : _.project_id === "7"
-                                ? "hana"
-                                : "wakaba"
-                          }
-                        />
-                      </Link>
-                    ))}
-                  </HStack>
-                </HorizontalScrolling>
-              </p.div>
-
-              <p.div ref={scrollTrendingRef} pl={8} py={8} w="auto">
-                <HorizontalScrolling title="急上昇">
-                  <HStack gap={40} w="auto">
-                    {projectsData.map((_) => (
-                      <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                        <ProjectCard
-                          key={_.project_id}
-                          amount_of_money={_.amount_of_money}
-                          key_visual={_.key_visual ?? ""}
-                          location={_.location}
-                          name={_.name}
-                          status={
-                            // eslint-disable-next-line
-                            _.project_id === "1"
-                              ? "tsubomi"
-                              : _.project_id === "7"
-                                ? "hana"
-                                : "wakaba"
-                          }
-                        />
-                      </Link>
-                    ))}
-                  </HStack>
-                </HorizontalScrolling>
-              </p.div>
-
-              <p.div ref={scrollStaredRef} pl={8} py={8} w="auto">
-                <HorizontalScrolling title="お気に入り">
-                  <HStack gap={40} w="auto">
-                    {projectsData.map((_) => (
-                      <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                        <ProjectCard
-                          key={_.project_id}
-                          amount_of_money={_.amount_of_money}
-                          key_visual={_.key_visual ?? ""}
-                          location={_.location}
-                          name={_.name}
-                          status={
-                            // eslint-disable-next-line
-                            _.project_id === "1"
-                              ? "tsubomi"
-                              : _.project_id === "7"
-                                ? "hana"
-                                : "wakaba"
-                          }
-                        />
-                      </Link>
-                    ))}
-                  </HStack>
-                </HorizontalScrolling>
-              </p.div>
-            </VStack>
-          </p.div>
+          <PC swrProjects={swrProjects} />
         </VStack>
       </HStack>
     );
