@@ -151,6 +151,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
     const {
       register,
       handleSubmit,
+      reset,
       formState: { errors },
     } = useForm<CompanyForm>();
 
@@ -687,43 +688,79 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         (typeof value === "string" && value === "") ||
                         (typeof value === "number" && value === 0),
                     ) ? null : (
-                      <p.div>
-                        <p.h1 fontSize="2xl">以下の内容が変更されます</p.h1>
-
-                        <p.p fontSize="xl">{formData.description}</p.p>
-                        <p.p fontSize="xl">{formData.title_1000}</p.p>
-                        <p.p fontSize="xl">{formData.title_3000}</p.p>
-                        <p.p fontSize="xl">{formData.title_5000}</p.p>
-                        <p.p fontSize="xl">{formData.description_1000}</p.p>
-                        <p.p fontSize="xl">{formData.description_3000}</p.p>
-                        <p.p fontSize="xl">{formData.description_5000}</p.p>
-                        <p.p fontSize="xl">{formData.deadline}</p.p>
-                        <p.p fontSize="xl">{formData.location}</p.p>
-                        <p.p fontSize="xl">{formData.motivation}</p.p>
-                        <p.p fontSize="xl">{formData.amountOfMoney}</p.p>
-                        <Dialog.Trigger
-                          className={dialog.trigger}
-                          disabled={triggerDisable}
-                        >
-                          <HStack
-                            _hover={{
-                              transform: "scale(1.05)",
-                              transition: "transform 0.1s",
+                      <p.div height="80vh" overflowY="scroll" width="70vw">
+                        <p.h1 fontSize="sm" pt={8}>
+                          以下の内容に変更されます
+                        </p.h1>
+                        <p.div px={2}>
+                          <p.div py={2}>
+                            <p.p>プロジェクトの説明</p.p>
+                            <p.p fontSize="xl">{formData.description}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p>募集終了時期</p.p>
+                            <p.p fontSize="xl">{formData.deadline}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p>建築予定地</p.p>
+                            <p.p fontSize="xl">{formData.location}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p>モチベーション</p.p>
+                            <p.p fontSize="xl">{formData.motivation}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p fontSize="2xl">1000円プラン</p.p>
+                            <p.p>タイトル</p.p>
+                            <p.p fontSize="xl">{formData.title_1000}</p.p>
+                            <p.p>説明</p.p>
+                            <p.p fontSize="xl">{formData.description_1000}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p fontSize="2xl">3000円プラン</p.p>
+                            <p.p>タイトル</p.p>
+                            <p.p fontSize="xl">{formData.title_3000}</p.p>
+                            <p.p>説明</p.p>
+                            <p.p fontSize="xl">{formData.description_3000}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p fontSize="2xl">5000円プラン</p.p>
+                            <p.p>タイトル</p.p>
+                            <p.p fontSize="xl">{formData.title_5000}</p.p>
+                            <p.p>説明</p.p>
+                            <p.p fontSize="xl">{formData.description_5000}</p.p>
+                          </p.div>
+                          <p.div py={2}>
+                            <p.p>目標金額</p.p>
+                            <p.p fontSize="xl">{formData.amountOfMoney}</p.p>
+                          </p.div>
+                        </p.div>
+                        <p.div pt={16}>
+                          <Button
+                            color="wkb-bg"
+                            fontSize="md"
+                            onClick={() => {
+                              reset();
                             }}
-                            alignContent="center"
-                            bg="wkb.primary"
-                            color="wkb-neutral.0"
-                            display="flex"
-                            justify="center"
-                            mb={4}
-                            p={2}
-                            rounded="md"
                           >
-                            <Button color="wkb-bg" fontSize="2xl" type="submit">
-                              <div role="button">変更を適用</div>
-                            </Button>
-                          </HStack>
-                        </Dialog.Trigger>
+                            <div role="button">変更を適用</div>
+                          </Button>
+                          <Dialog.Trigger className={dialog.trigger}>
+                            <HStack
+                              alignContent="center"
+                              bg="wkb.primary"
+                              color="wkb-neutral.0"
+                              display="flex"
+                              justify="center"
+                              p={2}
+                              rounded="md"
+                            >
+                              <Button color="wkb-bg" fontSize="md">
+                                <div role="button">キャンセル</div>
+                              </Button>
+                            </HStack>
+                          </Dialog.Trigger>
+                        </p.div>
                       </p.div>
                     )}
                   </Dialog.Content>
