@@ -24,6 +24,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { IconText } from "@/components/IconText";
 
 function ProjectCardRenderer({
   swrProjects,
@@ -83,24 +84,15 @@ function SideBar(): ReactElement {
           みんなのプロジェクト
         </p.p>
         <VStack alignItems="start" gap={10} p={10}>
-          <p.button className={sideBarButton}>
-            <HStack>
-              <Icon icon="mdi:thumb-up" />
-              人気
-            </HStack>
-          </p.button>
-          <p.button className={sideBarButton}>
-            <HStack>
-              <Icon icon="mdi:chart-line-variant" />
-              急上昇
-            </HStack>
-          </p.button>
-          <p.button className={sideBarButton}>
-            <HStack>
-              <Icon icon="mdi:star-outline" />
-              お気に入り
-            </HStack>
-          </p.button>
+          <p.a className={sideBarButton} href="#recommend">
+            <IconText icon="mdi:thumb-up">おすすめ</IconText>
+          </p.a>
+          <p.a className={sideBarButton} href="#trending">
+            <IconText icon="mdi:chart-line-variant">急上昇</IconText>
+          </p.a>
+          <p.a className={sideBarButton} href="#stars">
+            <IconText icon="mdi:star-outline">お気に入り</IconText>
+          </p.a>
         </VStack>
 
         <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
@@ -263,47 +255,40 @@ function PC({
 
       <VStack
         display="block"
-        gap={8}
+        gap="20"
+        pl="20"
         mdDown={{
           display: "none",
         }}
         w="calc(100dvw - 410px)"
       >
-        <p.div pl={8} w="auto">
-          <HorizontalScrolling title="おすすめ">
-            <HStack gap={40} w="auto">
-              <ProjectCardRenderer
-                projectsMapper={(projects) => projects.reverse()}
-                swrProjects={swrProjects}
-                title="おすすめ"
-              />
-            </HStack>
-          </HorizontalScrolling>
-        </p.div>
-
-        <p.div pl={8} py={8} w="auto">
-          <HorizontalScrolling title="急上昇">
-            <HStack gap={40} w="auto">
-              <ProjectCardRenderer
-                projectsMapper={(projects) => projects.reverse()}
-                swrProjects={swrProjects}
-                title="急上昇"
-              />
-            </HStack>
-          </HorizontalScrolling>
-        </p.div>
-
-        <p.div pl={8} py={8} w="auto">
-          <HorizontalScrolling title="お気に入り">
-            <HStack gap={40} w="auto">
-              <ProjectCardRenderer
-                projectsMapper={(projects) => projects.reverse()}
-                swrProjects={swrProjects}
-                title="お気に入り"
-              />
-            </HStack>
-          </HorizontalScrolling>
-        </p.div>
+        <HorizontalScrolling title="おすすめ">
+          <HStack gap="40" id="recommend">
+            <ProjectCardRenderer
+              projectsMapper={(projects) => projects.reverse()}
+              swrProjects={swrProjects}
+              title="おすすめ"
+            />
+          </HStack>
+        </HorizontalScrolling>
+        <HorizontalScrolling title="急上昇">
+          <HStack gap="40" id="trending">
+            <ProjectCardRenderer
+              projectsMapper={(projects) => projects.reverse()}
+              swrProjects={swrProjects}
+              title="急上昇"
+            />
+          </HStack>
+        </HorizontalScrolling>
+        <HorizontalScrolling title="お気に入り">
+          <HStack gap="40" id="stars">
+            <ProjectCardRenderer
+              projectsMapper={(projects) => projects.reverse()}
+              swrProjects={swrProjects}
+              title="お気に入り"
+            />
+          </HStack>
+        </HorizontalScrolling>
       </VStack>
     </p.div>
   );

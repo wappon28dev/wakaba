@@ -5,9 +5,9 @@ import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { ICON } from "@/assets/icon";
-import { type Project } from "@/lib/classes/project";
+import { Project } from "@/lib/classes/project";
 import { Pledge } from "@/lib/classes/project/pledge";
-import { fetchAddressFromLocation } from "@/lib/services/address";
+import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
 import { notifyErrorInToast } from "@/lib/utils/toast";
@@ -31,7 +31,9 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
   );
 
   const swrAddr = useSWRImmutable(
-    swrAbout.data?.referenced.sponsorData != null ? `${key}-addr` : null,
+    swrAbout.data?.referenced.sponsorData != null
+      ? `project-${key}-addr`
+      : null,
     async () => {
       const loc = swrAbout.data?.referenced.sponsorData;
       if (loc == null) return undefined;
@@ -40,7 +42,7 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
       return (
         await fetchAddressFromLocation({ lat, lon }).mapErr((e) => {
           notifyErrorInToast(
-            "swrLocation",
+            "swrAddr",
             new Error("Failed to fetch addr", { cause: e }),
             "住所の取得中にエラーが発生しました",
           );
@@ -84,24 +86,16 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
           .with(S.Success, ({ data: { Feature } }) => {
             const addr = Feature.at(0)?.Property.AddressElement;
             const referenced = swrAbout.data?.referenced;
+            if (addr == null || referenced == null) return null;
 
-            if (referenced == null) return null;
-            const addrStr = match(project.calcStatus(referenced))
-              .with("wakaba", () => `${addr?.at(2)?.Name}周辺`)
-              .otherwise(() => addr?.at(2)?.Name ?? addr?.at(3)?.Name ?? "");
             return (
               <>
                 <Icon icon="bi:geo-alt-fill" />
-                <p.p>{addrStr}</p.p>
+                <p.p>{addr2str(addr, Project.calcStatus(referenced))}</p.p>
               </>
             );
           })
-          .with(S.Error, ({ error }) => {
-            notifyErrorInToast(
-              "swrLocation",
-              new Error(error as string),
-              "住所の取得中にエラーが発生しました",
-            );
+          .with(S.Error, () => {
             return (
               <p.p color="wkb.secondary">
                 住所の取得中にエラーが発生しました

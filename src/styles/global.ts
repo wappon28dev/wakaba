@@ -7,6 +7,7 @@ export const globalCss: GlobalStyleObject = {
     fontFeatureSettings: "'plat'",
     fontFamily: "sans",
     scrollBehavior: "smooth",
+    scrollPaddingTop: "120px",
 
     fontSize: {
       base: "large",

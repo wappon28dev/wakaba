@@ -37,5 +37,14 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     appid: env.YAHOO_REV_GEO_API_KEY,
   });
 
-  return await fetch(`${url}?${params.toString()}`);
+  const response = await fetch(`${url}?${params.toString()}`);
+
+  const modifiedHeaders = new Headers(response.headers);
+  modifiedHeaders.set("Cache-Control", "public, max-age=3600");
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: modifiedHeaders,
+  });
 };
