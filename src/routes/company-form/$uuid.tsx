@@ -185,6 +185,38 @@ export const Route = createFileRoute("/company-form/$uuid")({
       triggerDisable = false;
     }
 
+    errors.description != null &&
+      toaster.error({
+        id: "description",
+        title: "エラー",
+        description: "プロジェクトの説明を入力してください",
+      });
+
+    const errorMessages = {
+      description: "プロジェクトの説明を入力してください",
+      deadline: "募集終了時期を入力してください",
+      location: "建築予定地を入力してください",
+      motivation: "モチベーションを入力してください",
+      title_1000: "タイトルを入力してください",
+      title_3000: "タイトルを入力してください",
+      title_5000: "タイトルを入力してください",
+      description_1000: "説明を入力してください",
+      description_3000: "説明を入力してください",
+      description_5000: "説明を入力してください",
+      amountOfMoney: "目標金額を入力してください",
+    };
+
+    Object.entries(errors).forEach(([key, value]) => {
+      if (value != null || value !== undefined || value !== "" || value !== 0) {
+        toaster.error({
+          id: key,
+          title: "エラー",
+          description: errorMessages[key as keyof typeof errorMessages],
+        });
+        triggerDisable = true;
+      }
+    });
+
     const onSubmit: SubmitHandler<CompanyForm> = (temp: CompanyForm) => {
       setFormData(temp);
       console.log(temp);
@@ -230,19 +262,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <Field.Textarea
                       className={textArea.textarea}
                       {...register("description", { required: true })}
-                      onChange={(e) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          description: e.target.value,
-                        }));
-                      }}
                     />
-                    {errors.description != null &&
-                      toaster.error({
-                        id: "description",
-                        title: "エラー",
-                        description: "プロジェクトの説明を入力してください",
-                      })}
                   </Field.Root>
                 </p.div>
                 <p.div
@@ -277,19 +297,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         <DatePicker.Input
                           className={datePicker.input}
                           {...register("deadline", { required: true })}
-                          onChange={(e) => {
-                            setFormData((prev) => ({
-                              ...prev,
-                              deadline: e.target.value,
-                            }));
-                          }}
                         />
-                        {errors.deadline != null &&
-                          toaster.error({
-                            id: "deadline",
-                            title: "エラー",
-                            description: "募集終了時期を入力してください",
-                          })}
                         <DatePicker.Trigger className={datePicker.trigger}>
                           📅
                         </DatePicker.Trigger>
@@ -469,19 +477,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       <Field.Input
                         className={textArea.input}
                         {...register("location", { required: true })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            location: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.location != null &&
-                        toaster.error({
-                          id: "location",
-                          title: "エラー",
-                          description: "建築予定地を入力してください",
-                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -502,19 +498,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <Field.Textarea
                       className={textArea.textarea}
                       {...register("motivation", { required: true })}
-                      onChange={(e) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          motivation: e.target.value,
-                        }));
-                      }}
                     />
-                    {errors.motivation != null &&
-                      toaster.error({
-                        id: "motivation",
-                        title: "エラー",
-                        description: "モチベーションを入力してください",
-                      })}
                   </Field.Root>
                 </p.div>
               </p.div>
@@ -561,19 +545,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       <Field.Input
                         className={textArea.input}
                         {...register(`title_1000`, { required: true })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            title_1000: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.title_1000 != null &&
-                        toaster.error({
-                          id: "title_1000",
-                          title: "エラー",
-                          description: "タイトルを入力してください",
-                        })}
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
                       説明
@@ -584,19 +556,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         {...register(`description_1000`, {
                           required: true,
                         })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            description_1000: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.description_1000 != null &&
-                        toaster.error({
-                          id: "description_1000",
-                          title: "エラー",
-                          description: "説明を入力してください",
-                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -616,19 +576,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       <Field.Input
                         className={textArea.input}
                         {...register(`title_3000`, { required: true })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            title_3000: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.title_3000 != null &&
-                        toaster.error({
-                          id: "title_3000",
-                          title: "エラー",
-                          description: "タイトルを入力してください",
-                        })}
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
                       説明
@@ -639,19 +587,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         {...register(`description_3000`, {
                           required: true,
                         })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            description_3000: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.description_3000 != null &&
-                        toaster.error({
-                          id: "description_3000",
-                          title: "エラー",
-                          description: "説明を入力してください",
-                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -671,19 +607,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       <Field.Input
                         className={textArea.input}
                         {...register(`title_5000`, { required: true })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            title_5000: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.title_5000 != null &&
-                        toaster.error({
-                          id: "title_5000",
-                          title: "エラー",
-                          description: "タイトルを入力してください",
-                        })}
                     </Field.Root>
                     <p.p fontSize="md" pb={2} pt={10}>
                       説明
@@ -694,19 +618,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         {...register(`description_5000`, {
                           required: true,
                         })}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            description_5000: e.target.value,
-                          }));
-                        }}
                       />
-                      {errors.description_5000 != null &&
-                        toaster.error({
-                          id: "description_5000",
-                          title: "エラー",
-                          description: "説明を入力してください",
-                        })}
                     </Field.Root>
                   </p.div>
                 </p.div>
@@ -728,19 +640,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <NumberInput.Input
                       className={numberInput.input}
                       {...register("amountOfMoney", { required: true })}
-                      onChange={(e) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          amountOfMoney: Number(e.target.value),
-                        }));
-                      }}
                     />
-                    {errors.amountOfMoney != null &&
-                      toaster.error({
-                        id: "amountOfMoney",
-                        title: "エラー",
-                        description: "目標金額を入力してください",
-                      })}
                     <p.p fontSize="4xl" fontWeight="bold" pl={3} pr={5}>
                       円
                     </p.p>
@@ -798,6 +698,29 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         <p.p fontSize="xl">{formData.location}</p.p>
                         <p.p fontSize="xl">{formData.motivation}</p.p>
                         <p.p fontSize="xl">{formData.amountOfMoney}</p.p>
+                        <Dialog.Trigger
+                          className={dialog.trigger}
+                          disabled={triggerDisable}
+                        >
+                          <HStack
+                            _hover={{
+                              transform: "scale(1.05)",
+                              transition: "transform 0.1s",
+                            }}
+                            alignContent="center"
+                            bg="wkb.primary"
+                            color="wkb-neutral.0"
+                            display="flex"
+                            justify="center"
+                            mb={4}
+                            p={2}
+                            rounded="md"
+                          >
+                            <Button color="wkb-bg" fontSize="2xl" type="submit">
+                              <div role="button">変更を適用</div>
+                            </Button>
+                          </HStack>
+                        </Dialog.Trigger>
                       </p.div>
                     )}
                   </Dialog.Content>
