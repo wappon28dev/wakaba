@@ -183,14 +183,8 @@ export const Route = createFileRoute("/company-form/$uuid")({
       formData.description_5000 !== ""
     ) {
       triggerDisable = false;
+      console.log(formData);
     }
-
-    errors.description != null &&
-      toaster.error({
-        id: "description",
-        title: "エラー",
-        description: "プロジェクトの説明を入力してください",
-      });
 
     const errorMessages = {
       description: "プロジェクトの説明を入力してください",
@@ -205,7 +199,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
       description_5000: "説明を入力してください",
       amountOfMoney: "目標金額を入力してください",
     };
-
     Object.entries(errors).forEach(([key, value]) => {
       if (value != null || value !== undefined || value !== "" || value !== 0) {
         toaster.error({
@@ -219,7 +212,10 @@ export const Route = createFileRoute("/company-form/$uuid")({
 
     const onSubmit: SubmitHandler<CompanyForm> = (temp: CompanyForm) => {
       setFormData(temp);
+
+      // eslint-disable-next-line no-console
       console.log(temp);
+      // eslint-disable-next-line no-console
       console.log(formData);
     };
 
@@ -296,7 +292,9 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       <DatePicker.Control className={datePicker.control}>
                         <DatePicker.Input
                           className={datePicker.input}
-                          {...register("deadline", { required: true })}
+                          {...register("deadline", {
+                            required: true,
+                          })}
                         />
                         <DatePicker.Trigger className={datePicker.trigger}>
                           📅
@@ -639,7 +637,10 @@ export const Route = createFileRoute("/company-form/$uuid")({
                   <NumberInput.Root className={numberInput.root}>
                     <NumberInput.Input
                       className={numberInput.input}
-                      {...register("amountOfMoney", { required: true })}
+                      {...register("amountOfMoney", {
+                        required: true,
+                        pattern: /^[0-9]*$/,
+                      })}
                     />
                     <p.p fontSize="4xl" fontWeight="bold" pl={3} pr={5}>
                       円
@@ -687,6 +688,8 @@ export const Route = createFileRoute("/company-form/$uuid")({
                         (typeof value === "number" && value === 0),
                     ) ? null : (
                       <p.div>
+                        <p.h1 fontSize="2xl">以下の内容が変更されます</p.h1>
+
                         <p.p fontSize="xl">{formData.description}</p.p>
                         <p.p fontSize="xl">{formData.title_1000}</p.p>
                         <p.p fontSize="xl">{formData.title_3000}</p.p>
