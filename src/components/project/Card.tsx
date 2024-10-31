@@ -1,39 +1,53 @@
 import { Icon } from "@iconify/react";
+import { ResultAsync } from "neverthrow";
 import { styled as p, HStack, VStack } from "panda/jsx";
-
 import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { ICON } from "@/assets/icon";
+import { type Project } from "@/lib/classes/project";
+import { Pledge } from "@/lib/classes/project/pledge";
 import { fetchAddressFromLocation } from "@/lib/services/address";
 import { S } from "@/lib/utils/patterns";
+import { notifyTableErrorInToast } from "@/lib/utils/table";
 import { notifyErrorInToast } from "@/lib/utils/toast";
 
-export function ProjectCard({
-  name,
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  key_visual,
-  location,
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  amount_of_money,
-  status,
-}: {
-  name: string;
-  location: {
-    lat: number;
-    lon: number;
-  };
-  amount_of_money: number;
-  status: "wakaba" | "tsubomi" | "hana";
-  key_visual: string;
-}): ReactElement {
-  const swrLocation = useSWRImmutable("location", async () =>
+export function ProjectCard({ project }: { project: Project }): ReactElement {
+  const { name, key_visual } = project.data;
+  const key = `project-${project.data.project_id}`;
+
+  const swrAbout = useSWRImmutable(key, async () =>
     (
-      await fetchAddressFromLocation({
-        lat: location.lat,
-        lon: location.lon,
-      })
+      await ResultAsync.combine([
+        project.resolveRelations(),
+        project.resolveReferenced(),
+      ])
+        .map(([resolved, referenced]) => ({
+          resolved,
+          referenced,
+        }))
+        .mapErr(notifyTableErrorInToast("swrProjectAbout"))
     )._unsafeUnwrap(),
+  );
+
+  const swrAddr = useSWRImmutable(
+    swrAbout.data?.referenced.sponsorData != null ? `${key}-addr` : null,
+    async () => {
+      const loc = swrAbout.data?.referenced.sponsorData;
+      if (loc == null) return undefined;
+      const [lon, lat] = loc.data.location.coordinates;
+
+      return (
+        await fetchAddressFromLocation({ lat, lon }).mapErr((e) => {
+          notifyErrorInToast(
+            "swrLocation",
+            new Error("Failed to fetch addr", { cause: e }),
+            "住所の取得中にエラーが発生しました",
+          );
+          return e;
+        })
+      )._unsafeUnwrap();
+    },
   );
 
   return (
@@ -55,21 +69,24 @@ export function ProjectCard({
           h="1/2"
           objectFit="cover"
           rounded="md"
-          src={key_visual}
+          src={key_visual ?? ""}
           w="100%"
         />
       </p.div>
       <HStack gap="1">
-        {match(swrLocation)
+        {match(swrAddr)
           .with(S.Loading, () => (
             <>
               <Icon icon="svg-spinners:ring-resize" />
               <p.p>住所を取得中...</p.p>
             </>
           ))
-          .with(S.Success, ({ data }) => {
-            const addr = data.Feature.at(0)?.Property.AddressElement;
-            const addrStr = match(status)
+          .with(S.Success, ({ data: { Feature } }) => {
+            const addr = Feature.at(0)?.Property.AddressElement;
+            const referenced = swrAbout.data?.referenced;
+
+            if (referenced == null) return null;
+            const addrStr = match(project.calcStatus(referenced))
               .with("wakaba", () => `${addr?.at(2)?.Name}周辺`)
               .otherwise(() => addr?.at(2)?.Name ?? addr?.at(3)?.Name ?? "");
             return (
@@ -96,17 +113,31 @@ export function ProjectCard({
       <p.p flex="1" fontSize="2xl" minH="3em">
         {name}
       </p.p>
-      <p.p fontSize="md">現在金額 ￥{amount_of_money}</p.p>
+      <p.p fontSize="md">
+        現在金額 ￥
+        {match(swrAbout)
+          .with(S.Success, ({ data: { referenced } }) =>
+            Pledge.calcTotalAmountOfMoney(referenced.pledges),
+          )
+          .otherwise(() => "---")}
+      </p.p>
       <HStack justifyContent="space-between" w="100%">
         <HStack>
           <Icon height="1.5em" icon="mdi:star-outline" />
           <Icon height="1.5em" icon="mdi:share-variant" />
         </HStack>
         <p.div alignItems="baseline" ml="auto">
-          <Icon
-            height={status === "hana" ? "2rem" : "1.5rem"}
-            icon={ICON[status]}
-          />
+          {match(swrAbout)
+            .with(S.Success, ({ data: { referenced } }) => {
+              const status = project.calcStatus(referenced);
+              return (
+                <Icon
+                  height={status === "hana" ? "2rem" : "1.5rem"}
+                  icon={ICON[status]}
+                />
+              );
+            })
+            .otherwise(() => null)}
         </p.div>
       </HStack>
     </VStack>

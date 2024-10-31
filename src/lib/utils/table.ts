@@ -27,13 +27,15 @@ export abstract class Table<
   Config extends TableConfig,
   Schema extends object,
   SchemaResolved extends object = Schema,
+  SchemaReferenced extends object = Schema,
 > {
   constructor(
     public data: Schema,
     protected config: Config,
   ) {}
 
-  public resolveRelations?(): ResultAsync<SchemaResolved, TableError>;
+  public resolveRelations?(): TableResult<SchemaResolved>;
+  public resolveReferenced?(): TableResult<SchemaReferenced>;
 
   static transformError(
     this: void,
@@ -136,5 +138,6 @@ export function notifyTableErrorInToast(parentCaller: string) {
       message,
       hint,
     );
+    return tableError;
   };
 }

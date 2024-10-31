@@ -45,7 +45,12 @@ type SchemaReferenced = {
 
 type ProjectStatus = "wakaba" | "tsubomi" | "hana";
 
-export class Project extends Table<typeof config, Schema, SchemaResolved> {
+export class Project extends Table<
+  typeof config,
+  Schema,
+  SchemaResolved,
+  SchemaReferenced
+> {
   constructor(data: Schema) {
     super(data, config);
   }
@@ -58,10 +63,7 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
       return "wakaba" as const;
     }
 
-    const totalPledge = pledges.reduce(
-      (acc, pledge) => acc + pledge.data.amount_of_money,
-      0,
-    );
+    const totalPledge = Pledge.calcTotalAmountOfMoney(pledges);
 
     if (totalPledge >= sponsorData.data.target_amount_of_money) {
       return "hana" as const;
@@ -90,7 +92,7 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
       .mapErr(this.transformError("resolveRelations"));
   }
 
-  public resolveReferenced(): TableResult<SchemaReferenced> {
+  public override resolveReferenced(): TableResult<SchemaReferenced> {
     const sponsorData = ResultAsync.fromSafePromise(
       supabase
         .from("sponsor_data")

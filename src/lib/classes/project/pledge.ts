@@ -51,4 +51,11 @@ export class Pledge extends Table<typeof config, Schema, SchemaResolved> {
       }))
       .mapErr(this.transformError("resolveRelations"));
   }
+
+  static calcTotalAmountOfMoney(pledges: Pledge[]): number {
+    return pledges.reduce(
+      (acc, pledge) => acc + pledge.data.amount_of_money,
+      0,
+    );
+  }
 }

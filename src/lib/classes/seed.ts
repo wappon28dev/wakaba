@@ -8,6 +8,7 @@ import {
   type TableConfig,
   type TableSchemaOf,
   type TableResult,
+  type Location,
 } from "@/types/table";
 import { type Override } from "@/types/utils";
 
@@ -18,21 +19,7 @@ const config = {
   displayName: "シード",
 } as const satisfies TableConfig;
 
-type Schema = Override<
-  Table2schema<typeof config>,
-  {
-    location: {
-      type: "Point";
-      crs: {
-        type: "name";
-        properties: {
-          name: string;
-        };
-      };
-      coordinates: [number, number];
-    };
-  }
->;
+type Schema = Override<Table2schema<typeof config>, { location: Location }>;
 type SchemaResolvedData = Schema & {
   sower: TableSchemaOf<Sower>;
   category: TableSchemaOf<Category>;

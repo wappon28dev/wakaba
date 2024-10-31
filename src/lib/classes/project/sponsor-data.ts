@@ -8,7 +8,9 @@ import {
   type TableConfig,
   type TableSchemaOf,
   type TableResult,
+  type Location,
 } from "@/types/table";
+import { type Override } from "@/types/utils";
 
 const config = {
   className: "SponsorData",
@@ -17,7 +19,7 @@ const config = {
   displayName: "支援情報",
 } as const satisfies TableConfig;
 
-type Schema = Table2schema<typeof config>;
+type Schema = Override<Table2schema<typeof config>, { location: Location }>;
 type SchemaResolvedData = Schema & {
   project: TableSchemaOf<Project>;
   sponsor: TableSchemaOf<Sponsor>;

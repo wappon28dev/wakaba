@@ -7,6 +7,7 @@ import {
   type TableSchemaOf,
   type Table2schema,
   type TableConfig,
+  type Zone,
 } from "@/types/table";
 import { type Override } from "@/types/utils";
 
@@ -17,21 +18,7 @@ const config = {
   displayName: "区域",
 } as const satisfies TableConfig;
 
-type Schema = Override<
-  Table2schema<typeof config>,
-  {
-    zone: {
-      type: "Polygon";
-      crs: {
-        type: "name";
-        properties: {
-          name: string;
-        };
-      };
-      coordinates: [[Array<[number, number]>]];
-    };
-  }
->;
+type Schema = Override<Table2schema<typeof config>, { zone: Zone }>;
 
 export class Territory extends Table<typeof config, Schema> {
   constructor(data: Schema) {
