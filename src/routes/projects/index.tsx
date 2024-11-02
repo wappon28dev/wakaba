@@ -1,8 +1,7 @@
 import { Tabs } from "@ark-ui/react";
-import { Icon } from "@iconify/react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { css } from "panda/css";
-import { Center, Flex, Grid, HStack, styled as p, VStack } from "panda/jsx";
+import { Center, HStack, styled as p, VStack } from "panda/jsx";
 import { useEffect, useState, type ReactElement } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,16 +9,15 @@ import { type SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { ErrorScreen } from "@/components/ErrorScreen";
-import { HorizontalScrolling } from "@/components/HorizontalScrolling";
+import { IconText } from "@/components/IconText";
 import { Loading } from "@/components/Loading";
 import { cvaButton } from "@/components/cva/Button";
+import { GridLayout } from "@/components/cva/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
 import { svaTabs } from "@/components/sva/tabs";
 import { Project } from "@/lib/classes/project";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
-import { IconText } from "@/components/IconText";
-import { GridLayout } from "@/components/cva/GridLayout";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -63,13 +61,13 @@ function SideBar(): ReactElement {
   return (
     <VStack
       bg="wkb-neutral.100"
-      position="sticky"
-      top="75px"
-      minW="400px"
       display={{
         base: "none",
         xl: "block",
       }}
+      minW="400px"
+      position="sticky"
+      top="75px"
     >
       <p.div bg="wkb.primary" h="100%" p={4}>
         <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
@@ -128,8 +126,8 @@ function ProjectsCarousel({
         base: "block",
         xl: "none",
       }}
-      w="100vw"
       style={{ width }}
+      w="100vw"
     >
       <Swiper
         autoplay
@@ -158,12 +156,12 @@ function ProjectsCarousel({
             data.map((project) => (
               <SwiperSlide
                 key={project.data.project_id}
-                zoom={false}
                 className={css({
                   paddingInline: "10px",
                   display: "grid!",
                   h: "unset!",
                 })}
+                zoom={false}
               >
                 <ProjectCard project={project} />
               </SwiperSlide>
@@ -282,8 +280,8 @@ function PC({
         base: "none",
         xl: "block",
       }}
-      w="100%"
       gap="20"
+      w="100%"
     >
       <p.p fontSize="5xl" fontWeight="bold" p={36} textAlign="center">
         Projects

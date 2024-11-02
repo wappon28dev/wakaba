@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { createFileRoute } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
 import { Flex, Grid, HStack, styled as p, VStack } from "panda/jsx";
-import { type ReactElement, useEffect, useMemo, useState } from "react";
+import { type ReactElement, useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { FruitCard } from "./-components/Fruit";
@@ -20,9 +20,11 @@ import { Project } from "@/lib/classes/project";
 import { Pledge } from "@/lib/classes/project/pledge";
 import { type SponsorData } from "@/lib/classes/project/sponsor-data";
 import { type Territory } from "@/lib/classes/territory";
-import { getCapitalizedStr, waitMs } from "@/lib/utils";
+import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
+import { getCapitalizedStr } from "@/lib/utils";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
+import { notifyErrorInToast } from "@/lib/utils/toast";
 import {
   type TableBrandedId,
   type TableError,
@@ -30,8 +32,6 @@ import {
   type TableSchemaResolvedOf,
 } from "@/types/table";
 import { type Nullable } from "@/types/utils";
-import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
-import { notifyErrorInToast } from "@/lib/utils/toast";
 
 type ProjectData<T = Project> = {
   project: T;
@@ -131,9 +131,9 @@ function SponsorInfo({
   return (
     <Dialog.Root>
       <Dialog.Trigger
+        asChild
         className={dialog.trigger}
         disabled={projectStatus === "wakaba"}
-        asChild
       >
         <Button
           alignContent="center"
@@ -269,9 +269,9 @@ function GridDetailInfo({
       <Grid
         gap={4}
         gridTemplateColumns="2fr 1.4fr"
+        maxW="1200px"
         mdDown={{ gridTemplateColumns: "1fr" }}
         p={4}
-        maxW="1200px"
       >
         <VStack>
           <img
@@ -324,13 +324,11 @@ function GridDetailInfo({
                   </>
                 );
               })
-              .with(S.Error, () => {
-                return (
+              .with(S.Error, () => (
                   <p.p color="wkb.secondary">
                     住所の取得中にエラーが発生しました
                   </p.p>
-                );
-              })
+                ))
               .otherwise(() => null)}
           </HStack>
 
@@ -457,14 +455,14 @@ export const Route = createFileRoute("/projects/$uuid")({
         <GridDetailInfo projectData={projectData} />
 
         <p.div bg="wkb.primary" display="flex" justifyContent="center" w="100%">
-          <VStack alignItems="center" w="100%" maxW="1200px">
+          <VStack alignItems="center" maxW="1200px" w="100%">
             <p.p
               color="wkb-neutral.0"
               fontSize="2xl"
               fontWeight="bold"
+              id="pledge"
               mb={4}
               mt={20}
-              id="pledge"
             >
               支援する
             </p.p>

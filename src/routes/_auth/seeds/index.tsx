@@ -1,34 +1,26 @@
+import { HoverCard, Portal } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
-import { Grid, styled as p, VStack } from "panda/jsx";
-import { Fragment, type ReactElement } from "react";
+import { css } from "panda/css";
+import { styled as p, VStack } from "panda/jsx";
+import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
+import { match } from "ts-pattern";
 import { SownSeed } from "./-components/SownSeed";
+import { SownSeedInline } from "./-components/SownSeedInline";
 import { ErrorScreen } from "@/components/ErrorScreen";
 import { Loading } from "@/components/Loading";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
+import { GridLayout } from "@/components/cva/GridLayout";
+import { ProjectCard } from "@/components/project/Card";
+import { svaHoverCard } from "@/components/sva/hover-card";
 import { Project } from "@/lib/classes/project";
 import { type Seed } from "@/lib/classes/seed";
 import { Sower } from "@/lib/classes/sower";
-import { notifyTableErrorInToast } from "@/lib/utils/table";
-import {
-  type TableBrandedId,
-  type TableError,
-  type TableResult,
-} from "@/types/table";
-import { Territory } from "@/lib/classes/territory";
-import { match } from "ts-pattern";
 import { S } from "@/lib/utils/patterns";
-import { ProjectCard } from "@/components/project/Card";
-import { GridLayout } from "@/components/cva/GridLayout";
-import { HoverCard, Portal } from "@ark-ui/react";
-import { svaHoverCard } from "@/components/sva/hover-card";
-import { SownSeedInline } from "./-components/SownSeedInline";
-import { css } from "panda/css";
-
-const formatCreatedAt = (createdAt: string): string =>
-  new Date(createdAt).toLocaleDateString("ja-JP");
+import { notifyTableErrorInToast } from "@/lib/utils/table";
+import { type TableError, type TableResult } from "@/types/table";
 
 function fetchProjectSeedsMap(
   seeds: Seed[],
@@ -86,13 +78,13 @@ function ProjectsBySeeds({ seeds }: { seeds: Seed[] }): ReactElement {
       <GridLayout>
         {Array.from(data).map(([pj, sd]) => (
           <HoverCard.Root
-            positioning={{ placement: "right", gutter: 8 }}
-            openDelay={200}
-            closeDelay={200}
             key={pj.data.project_id}
+            closeDelay={200}
+            openDelay={200}
+            positioning={{ placement: "right", gutter: 8 }}
           >
             <HoverCard.Trigger asChild>
-              <GridLayout textAlign="start" h="100%">
+              <GridLayout h="100%" textAlign="start">
                 <ProjectCard project={pj} />
               </GridLayout>
             </HoverCard.Trigger>
@@ -110,17 +102,17 @@ function ProjectsBySeeds({ seeds }: { seeds: Seed[] }): ReactElement {
                     <HoverCard.ArrowTip className={cls.arrowTip} />
                   </HoverCard.Arrow>
                   <VStack>
-                    <p.h3 fontWeight="bold" fontSize="md">
+                    <p.h3 fontSize="md" fontWeight="bold">
                       元となったあなたのシード
                     </p.h3>
                     <VStack
                       alignItems="start"
-                      w="300px"
                       maxH="300px"
                       overflowY="auto"
+                      w="300px"
                     >
                       {sd.map((s) => (
-                        <SownSeedInline seed={s} key={s.data.seed_id} />
+                        <SownSeedInline key={s.data.seed_id} seed={s} />
                       ))}
                     </VStack>
                   </VStack>
@@ -174,7 +166,7 @@ export const Route = createFileRoute("/_auth/seeds/")({
     </Expanded>
   ),
   component: () => {
-    const { sower, seeds } = Route.useLoaderData();
+    const { seeds } = Route.useLoaderData();
 
     return (
       <Expanded alignItems="start">

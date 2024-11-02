@@ -1,9 +1,7 @@
-import { Icon } from "@iconify/react";
 import { styled as p, HStack, VStack } from "panda/jsx";
 import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
-import { ICON } from "@/assets/icon";
 import { IconText } from "@/components/IconText";
 import { type Seed } from "@/lib/classes/seed";
 import { S } from "@/lib/utils/patterns";
@@ -31,14 +29,14 @@ export function SownSeedInline({ seed }: { seed: Seed }): ReactElement {
         <p.div
           bg="wkb-brown"
           color="wkb.bg"
+          fontSize="sm"
           lineClamp="1"
+          px="2"
+          py="1"
           rounded="lg"
           textAlign="center"
           textOverflow="ellipsis"
           transition="background-color 0.2s"
-          px="2"
-          py="1"
-          fontSize="sm"
         >
           <p.p minH="1lh">
             {match(swrSeedAbout)
@@ -49,11 +47,11 @@ export function SownSeedInline({ seed }: { seed: Seed }): ReactElement {
           </p.p>
         </p.div>
         <IconText
+          containerProps={{ gap: "1" }}
           icon="uil:calender"
           iconProps={{ height: "1em" }}
-          containerProps={{ gap: "1" }}
         >
-          {new Date(seed.data.created_at).toLocaleDateString()}
+          {new Date(seed.data.created_at).toLocaleDateString("ja-JP")}
         </IconText>
       </HStack>
       <p.p fontSize="lg" lineClamp="3">

@@ -1,9 +1,12 @@
 import { Icon } from "@iconify/react";
+import { Link } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
+import { css } from "panda/css";
 import { styled as p, HStack, Grid } from "panda/jsx";
 import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
+import { IconText } from "@/components/IconText";
 import { ICON } from "@/assets/icon";
 import { Project } from "@/lib/classes/project";
 import { Pledge } from "@/lib/classes/project/pledge";
@@ -11,9 +14,6 @@ import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
 import { notifyErrorInToast } from "@/lib/utils/toast";
-import { IconText } from "../IconText";
-import { css } from "panda/css";
-import { createFileRoute, Link } from "@tanstack/react-router";
 
 export function ProjectCard({ project }: { project: Project }): ReactElement {
   const { name, key_visual } = project.data;
@@ -57,24 +57,24 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
 
   return (
     <Link
-      to="/projects/$uuid"
       params={{ uuid: project.data.project_id }}
       style={{
         // NOTE: 親の Grid display を子に通す.
         display: "contents",
       }}
+      to="/projects/$uuid"
     >
       <Grid
-        className="project-card"
         _hover={{ shadow: "md" }}
-        transition="box-shadow 0.1s"
         alignItems="start"
         bg="wkb-neutral.0"
+        className="project-card"
+        gap="1"
         gridRow="span 5"
         gridTemplateRows="subgrid"
         p="4"
         rounded="md"
-        gap="1"
+        transition="box-shadow 0.1s"
       >
         <p.img
           alt="Placeholder"
@@ -84,9 +84,6 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
           w="100%"
         />
         <p.div
-          w="100%"
-          pt="2"
-          minH="1lh"
           className={css({
             "& > div": {
               gap: "0",
@@ -96,6 +93,9 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
               },
             },
           })}
+          minH="1lh"
+          pt="2"
+          w="100%"
         >
           {match(swrAddr)
             .with(S.Loading, () => (
@@ -121,7 +121,7 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
             ))
             .otherwise(() => null)}
         </p.div>
-        <p.p fontSize="2xl" lineClamp="2" fontWeight="bold">
+        <p.p fontSize="2xl" fontWeight="bold" lineClamp="2">
           {name}
         </p.p>
         <p.p fontSize="md">
