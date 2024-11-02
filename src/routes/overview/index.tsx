@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Box, styled as p } from "panda/jsx";
+import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
 import { Map } from "./-components/Map";
 
@@ -24,7 +24,7 @@ type projects = {
   target_amount_of_money: number;
 };
 
-export const Route = createFileRoute("/_auth/overview/")({
+export const Route = createFileRoute("/overview/")({
   component: () => {
     const [currentUserLocation, setCurrentUserLocation] = useState<{
       lat: number | null;
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_auth/overview/")({
           });
         });
       }
-    });
+    }, []);
 
     const projects: projects[] = [
       {
@@ -82,11 +82,14 @@ export const Route = createFileRoute("/_auth/overview/")({
     ];
 
     return (
-      <p.div>
-        <Box maxH="100dvh" width="100%">
-          <Map currentUserLocation={currentUserLocation} projects={projects} />
-        </Box>
-        周辺で募集中のプロジェクト (この下にプロジェクトカードを並べるか悩み中)
+      <p.div
+        h="calc(100dvh-200px)"
+        w="100dvw"
+        xlDown={{
+          h: "50%",
+        }}
+      >
+        <Map currentUserLocation={currentUserLocation} projects={projects} />
       </p.div>
     );
   },

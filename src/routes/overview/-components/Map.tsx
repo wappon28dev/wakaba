@@ -68,7 +68,7 @@ export function Map({
   return (
     <MapContainer
       center={[currentUserLocation.lat, currentUserLocation.lng]}
-      style={{ height: "500px", width: "100%" }}
+      style={{ height: "400px", width: "100%" }}
       zoom={16}
       zoomControl={false}
     >
