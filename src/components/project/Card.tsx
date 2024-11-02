@@ -1,7 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Link } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
-import { css } from "panda/css";
 import { styled as p, HStack, Grid } from "panda/jsx";
 import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
@@ -83,23 +82,14 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
           src={key_visual ?? ""}
           w="100%"
         />
-        <p.div
-          className={css({
-            "& > div": {
-              gap: "0",
-              "& > svg": {
-                height: "1.2em",
-                width: "1.2em",
-              },
-            },
-          })}
-          minH="1lh"
-          pt="2"
-          w="100%"
-        >
+        <p.div minH="1lh" pt="2" w="100%">
           {match(swrAddr)
             .with(S.Loading, () => (
-              <IconText icon="svg-spinners:ring-resize">
+              <IconText
+                containerProps={{ gap: "1" }}
+                icon="svg-spinners:ring-resize"
+                iconProps={{ height: "1.2em" }}
+              >
                 <p.p>住所を取得中...</p.p>
               </IconText>
             ))
@@ -109,7 +99,11 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
               if (addr == null || referenced == null) return null;
 
               return (
-                <IconText icon="mdi:map-marker-outline">
+                <IconText
+                  containerProps={{ gap: "1" }}
+                  icon="mdi:map-marker-outline"
+                  iconProps={{ height: "1.2em" }}
+                >
                   <p.p>{addr2str(addr, Project.calcStatus(referenced))}</p.p>
                 </IconText>
               );
@@ -124,11 +118,12 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
         <p.p fontSize="2xl" fontWeight="bold" lineClamp="2" minH="1lh">
           {name}
         </p.p>
-        <p.p fontSize="md">
-          現在金額 ￥
+        <p.p fontSize="md" minH="1lh">
           {match(swrProjectAbout)
-            .with(S.Success, ({ data: { referenced } }) =>
-              Pledge.calcTotalAmountOfMoney(referenced.pledges),
+            .with(
+              S.Success,
+              ({ data: { referenced } }) =>
+                `現在金額 ¥ ${Pledge.calcTotalAmountOfMoney(referenced.pledges).toLocaleString()}`,
             )
             .otherwise(() => "---")}
         </p.p>

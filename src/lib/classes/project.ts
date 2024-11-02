@@ -138,7 +138,7 @@ export class Project extends Table<
     }));
   }
 
-  static toBeDistinct(
+  static getUniqueMap(
     projects: Project[],
   ): Map<TableBrandedId<Project>, Project> {
     const uniqueProjectMap = new Map<TableBrandedId<Project>, Project>();

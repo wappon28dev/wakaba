@@ -5,9 +5,6 @@ export const svaHoverCard = sva({
   className: "hover-card",
   slots: hoverCardAnatomy.keys(),
   base: {
-    trigger: {
-      // display: "contents",
-    },
     content: {
       p: "2",
       bg: "wkb.bg",

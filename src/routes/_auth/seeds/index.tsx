@@ -34,7 +34,7 @@ function fetchProjectSeedsMap(
 
   // p(t) と, s_n とのペア (1-N)
   return seedsTerritoriesProjects.map((sTsPs) => {
-    const uniqueProjects = Project.toBeDistinct(
+    const uniqueProjects = Project.getUniqueMap(
       Array.from(sTsPs).flatMap(([, { projects }]) => projects),
     );
 
