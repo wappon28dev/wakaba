@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
 import { Grid, styled as p, VStack } from "panda/jsx";
-import { type ReactElement } from "react";
+import { Fragment, type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { SownSeed } from "./-components/SownSeed";
 import { ErrorScreen } from "@/components/ErrorScreen";
@@ -22,6 +22,10 @@ import { match } from "ts-pattern";
 import { S } from "@/lib/utils/patterns";
 import { ProjectCard } from "@/components/project/Card";
 import { GridLayout } from "@/components/cva/GridLayout";
+import { HoverCard, Portal } from "@ark-ui/react";
+import { svaHoverCard } from "@/components/sva/hover-card";
+import { SownSeedInline } from "./-components/SownSeedInline";
+import { css } from "panda/css";
 
 const formatCreatedAt = (createdAt: string): string =>
   new Date(createdAt).toLocaleDateString("ja-JP");
@@ -61,6 +65,8 @@ function fetchProjectSeedsMap(
 }
 
 function ProjectsBySeeds({ seeds }: { seeds: Seed[] }): ReactElement {
+  const cls = svaHoverCard();
+
   const swrProjectSeedsPairs = useSWRImmutable(
     "project-seeds-pairs",
     async () =>
@@ -78,8 +84,50 @@ function ProjectsBySeeds({ seeds }: { seeds: Seed[] }): ReactElement {
     .with(S.Loading, () => <Loading>芽が出た種を読み込み中…</Loading>)
     .with(S.Success, ({ data }) => (
       <GridLayout>
-        {Array.from(data).map(([pj, seeds]) => (
-          <ProjectCard project={pj} key={pj.data.project_id} />
+        {Array.from(data).map(([pj, sd]) => (
+          <HoverCard.Root
+            positioning={{ placement: "right", gutter: 8 }}
+            openDelay={200}
+            closeDelay={200}
+            key={pj.data.project_id}
+          >
+            <HoverCard.Trigger asChild>
+              <GridLayout textAlign="start" h="100%">
+                <ProjectCard project={pj} />
+              </GridLayout>
+            </HoverCard.Trigger>
+            <Portal>
+              <HoverCard.Positioner>
+                <HoverCard.Content
+                  className={css(svaHoverCard.raw().content, {
+                    display: {
+                      base: "none",
+                      md: "block",
+                    },
+                  })}
+                >
+                  <HoverCard.Arrow className={cls.arrow}>
+                    <HoverCard.ArrowTip className={cls.arrowTip} />
+                  </HoverCard.Arrow>
+                  <VStack>
+                    <p.h3 fontWeight="bold" fontSize="md">
+                      元となったあなたのシード
+                    </p.h3>
+                    <VStack
+                      alignItems="start"
+                      w="300px"
+                      maxH="300px"
+                      overflowY="auto"
+                    >
+                      {sd.map((s) => (
+                        <SownSeedInline seed={s} key={s.data.seed_id} />
+                      ))}
+                    </VStack>
+                  </VStack>
+                </HoverCard.Content>
+              </HoverCard.Positioner>
+            </Portal>
+          </HoverCard.Root>
         ))}
       </GridLayout>
     ))

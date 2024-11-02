@@ -2,15 +2,14 @@ import { Tabs } from "@ark-ui/react";
 import { Icon } from "@iconify/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { css } from "panda/css";
-import { Center, Flex, HStack, styled as p, VStack } from "panda/jsx";
-import { type ReactElement } from "react";
+import { Center, Flex, Grid, HStack, styled as p, VStack } from "panda/jsx";
+import { useEffect, useState, type ReactElement } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { type SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { ErrorScreen } from "@/components/ErrorScreen";
-import { GridLayout } from "@/components/GridLayout";
 import { HorizontalScrolling } from "@/components/HorizontalScrolling";
 import { Loading } from "@/components/Loading";
 import { cvaButton } from "@/components/cva/Button";
@@ -19,12 +18,13 @@ import { svaTabs } from "@/components/sva/tabs";
 import { Project } from "@/lib/classes/project";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
+import { IconText } from "@/components/IconText";
+import { GridLayout } from "@/components/cva/GridLayout";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { IconText } from "@/components/IconText";
 
 function ProjectCardRenderer({
   swrProjects,
@@ -45,12 +45,7 @@ function ProjectCardRenderer({
     ))
     .with(S.Success, ({ data }) =>
       projectsMapper(data).map((project) => (
-        <Link
-          key={project.data.project_id}
-          to={`/projects/${project.data.project_id}`}
-        >
-          <ProjectCard project={project} />
-        </Link>
+        <ProjectCard key={project.data.project_id} project={project} />
       )),
     )
     .otherwise(() => <ErrorScreen title={`${title}の取得`} />);
@@ -68,18 +63,15 @@ function SideBar(): ReactElement {
   return (
     <VStack
       bg="wkb-neutral.100"
-      display="block"
       position="sticky"
       top="75px"
-      w="400px"
-      xlDown={{
-        display: "none",
-      }}
-      xlTo2xl={{
-        display: "none",
+      minW="400px"
+      display={{
+        base: "none",
+        xl: "block",
       }}
     >
-      <p.div bg="wkb.primary" h="100%" p={4} w="100%">
+      <p.div bg="wkb.primary" h="100%" p={4}>
         <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
           みんなのプロジェクト
         </p.p>
@@ -116,16 +108,28 @@ function ProjectsCarousel({
 }: {
   swrProjects: SWRResponse<Project[]>;
 }): ReactElement {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(document.body.clientWidth);
+    window.addEventListener("resize", () => {
+      setWidth(document.body.clientWidth);
+    });
+    return () => {
+      window.removeEventListener("resize", () => {
+        setWidth(document.body.clientWidth);
+      });
+    };
+  }, []);
+
   return (
     <p.div
-      display="none"
-      w="100dvw"
-      xlDown={{
-        display: "block",
+      display={{
+        base: "block",
+        xl: "none",
       }}
-      xlTo2xl={{
-        display: "block",
-      }}
+      w="100vw"
+      style={{ width }}
     >
       <Swiper
         autoplay
@@ -152,10 +156,16 @@ function ProjectsCarousel({
           ))
           .with(S.Success, ({ data }) =>
             data.map((project) => (
-              <SwiperSlide key={project.data.project_id} zoom={false}>
-                <Link to={`/projects/${project.data.project_id}`}>
-                  <ProjectCard project={project} />
-                </Link>
+              <SwiperSlide
+                key={project.data.project_id}
+                zoom={false}
+                className={css({
+                  paddingInline: "10px",
+                  display: "grid!",
+                  h: "unset!",
+                })}
+              >
+                <ProjectCard project={project} />
               </SwiperSlide>
             )),
           )
@@ -174,67 +184,92 @@ function ProjectsTabs({
 }): ReactElement {
   const tabs = svaTabs();
   return (
-    <Flex
-      display="none"
-      justify="center"
-      xlDown={{
-        display: "block",
-      }}
-      xlTo2xl={{
-        display: "block",
+    <p.div
+      display={{
+        base: "block",
+        xl: "none",
       }}
     >
-      <p.div w="100%">
-        <Tabs.Root className={tabs.root} defaultValue="recommend">
-          <Tabs.List className={tabs.list}>
-            <Tabs.Trigger className={tabs.trigger} value="recommend">
-              <p.p fontWeight="bold">おすすめ</p.p>
-            </Tabs.Trigger>
-            <Tabs.Trigger className={tabs.trigger} value="trending">
-              <p.p fontWeight="bold">急上昇</p.p>
-            </Tabs.Trigger>
-            <Tabs.Trigger className={tabs.trigger} value="stared">
-              <p.p fontWeight="bold">すべて</p.p>
-            </Tabs.Trigger>
-          </Tabs.List>
-          <Tabs.Content value="recommend">
-            <GridLayout>
-              <ProjectCardRenderer
-                projectsMapper={
-                  // TODO: .sort(async (a, b) => await b.data.amount_of_money - a.data.amount_of_money)
-                  (projects) => projects
-                }
-                swrProjects={swrProjects}
-              />
-            </GridLayout>
-          </Tabs.Content>
-          <Tabs.Content value="trending">
-            <GridLayout>
-              <ProjectCardRenderer
-                projectsMapper={
-                  // TODO: .sort((a, b) => Number(a.category_id) - Number(b.category_id))
-                  (projects) => projects
-                }
-                swrProjects={swrProjects}
-              />
-            </GridLayout>
-          </Tabs.Content>
-          <Tabs.Content value="stared">
-            <GridLayout>
-              <ProjectCardRenderer
-                projectsMapper={
-                  // TODO: .sort((a, b) => Number(a.category_id) - Number(b.category_id))
-                  (projects) => projects
-                }
-                swrProjects={swrProjects}
-              />
-            </GridLayout>
-          </Tabs.Content>
-        </Tabs.Root>
-      </p.div>
-    </Flex>
+      <Tabs.Root className={tabs.root} defaultValue="recommend">
+        <Tabs.List
+          className={css(svaTabs.raw().list, {
+            pb: "20px",
+          })}
+        >
+          <Tabs.Trigger className={tabs.trigger} value="recommend">
+            <p.p fontWeight="bold">おすすめ</p.p>
+          </Tabs.Trigger>
+          <Tabs.Trigger className={tabs.trigger} value="trending">
+            <p.p fontWeight="bold">急上昇</p.p>
+          </Tabs.Trigger>
+          <Tabs.Trigger className={tabs.trigger} value="stared">
+            <p.p fontWeight="bold">すべて</p.p>
+          </Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="recommend">
+          <GridLayout>
+            <ProjectCardRenderer
+              projectsMapper={
+                // TODO: .sort(async (a, b) => await b.data.amount_of_money - a.data.amount_of_money)
+                (projects) => projects
+              }
+              swrProjects={swrProjects}
+            />
+          </GridLayout>
+        </Tabs.Content>
+        <Tabs.Content value="trending">
+          <GridLayout>
+            <ProjectCardRenderer
+              projectsMapper={
+                // TODO: .sort((a, b) => Number(a.category_id) - Number(b.category_id))
+                (projects) => projects
+              }
+              swrProjects={swrProjects}
+            />
+          </GridLayout>
+        </Tabs.Content>
+        <Tabs.Content value="stared">
+          <GridLayout>
+            <ProjectCardRenderer
+              projectsMapper={
+                // TODO: .sort((a, b) => Number(a.category_id) - Number(b.category_id))
+                (projects) => projects
+              }
+              swrProjects={swrProjects}
+            />
+          </GridLayout>
+        </Tabs.Content>
+      </Tabs.Root>
+    </p.div>
   );
 }
+
+const cardContainerStyle = css({
+  gap: "20",
+  "& > div": {
+    ml: "100px",
+    mdDown: {
+      display: "none",
+    },
+    alignItems: "start",
+    maxW: "100%",
+    "& > h2": {
+      fontSize: "2xl",
+      fontWeight: "bold",
+    },
+    // wrapper
+    "& > div": {
+      display: "grid",
+      gap: "10",
+      overflowX: "auto",
+      maxW: "calc(98dvw - 500px)",
+      gridAutoFlow: "column",
+      "& .project-card": {
+        w: "400px",
+      },
+    },
+  },
+});
 
 function PC({
   swrProjects,
@@ -242,55 +277,51 @@ function PC({
   swrProjects: SWRResponse<Project[]>;
 }): ReactElement {
   return (
-    <p.div
-      display="block"
-      mdDown={{
-        display: "none",
+    <VStack
+      display={{
+        base: "none",
+        xl: "block",
       }}
       w="100%"
+      gap="20"
     >
       <p.p fontSize="5xl" fontWeight="bold" p={36} textAlign="center">
         Projects
       </p.p>
 
-      <VStack
-        display="block"
-        gap="20"
-        pl="20"
-        mdDown={{
-          display: "none",
-        }}
-        w="calc(100dvw - 410px)"
-      >
-        <HorizontalScrolling title="おすすめ">
-          <HStack gap="40" id="recommend">
+      <VStack className={cardContainerStyle}>
+        <VStack id="recommend">
+          <p.h2>おすすめ</p.h2>
+          <p.div>
             <ProjectCardRenderer
               projectsMapper={(projects) => projects.reverse()}
               swrProjects={swrProjects}
               title="おすすめ"
             />
-          </HStack>
-        </HorizontalScrolling>
-        <HorizontalScrolling title="急上昇">
-          <HStack gap="40" id="trending">
+          </p.div>
+        </VStack>
+        <VStack id="trending">
+          <p.h2>急上昇</p.h2>
+          <p.div>
             <ProjectCardRenderer
               projectsMapper={(projects) => projects.reverse()}
               swrProjects={swrProjects}
               title="急上昇"
             />
-          </HStack>
-        </HorizontalScrolling>
-        <HorizontalScrolling title="お気に入り">
-          <HStack gap="40" id="stars">
+          </p.div>
+        </VStack>
+        <VStack id="stars">
+          <p.h2>お気に入り</p.h2>
+          <p.div>
             <ProjectCardRenderer
               projectsMapper={(projects) => projects.reverse()}
               swrProjects={swrProjects}
               title="お気に入り"
             />
-          </HStack>
-        </HorizontalScrolling>
+          </p.div>
+        </VStack>
       </VStack>
-    </p.div>
+    </VStack>
   );
 }
 

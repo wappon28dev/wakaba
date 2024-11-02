@@ -369,25 +369,20 @@ function GridDetailInfo({
               </Progress.Track>
             </Progress.Root>
           )}
-
-          <Button
-            my="4"
-            onClick={() => {
-              // scrollFruits();
-            }}
-            variant="filled"
-          >
-            <IconText
-              containerProps={{
-                fontSize: "lg",
-                fontWeight: "bold",
-                justifyContent: "center",
-              }}
-              icon={ICON[projectStatus]}
-            >
-              この {getCapitalizedStr(projectStatus)} を支援する
-            </IconText>
-          </Button>
+          <p.a href="#pledge" w="100%">
+            <Button my="4" variant="filled" w="100%">
+              <IconText
+                containerProps={{
+                  fontSize: "lg",
+                  fontWeight: "bold",
+                  justifyContent: "center",
+                }}
+                icon={ICON[projectStatus]}
+              >
+                この {getCapitalizedStr(projectStatus)} を支援する
+              </IconText>
+            </Button>
+          </p.a>
           <p.p fontSize="xs" fontWeight="bold" mb={4}>
             以下の意見が集まって生成されました
           </p.p>
@@ -469,6 +464,7 @@ export const Route = createFileRoute("/projects/$uuid")({
               fontWeight="bold"
               mb={4}
               mt={20}
+              id="pledge"
             >
               支援する
             </p.p>

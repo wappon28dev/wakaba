@@ -25,7 +25,6 @@ export const svaTabs = sva({
     },
     list: {
       display: "flex",
-      direction: "row",
       justifyContent: "space-between",
     },
     trigger: {
