@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { createFileRoute } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
 import { Flex, Grid, HStack, styled as p, VStack } from "panda/jsx";
-import { type ReactElement, useMemo } from "react";
+import { type ReactElement, useEffect, useMemo, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { FruitCard } from "./-components/Fruit";
@@ -20,7 +20,7 @@ import { Project } from "@/lib/classes/project";
 import { Pledge } from "@/lib/classes/project/pledge";
 import { type SponsorData } from "@/lib/classes/project/sponsor-data";
 import { type Territory } from "@/lib/classes/territory";
-import { getCapitalizedStr } from "@/lib/utils";
+import { getCapitalizedStr, waitMs } from "@/lib/utils";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
 import {
@@ -67,7 +67,7 @@ function ReferencedSeedsInfo({
 
   return match(swrSeeds)
     .with(S.Loading, () => (
-      <Expanded bg="wkb-neutral.100" items="center" h="300px">
+      <Expanded bg="wkb-neutral.100" items="center">
         <Loading>
           <p.p>参照されたシードを取得中…</p.p>
         </Loading>
@@ -378,10 +378,12 @@ function GridDetailInfo({
             variant="filled"
           >
             <IconText
-              fontSize="lg"
-              fontWeight="bold"
+              containerProps={{
+                fontSize: "lg",
+                fontWeight: "bold",
+                justifyContent: "center",
+              }}
               icon={ICON[projectStatus]}
-              justifyContent="center"
             >
               この {getCapitalizedStr(projectStatus)} を支援する
             </IconText>
@@ -389,9 +391,9 @@ function GridDetailInfo({
           <p.p fontSize="xs" fontWeight="bold" mb={4}>
             以下の意見が集まって生成されました
           </p.p>
-          <p.p maxH="300px" overflowY="auto" py="5">
+          <p.div h="300px" overflowY="auto" py="5">
             <ReferencedSeedsInfo territory={resolved.territory} />
-          </p.p>
+          </p.div>
           <SponsorInfo
             projectStatus={projectStatus}
             sponsorData={referenced.sponsorData}
@@ -438,6 +440,7 @@ export const Route = createFileRoute("/projects/$uuid")({
   },
   errorComponent: ({ error }) => {
     const { cause } = error as Error & { cause: TableError };
+    // eslint-disable-next-line no-console
     console.error(cause);
 
     return (
@@ -448,15 +451,12 @@ export const Route = createFileRoute("/projects/$uuid")({
   },
   pendingComponent: () => (
     <Expanded items="center">
-      <Loading>
-        <p.p>プロジェクトを読み込み中…</p.p>
-      </Loading>
+      <Loading>プロジェクトを読み込み中…</Loading>
     </Expanded>
   ),
   component: () => {
     const projectData = Route.useLoaderData();
     const { referenced } = projectData;
-
     return (
       <p.div>
         <GridDetailInfo projectData={projectData} />

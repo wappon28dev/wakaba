@@ -12,6 +12,7 @@ import {
   type TableConfig,
   type Table2schema,
   type TableResult,
+  type TableBrandedId,
 } from "@/types/table";
 import { type Nullable, type Override } from "@/types/utils";
 
@@ -135,5 +136,15 @@ export class Project extends Table<
       sponsorData: s,
       ...o,
     }));
+  }
+
+  static toBeDistinct(
+    projects: Project[],
+  ): Map<TableBrandedId<Project>, Project> {
+    const uniqueProjectMap = new Map<TableBrandedId<Project>, Project>();
+    projects.forEach((pj) => {
+      uniqueProjectMap.set(pj.data.project_id, pj);
+    });
+    return uniqueProjectMap;
   }
 }

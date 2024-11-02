@@ -461,6 +461,16 @@ export type Database = {
           sower_id: string;
         }>;
       };
+      get_territories_within_seed: {
+        Args: {
+          seed_id: string;
+        };
+        Returns: Array<{
+          created_at: string;
+          territory_id: string;
+          zone: unknown;
+        }>;
+      };
     };
     Enums: {
       [_ in never]: never;

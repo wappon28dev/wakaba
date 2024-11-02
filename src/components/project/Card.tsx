@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { ResultAsync } from "neverthrow";
-import { styled as p, HStack, VStack } from "panda/jsx";
+import { styled as p, HStack, Grid } from "panda/jsx";
 import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
@@ -11,12 +11,15 @@ import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
 import { S } from "@/lib/utils/patterns";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
 import { notifyErrorInToast } from "@/lib/utils/toast";
+import { IconText } from "../IconText";
+import { css } from "panda/css";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export function ProjectCard({ project }: { project: Project }): ReactElement {
   const { name, key_visual } = project.data;
   const key = `project-${project.data.project_id}`;
 
-  const swrAbout = useSWRImmutable(key, async () =>
+  const swrProjectAbout = useSWRImmutable(key, async () =>
     (
       await ResultAsync.combine([
         project.resolveRelations(),
@@ -31,11 +34,11 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
   );
 
   const swrAddr = useSWRImmutable(
-    swrAbout.data?.referenced.sponsorData != null
+    swrProjectAbout.data?.referenced.sponsorData != null
       ? `project-${key}-addr`
       : null,
     async () => {
-      const loc = swrAbout.data?.referenced.sponsorData;
+      const loc = swrProjectAbout.data?.referenced.sponsorData;
       if (loc == null) return undefined;
       const [lon, lat] = loc.data.location.coordinates;
 
@@ -53,87 +56,102 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
   );
 
   return (
-    <VStack
-      alignItems="start"
-      bg="wkb-neutral.0"
-      fontSize="sm"
-      m={4}
-      mdDown={{ minW: "90%" }}
-      minH={300}
-      minW={600}
-      p={4}
-      rounded="md"
-      w="20%"
+    <Link
+      to="/projects/$uuid"
+      params={{ uuid: project.data.project_id }}
+      style={{
+        // NOTE: 親の Grid display を子に通す.
+        display: "contents",
+      }}
     >
-      <p.div position="relative">
+      <Grid
+        className="project-card"
+        _hover={{ shadow: "md" }}
+        transition="box-shadow 0.1s"
+        alignItems="start"
+        bg="wkb-neutral.0"
+        gridRow="span 5"
+        gridTemplateRows="subgrid"
+        p="4"
+        rounded="md"
+        gap="1"
+      >
         <p.img
           alt="Placeholder"
-          h="1/2"
           objectFit="cover"
           rounded="md"
           src={key_visual ?? ""}
           w="100%"
         />
-      </p.div>
-      <HStack gap="1">
-        {match(swrAddr)
-          .with(S.Loading, () => (
-            <>
-              <Icon icon="svg-spinners:ring-resize" />
-              <p.p>住所を取得中...</p.p>
-            </>
-          ))
-          .with(S.Success, ({ data: { Feature } }) => {
-            const addr = Feature.at(0)?.Property.AddressElement;
-            const referenced = swrAbout.data?.referenced;
-            if (addr == null || referenced == null) return null;
+        <p.div
+          w="100%"
+          pt="2"
+          minH="1lh"
+          className={css({
+            "& > div": {
+              gap: "0",
+              "& > svg": {
+                height: "1.2em",
+                width: "1.2em",
+              },
+            },
+          })}
+        >
+          {match(swrAddr)
+            .with(S.Loading, () => (
+              <IconText icon="svg-spinners:ring-resize">
+                <p.p>住所を取得中...</p.p>
+              </IconText>
+            ))
+            .with(S.Success, ({ data: { Feature } }) => {
+              const addr = Feature.at(0)?.Property.AddressElement;
+              const referenced = swrProjectAbout.data?.referenced;
+              if (addr == null || referenced == null) return null;
 
-            return (
-              <>
-                <Icon icon="bi:geo-alt-fill" />
-                <p.p>{addr2str(addr, Project.calcStatus(referenced))}</p.p>
-              </>
-            );
-          })
-          .with(S.Error, () => {
-            return (
+              return (
+                <IconText icon="mdi:map-marker-outline">
+                  <p.p>{addr2str(addr, Project.calcStatus(referenced))}</p.p>
+                </IconText>
+              );
+            })
+            .with(S.Error, () => (
               <p.p color="wkb.secondary">
                 住所の取得中にエラーが発生しました
               </p.p>
-            );
-          })
-          .otherwise(() => null)}
-      </HStack>
-      <p.p flex="1" fontSize="2xl" minH="3em">
-        {name}
-      </p.p>
-      <p.p fontSize="md">
-        現在金額 ￥
-        {match(swrAbout)
-          .with(S.Success, ({ data: { referenced } }) =>
-            Pledge.calcTotalAmountOfMoney(referenced.pledges),
-          )
-          .otherwise(() => "---")}
-      </p.p>
-      <HStack justifyContent="space-between" w="100%">
-        <HStack>
-          <Icon height="1.5em" icon="mdi:star-outline" />
-          <Icon height="1.5em" icon="mdi:share-variant" />
-        </HStack>
-        <p.div alignItems="baseline" ml="auto">
-          {match(swrAbout)
-            .with(S.Success, ({ data: { referenced } }) => {
-              const status = project.calcStatus(referenced);
-              return (
-                <Icon
-                  height={status === "hana" ? "2rem" : "1.5rem"}
-                  icon={ICON[status]}
-                />
-              );
-            })
+            ))
             .otherwise(() => null)}
         </p.div>
-      </HStack>
-    </VStack>
+        <p.p fontSize="2xl" lineClamp="2" fontWeight="bold">
+          {name}
+        </p.p>
+        <p.p fontSize="md">
+          現在金額 ￥
+          {match(swrProjectAbout)
+            .with(S.Success, ({ data: { referenced } }) =>
+              Pledge.calcTotalAmountOfMoney(referenced.pledges),
+            )
+            .otherwise(() => "---")}
+        </p.p>
+        <HStack justifyContent="space-between" w="100%">
+          <HStack>
+            <Icon height="1.5em" icon="mdi:star-outline" />
+            <Icon height="1.5em" icon="mdi:share-variant" />
+          </HStack>
+          <p.div alignItems="baseline" ml="auto">
+            {match(swrProjectAbout)
+              .with(S.Success, ({ data: { referenced } }) => {
+                const status = project.calcStatus(referenced);
+                return (
+                  <Icon
+                    height={status === "hana" ? "2rem" : "1.5rem"}
+                    icon={ICON[status]}
+                  />
+                );
+              })
+              .otherwise(() => null)}
+          </p.div>
+        </HStack>
+      </Grid>
+    </Link>
   );
 }
