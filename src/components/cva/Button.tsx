@@ -18,6 +18,10 @@ export const Button = p("button", {
     p: "2",
     px: "4",
     rounded: "md",
+    _hover: {
+      transform: "scale(1.05)",
+    },
+    transition: "transform 0.1s",
   },
   variants: {
     variant: {

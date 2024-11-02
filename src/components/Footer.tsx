@@ -40,7 +40,8 @@ export function Footer(): ReactElement {
       flexDirection="column"
       fontSize="sm"
       gap="5"
-      p="4"
+      px="4"
+      py="16"
     >
       <HStack gap="5">
         <a
@@ -70,7 +71,8 @@ export function Footer(): ReactElement {
             rounded: "md",
           },
         })}
-        gap="5"
+        gap="1"
+        mdDown={{ mr: "1" }}
         ml="5" // NOTE: 中央揃えの見た目のため, 右にずらしている
       >
         <LinkText currentLoc={resolvedLocation} to="/projects" />

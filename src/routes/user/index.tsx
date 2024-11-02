@@ -54,7 +54,7 @@ function NotAuthenticated(): ReactElement {
         <p.p>まずはログインしてみましょう！</p.p>
         <Button
           onClick={() => {
-            setRedirectTo(redirectTo);
+            setRedirectTo(redirectTo ?? "/");
             void User.signIn();
           }}
           variant="filled"

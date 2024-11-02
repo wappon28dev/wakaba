@@ -3,16 +3,20 @@
   "version": "0.2",
   "ignorePaths": [
     "node_modules",
-    "/package.json"
+    "src/types/supabase.gen.ts",
+    "/package.json",
+    "src/assets/svg"
   ],
   "words": [
     "Aichi",
     "backburger",
     "cloudflare",
     "consts",
+    "DKKI",
     "envsafe",
     "fontsource",
     "gemini",
+    "hana",
     "Hstack",
     "iconify",
     "instagram",
@@ -21,11 +25,13 @@
     "lottiefiles",
     "neverthrow",
     "pandacss",
+    "PGRST",
+    "Postgrest",
     "supabase",
     "SUPABASE",
     "tanstack",
+    "tsubomi",
     "vstack",
-    "Vstack",
     "wakaba"
   ]
 }

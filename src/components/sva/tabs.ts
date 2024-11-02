@@ -30,15 +30,15 @@ export const svaTabs = sva({
     },
     trigger: {
       cursor: "pointer",
-      px: "6",
-      borderBottom: "2px solid",
+      borderBottom: { base: "5px solid", md: "3px solid" },
       borderColor: "wkb.text",
       fontWeight: "bold",
       _selected: {
         color: "wkb-green",
-        borderBottom: "2px solid",
+        borderBottom: { base: "5px solid", md: "3px solid" },
         borderColor: "wkb.primary",
       },
+      fontSize: { base: "2xl", md: "lg" },
     },
   },
 });
