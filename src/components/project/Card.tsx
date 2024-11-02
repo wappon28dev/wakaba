@@ -8,14 +8,15 @@ import { ICON } from "@/assets/icon";
 import { fetchAddressFromLocation } from "@/lib/services/address";
 import { S } from "@/lib/utils/patterns";
 import { notifyErrorInToast } from "@/lib/utils/toast";
-import { ICON } from "@/assets/icon";
 
 export function ProjectCard({
   name,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   key_visual,
   location,
-  amountOfMoney,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  amount_of_money,
+  status,
 }: {
   name: string;
   location: {
