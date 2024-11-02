@@ -132,11 +132,8 @@ function ProjectsCarousel({
       <Swiper
         autoplay
         breakpoints={{
-          640: {
-            slidesPerView: 1,
-          },
           768: {
-            slidesPerView: 2,
+            slidesPerView: 3,
           },
         }}
         centeredSlides
@@ -181,6 +178,7 @@ function ProjectsTabs({
   swrProjects: SWRResponse<Project[]>;
 }): ReactElement {
   const tabs = svaTabs();
+
   return (
     <p.div
       display={{
@@ -283,7 +281,7 @@ function PC({
       gap="20"
       w="100%"
     >
-      <p.p fontSize="5xl" fontWeight="bold" p={36} textAlign="center">
+      <p.p fontSize="5xl" fontWeight="bold" p="36" textAlign="center" w="100%">
         Projects
       </p.p>
 
@@ -340,6 +338,7 @@ export const Route = createFileRoute("/projects/")({
         <VStack alignItems="center" w="auto">
           {/* スマホビュー */}
           <ProjectsCarousel swrProjects={swrProjects} />
+
           <ProjectsTabs swrProjects={swrProjects} />
 
           {/* PCビュー */}

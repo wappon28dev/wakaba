@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { createFileRoute } from "@tanstack/react-router";
 import { ResultAsync } from "neverthrow";
 import { Flex, Grid, HStack, styled as p, VStack } from "panda/jsx";
+import { token } from "panda/tokens";
 import { type ReactElement, useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
@@ -74,7 +75,13 @@ function ReferencedSeedsInfo({
       </Expanded>
     ))
     .with(S.Success, ({ data }) => (
-      <VStack gap="4" w="100%">
+      <VStack
+        fadeIn="5"
+        gap="4"
+        overflowY="auto"
+        style={{ height: `calc(300px - ${token("spacing.10")})` }}
+        w="100%"
+      >
         {data.map((seed) => (
           <p.div
             key={seed.data.seed_id}
@@ -325,10 +332,10 @@ function GridDetailInfo({
                 );
               })
               .with(S.Error, () => (
-                  <p.p color="wkb.secondary">
-                    住所の取得中にエラーが発生しました
-                  </p.p>
-                ))
+                <p.p color="wkb.secondary">
+                  住所の取得中にエラーが発生しました
+                </p.p>
+              ))
               .otherwise(() => null)}
           </HStack>
 
@@ -381,10 +388,10 @@ function GridDetailInfo({
               </IconText>
             </Button>
           </p.a>
-          <p.p fontSize="xs" fontWeight="bold" mb={4}>
+          <p.p fontSize="xs" fontWeight="bold">
             以下の意見が集まって生成されました
           </p.p>
-          <p.div h="300px" overflowY="auto" py="5">
+          <p.div h="300px" py="5">
             <ReferencedSeedsInfo territory={resolved.territory} />
           </p.div>
           <SponsorInfo

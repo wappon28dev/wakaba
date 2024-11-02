@@ -20,7 +20,6 @@ export function SownSeed({ seed }: { seed: Seed }): ReactElement {
 
   return (
     <p.div
-      _hover={{ shadow: "md" }}
       alignItems="start"
       bg="wkb-neutral.0"
       display="grid"

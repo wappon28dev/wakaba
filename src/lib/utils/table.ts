@@ -21,6 +21,7 @@ import {
 export const queryErrorCode = {
   NO_ROWS_FOUND: "PGRST116",
   ALREADY_EXISTS: "23505",
+  INVALID_INPUT: "22P02",
 };
 
 export abstract class Table<
@@ -54,6 +55,10 @@ export abstract class Table<
         .with(queryErrorCode.ALREADY_EXISTS, () => ({
           type: "ALREADY_EXISTS" as const,
           message: message ?? `この${config.displayName}は既に存在します`,
+        }))
+        .with(queryErrorCode.INVALID_INPUT, () => ({
+          type: "INVALID_INPUT" as const,
+          message: message ?? `不正な${config.displayName}IDです`,
         }))
         .otherwise(() => ({
           type: "UNKNOWN",

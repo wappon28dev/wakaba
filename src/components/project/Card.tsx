@@ -6,8 +6,8 @@ import { styled as p, HStack, Grid } from "panda/jsx";
 import { type ReactElement } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
-import { IconText } from "@/components/IconText";
 import { ICON } from "@/assets/icon";
+import { IconText } from "@/components/IconText";
 import { Project } from "@/lib/classes/project";
 import { Pledge } from "@/lib/classes/project/pledge";
 import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
@@ -121,7 +121,7 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
             ))
             .otherwise(() => null)}
         </p.div>
-        <p.p fontSize="2xl" fontWeight="bold" lineClamp="2">
+        <p.p fontSize="2xl" fontWeight="bold" lineClamp="2" minH="1lh">
           {name}
         </p.p>
         <p.p fontSize="md">

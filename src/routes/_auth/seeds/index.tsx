@@ -96,6 +96,26 @@ function ProjectsBySeeds({ seeds }: { seeds: Seed[] }): ReactElement {
                       base: "none",
                       md: "block",
                     },
+                    "&[data-placement='right']": {
+                      _open: {
+                        slideInX: "-3",
+                        slideInY: "0",
+                      },
+                      _closed: {
+                        slideOutX: "0",
+                        slideOutY: "0",
+                      },
+                    },
+                    "&[data-placement='left']": {
+                      _open: {
+                        slideInX: "3",
+                        slideInY: "0",
+                      },
+                      _closed: {
+                        slideOutX: "0",
+                        slideOutY: "0",
+                      },
+                    },
                   })}
                 >
                   <HoverCard.Arrow className={cls.arrow}>
