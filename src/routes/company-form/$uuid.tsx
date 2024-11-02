@@ -247,15 +247,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
                   <p.p display="inline" fontSize="xl" fontWeight="bold">
                     プロジェクトの説明
                   </p.p>
-                  <p.p
-                    color="red.500"
-                    display="inline"
-                    fontSize="xl"
-                    fontWeight="none"
-                    pl={1}
-                  >
-                    ※
-                  </p.p>
                   <Field.Root className={textArea.root}>
                     <Field.Textarea
                       className={textArea.textarea}
@@ -279,15 +270,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
                       pt={5}
                     >
                       募集終了時期
-                    </p.p>
-                    <p.p
-                      color="red.500"
-                      display="inline"
-                      fontSize="xl"
-                      fontWeight="none"
-                      pl={1}
-                    >
-                      ※
                     </p.p>
 
                     <DatePicker.Root className={datePicker.root}>
@@ -464,15 +446,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
                     <p.p display="inline" fontSize="xl" fontWeight="bold">
                       建築予定地
                     </p.p>
-                    <p.p
-                      color="red.500"
-                      display="inline"
-                      fontSize="xl"
-                      fontWeight="none"
-                      pl={1}
-                    >
-                      ※
-                    </p.p>
                     <Field.Root className={textArea.root}>
                       <Field.Input
                         className={textArea.input}
@@ -484,15 +457,6 @@ export const Route = createFileRoute("/company-form/$uuid")({
                 <p.div py={5}>
                   <p.p display="inline" fontSize="xl" fontWeight="bold">
                     モチベーション
-                  </p.p>
-                  <p.p
-                    color="red.500"
-                    display="inline"
-                    fontSize="xl"
-                    fontWeight="none"
-                    pl={1}
-                  >
-                    ※
                   </p.p>
                   <Field.Root className={textArea.root}>
                     <Field.Textarea
@@ -507,15 +471,7 @@ export const Route = createFileRoute("/company-form/$uuid")({
               <p.h1 display="inline" fontSize="4xl" fontWeight="bold">
                 返礼品
               </p.h1>
-              <p.p
-                color="red.500"
-                display="inline"
-                fontSize="xl"
-                fontWeight="none"
-                pl={1}
-              >
-                ※
-              </p.p>
+
               <p.div
                 display="grid"
                 gap={5}
@@ -624,17 +580,18 @@ export const Route = createFileRoute("/company-form/$uuid")({
                 </p.div>
               </p.div>
             </p.div>
-            <p.div background="wkb.primary">
+            <p.div background="wkb.primary" pt={12}>
               <p.div px={10}>
                 <p.h1
                   color="wkb.bg"
+                  display="inline"
                   fontSize="4xl"
                   fontWeight="bold"
                   pb={5}
-                  pt={16}
                 >
                   目標金額
                 </p.h1>
+
                 <p.div pb={20} pt={12} px={16}>
                   <NumberInput.Root className={numberInput.root}>
                     <NumberInput.Input
