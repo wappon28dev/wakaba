@@ -11,7 +11,7 @@ export function SownSeedInline({ seed }: { seed: Seed }): ReactElement {
   const swrSeedAbout = useSWRImmutable(`seed-${seed.data.seed_id}`, async () =>
     (
       await seed
-        .resolveRelations()
+        .resolveRelation()
         .mapErr(notifyTableErrorInToast("swrSeedAbout"))
     )._unsafeUnwrap(),
   );

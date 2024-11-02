@@ -22,35 +22,35 @@ const config = {
 } as const satisfies TableConfig;
 
 type Schema = Override<Table2schema<typeof config>, { location: Location }>;
-type SchemaResolvedData = Schema & {
+type SchemaRelationData = Schema & {
   sower: TableSchemaOf<Sower>;
   category: TableSchemaOf<Category>;
 };
-type SchemaResolved = Override<
-  SchemaResolvedData,
+type SchemaRelation = Override<
+  SchemaRelationData,
   {
     sower: Sower;
     category: Category;
   }
 >;
 
-export class Seed extends Table<typeof config, Schema, SchemaResolved> {
+export class Seed extends Table<typeof config, Schema, SchemaRelation> {
   constructor(data: Schema) {
     super(data, config);
   }
 
   static factories = Table.getFactories(Seed, config);
 
-  public override resolveRelations(): TableResult<SchemaResolved> {
+  public override resolveRelation(): TableResult<SchemaRelation> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("seeds")
         .select("*, category:categories(*), sower:sowers(*)")
         .eq(config.primaryKeyName, this.data.seed_id)
-        .returns<SchemaResolvedData>()
+        .returns<SchemaRelationData>()
         .single(),
     )
-      .andThen(this.transform<SchemaResolvedData>)
+      .andThen(this.transform<SchemaRelationData>)
       .map((data) => ({
         ...data,
         sower: new Sower(data.sower),

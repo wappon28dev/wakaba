@@ -30,13 +30,13 @@ import {
   type TableBrandedId,
   type TableError,
   type TableSchemaReferencedOf,
-  type TableSchemaResolvedOf,
+  type TableSchemaRelationOf,
 } from "@/types/table";
 import { type Nullable } from "@/types/utils";
 
 type ProjectData<T = Project> = {
   project: T;
-  resolved: TableSchemaResolvedOf<T>;
+  relation: TableSchemaRelationOf<T>;
   referenced: TableSchemaReferencedOf<T>;
 };
 type ProjectStatus = ReturnType<Project["calcStatus"]>;
@@ -129,7 +129,7 @@ function SponsorInfo({
       if (sponsorData == null) return undefined;
       return (
         await sponsorData
-          .resolveRelations()
+          .resolveRelation()
           .mapErr(notifyTableErrorInToast("swrSponsor"))
       )._unsafeUnwrap();
     },
@@ -225,7 +225,7 @@ function GridDetailInfo({
 }: {
   projectData: ProjectData;
 }): ReactElement {
-  const { project, resolved, referenced } = projectData;
+  const { project, relation, referenced } = projectData;
   const progress = svaProgress();
 
   const swrAddr = useSWRImmutable(
@@ -392,7 +392,7 @@ function GridDetailInfo({
             以下の意見が集まって生成されました
           </p.p>
           <p.div h="300px" py="5">
-            <ReferencedSeedsInfo territory={resolved.territory} />
+            <ReferencedSeedsInfo territory={relation.territory} />
           </p.div>
           <SponsorInfo
             projectStatus={projectStatus}
@@ -422,14 +422,13 @@ export const Route = createFileRoute("/projects/$uuid")({
     const project = Project.factories.from(projectId);
     return (
       await project.andThen((pj) =>
-        ResultAsync.combine([
-          pj.resolveRelations(),
-          pj.resolveReferenced(),
-        ]).map(([resolved, referenced]) => ({
-          project: pj,
-          resolved,
-          referenced,
-        })),
+        ResultAsync.combine([pj.resolveRelation(), pj.resolveReferenced()]).map(
+          ([relation, referenced]) => ({
+            project: pj,
+            relation,
+            referenced,
+          }),
+        ),
       )
     ).match(
       (d) => d,

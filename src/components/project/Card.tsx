@@ -21,11 +21,11 @@ export function ProjectCard({ project }: { project: Project }): ReactElement {
   const swrProjectAbout = useSWRImmutable(key, async () =>
     (
       await ResultAsync.combine([
-        project.resolveRelations(),
+        project.resolveRelation(),
         project.resolveReferenced(),
       ])
-        .map(([resolved, referenced]) => ({
-          resolved,
+        .map(([relation, referenced]) => ({
+          relation,
           referenced,
         }))
         .mapErr(notifyTableErrorInToast("swrProjectAbout"))

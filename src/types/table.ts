@@ -56,7 +56,7 @@ export type TableConfigOf<T> =
   T extends Table<infer C, any, any, any> ? C : never;
 export type TableSchemaOf<T> =
   T extends Table<any, infer S, any, any> ? S : never;
-export type TableSchemaResolvedOf<T> =
+export type TableSchemaRelationOf<T> =
   T extends Table<any, any, infer S, any> ? S : never;
 export type TableSchemaReferencedOf<T> =
   T extends Table<any, any, any, infer S> ? S : never;

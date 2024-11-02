@@ -24,12 +24,12 @@ const config = {
 } as const satisfies TableConfig;
 
 type Schema = Table2schema<typeof config>;
-type SchemaResolvedData = Schema & {
+type SchemaRelationData = Schema & {
   category: TableSchemaOf<Category>;
   territory: TableSchemaOf<Territory>;
 };
-type SchemaResolved = Override<
-  SchemaResolvedData,
+type SchemaRelation = Override<
+  SchemaRelationData,
   {
     category: Category;
     territory: Territory;
@@ -49,7 +49,7 @@ type ProjectStatus = "wakaba" | "tsubomi" | "hana";
 export class Project extends Table<
   typeof config,
   Schema,
-  SchemaResolved,
+  SchemaRelation,
   SchemaReferenced
 > {
   constructor(data: Schema) {
@@ -75,16 +75,16 @@ export class Project extends Table<
 
   public calcStatus = Project.calcStatus;
 
-  public override resolveRelations(): TableResult<SchemaResolved> {
+  public override resolveRelation(): TableResult<SchemaRelation> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("projects")
         .select("*, category:categories(*), territory:territories(*)")
         .eq(config.primaryKeyName, this.data.project_id)
-        .returns<SchemaResolvedData>()
+        .returns<SchemaRelationData>()
         .single(),
     )
-      .andThen(this.transform<SchemaResolvedData>)
+      .andThen(this.transform<SchemaRelationData>)
       .map((data) => ({
         ...data,
         category: new Category(data.category),

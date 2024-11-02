@@ -27,7 +27,7 @@ export const queryErrorCode = {
 export abstract class Table<
   Config extends TableConfig,
   Schema extends object,
-  SchemaResolved extends object = Schema,
+  SchemaRelation extends object = Schema,
   SchemaReferenced extends object = Schema,
 > {
   constructor(
@@ -35,7 +35,7 @@ export abstract class Table<
     protected config: Config,
   ) {}
 
-  public resolveRelations?(): TableResult<SchemaResolved>;
+  public resolveRelation?(): TableResult<SchemaRelation>;
   public resolveReferenced?(): TableResult<SchemaReferenced>;
 
   static transformError(
