@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { styled as p } from "panda/jsx";
 import { useEffect, useState } from "react";
 import { Map } from "./-components/Map";
+import { HalfModal } from "./-components/halfModal";
 
 type projects = {
   amount_of_money: number;
@@ -83,13 +84,16 @@ export const Route = createFileRoute("/overview/")({
 
     return (
       <p.div
-        h="calc(100dvh-200px)"
-        w="100dvw"
+        h="50%"
+        position="relative"
+        w="full"
         xlDown={{
           h: "50%",
         }}
       >
         <Map currentUserLocation={currentUserLocation} projects={projects} />
+
+        <HalfModal />
       </p.div>
     );
   },
