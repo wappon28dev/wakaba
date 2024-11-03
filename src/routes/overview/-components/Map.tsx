@@ -1,48 +1,24 @@
-import { Link } from "@tanstack/react-router";
 import Leaflet from "leaflet";
-import { Box, styled as p } from "panda/jsx";
+import { ResultAsync } from "neverthrow";
+import { styled as p } from "panda/jsx";
 import { type ReactElement } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { type SWRResponse } from "swr";
+import useSWRImmutable from "swr/immutable";
+import { match } from "ts-pattern";
+import { ErrorScreen } from "@/components/ErrorScreen";
+import { type Project } from "@/lib/classes/project";
+import { S } from "@/lib/utils/patterns";
 import "leaflet/dist/leaflet.css";
+import { notifyTableErrorInToast } from "@/lib/utils/table";
 
 Leaflet.Icon.Default.imagePath =
   "//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/";
 
-type projects = {
-  amount_of_money: number;
-  comment_ids: string[];
-  created_at: string;
-  deadline: string;
-  key_visual: string | null;
-  name: string;
-  project_id: string;
-  sponsor_data_id: string | null;
-  territory_id: string;
-  fruit_ids: string[];
-  location: {
-    lat: number;
-    lng: number;
-  };
-  motivation: string;
-  report_ids: string[];
-  sponsor_id: string;
-  target_amount_of_money: number;
-};
-
-export function Map({
-  currentUserLocation,
-  projects,
-}: {
-  currentUserLocation: {
-    lat: number | null;
-    lng: number | null;
-  };
-  projects: projects[];
-}): ReactElement {
-  const currentUserIcon = new Leaflet.Icon({
+function MarkerRenderer({ project }: { project: Project }): ReactElement {
+  const projectIcon = new Leaflet.Icon({
     iconUrl:
-      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png",
     shadowUrl:
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
     iconSize: [25, 41],
@@ -51,9 +27,62 @@ export function Map({
     shadowSize: [41, 41],
   });
 
-  const projectIcon = new Leaflet.Icon({
+  const key = `project-${project.data.project_id}`;
+
+  const swrProjectAbout = useSWRImmutable(key, async () =>
+    (
+      await ResultAsync.combine([
+        project.resolveRelation(),
+        project.resolveReferenced(),
+      ])
+        .map(([relation, referenced]) => ({
+          relation,
+          referenced,
+        }))
+        .mapErr(notifyTableErrorInToast("swrProjectAbout"))
+    )._unsafeUnwrap(),
+  );
+
+  return (
+    <>
+      {match(swrProjectAbout)
+        .with(
+          S.Success,
+          ({
+            data: {
+              referenced: { sponsorData },
+            },
+          }) => (
+            <Marker
+              key={project.data.project_id}
+              icon={projectIcon}
+              position={[
+                sponsorData?.data.location.coordinates[1] ?? 0,
+                sponsorData?.data.location.coordinates[0] ?? 0,
+              ]}
+            />
+          ),
+        )
+        .otherwise(() => (
+          <p.div>住所の取得に失敗しました</p.div>
+        ))}
+    </>
+  );
+}
+
+export function Map({
+  currentUserLocation,
+  swrProjects,
+}: {
+  currentUserLocation: {
+    lat: number | null;
+    lng: number | null;
+  };
+  swrProjects: SWRResponse<Project[]>;
+}): ReactElement {
+  const currentUserIcon = new Leaflet.Icon({
     iconUrl:
-      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png",
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
     shadowUrl:
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
     iconSize: [25, 41],
@@ -87,23 +116,16 @@ export function Map({
           lng: currentUserLocation.lng,
         }}
       />
-      {projects.map((project) => (
-        <Marker
-          key={project.project_id}
-          icon={projectIcon}
-          position={[project.location.lat, project.location.lng]}
-        >
-          <Popup closeButton={false}>
-            <Link to={`/project/${project.project_id}`}>
-              <Box lineHeight="none" width={150}>
-                <p.p fontSize="xl">{project.name}</p.p>
-                <p.span>現在金額: ¥{project.amount_of_money}</p.span>
-                {project.motivation}
-              </Box>
-            </Link>
-          </Popup>
-        </Marker>
-      ))}
+      {match(swrProjects)
+        .with(S.Loading, () => <p.div>プロジェクトを読み込み中…</p.div>)
+        .with(S.Success, ({ data }) =>
+          data.map((project) => (
+            <MarkerRenderer key={project.data.project_id} project={project} />
+          )),
+        )
+        .otherwise(() => (
+          <ErrorScreen title="プロジェクトの取得" />
+        ))}
     </MapContainer>
   );
 }
