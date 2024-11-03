@@ -52,7 +52,7 @@ export const Route = createFileRoute("/overview/")({
     }, []);
 
     useEffect(() => {
-      function handleResize():void {
+      function handleResize(): void {
         if (window.innerWidth < 768) {
           setResponsiveDirection("bottom");
         } else {
@@ -118,7 +118,7 @@ export const Route = createFileRoute("/overview/")({
         <Map currentUserLocation={currentUserLocation} projects={projects} />
         <HalfModal direction={responsiveDirection}>
           <VStack maxW="600px">
-            <div className={cls.handle} />
+            {responsiveDirection === "bottom" && <div className={cls.handle} />}
             <p.p>hey!</p.p>
           </VStack>
         </HalfModal>
