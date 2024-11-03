@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { styled as p } from "panda/jsx";
+import { styled as p, VStack } from "panda/jsx";
 import { useEffect, useState } from "react";
+import { HalfModal } from "./-components/HalfModal";
 import { Map } from "./-components/Map";
-import { HalfModal } from "./-components/halfModal";
+import { svaDrawer } from "@/components/sva/drawer";
 
 type projects = {
   amount_of_money: number;
@@ -27,6 +28,10 @@ type projects = {
 
 export const Route = createFileRoute("/overview/")({
   component: () => {
+    const cls = svaDrawer({});
+    const [responsiveDirection, setResponsiveDirection] = useState<
+      "bottom" | "top" | "left" | "right"
+    >("bottom");
     const [currentUserLocation, setCurrentUserLocation] = useState<{
       lat: number | null;
       lng: number | null;
@@ -34,6 +39,7 @@ export const Route = createFileRoute("/overview/")({
       lat: null,
       lng: null,
     });
+
     useEffect(() => {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -43,6 +49,26 @@ export const Route = createFileRoute("/overview/")({
           });
         });
       }
+    }, []);
+
+    useEffect(() => {
+      function handleResize():void {
+        if (window.innerWidth < 768) {
+          setResponsiveDirection("bottom");
+        } else {
+          setResponsiveDirection("right");
+        }
+      }
+
+      handleResize();
+      window.addEventListener("resize", () => {
+        handleResize();
+      });
+      return () => {
+        window.removeEventListener("resize", () => {
+          handleResize();
+        });
+      };
     }, []);
 
     const projects: projects[] = [
@@ -85,15 +111,17 @@ export const Route = createFileRoute("/overview/")({
     return (
       <p.div
         h="50%"
-        position="relative"
-        w="full"
         xlDown={{
           h: "50%",
         }}
       >
         <Map currentUserLocation={currentUserLocation} projects={projects} />
-
-        <HalfModal />
+        <HalfModal direction={responsiveDirection}>
+          <VStack maxW="600px">
+            <div className={cls.handle} />
+            <p.p>hey!</p.p>
+          </VStack>
+        </HalfModal>
       </p.div>
     );
   },

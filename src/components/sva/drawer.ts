@@ -23,19 +23,15 @@ export const svaDrawer = sva({
       position: "fixed",
       bottom: "0",
       textAlign: "center",
-      h: "auto",
-      w: "full",
     },
     handle: {
-      margin: "auto 0",
-      w: "10rem",
+      w: "100px",
       h: "0.3rem",
       borderRadius: "full",
       backgroundColor: "wkb-neutral.900",
       marginBottom: "1rem",
       cursor: "grab",
     },
-
   },
 
   variants: {
@@ -45,6 +41,8 @@ export const svaDrawer = sva({
           top: 0,
           left: 0,
           right: 0,
+          h: "full",
+          w: "auto",
         },
       },
       bottom: {
@@ -52,6 +50,8 @@ export const svaDrawer = sva({
           bottom: 0,
           left: 0,
           right: 0,
+          h: "full",
+          w: "auto",
         },
       },
       left: {
@@ -59,6 +59,8 @@ export const svaDrawer = sva({
           left: 0,
           top: 0,
           bottom: 0,
+          h: "auto",
+          w: "full",
         },
       },
       right: {
@@ -66,6 +68,8 @@ export const svaDrawer = sva({
           right: 0,
           top: 0,
           bottom: 0,
+          h: "auto",
+          w: "full",
         },
       },
     },
