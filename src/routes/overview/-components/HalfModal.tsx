@@ -16,7 +16,7 @@ export function HalfModal({
     <Drawer.Root
       direction={direction}
       modal={false}
-      snapPoints={["600px", 0.9]}
+      snapPoints={direction === "right" ? ["768px"] : ["768px", 0.9]}
     >
       <Drawer.Trigger asChild>
         <Button>Open Drawer</Button>

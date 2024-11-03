@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { HalfModal } from "./-components/HalfModal";
 import { Map } from "./-components/Map";
 import { svaDrawer } from "@/components/sva/drawer";
+import { ProjectDetail } from "@/routes/projects/-components/ProjectDetail";
 
 type projects = {
   amount_of_money: number;
@@ -117,9 +118,13 @@ export const Route = createFileRoute("/overview/")({
       >
         <Map currentUserLocation={currentUserLocation} projects={projects} />
         <HalfModal direction={responsiveDirection}>
-          <VStack maxW="600px">
+          <VStack maxW="768px">
             {responsiveDirection === "bottom" && <div className={cls.handle} />}
-            <p.p>hey!</p.p>
+            <p.div h="100%" maxW={{ base: "auto", md: "auto" }} w="100%">
+              <ProjectDetail
+                params={{ uuid: "08a78db3-f61b-4aac-bf7c-cad2fc45ebad" }}
+              />
+            </p.div>
           </VStack>
         </HalfModal>
       </p.div>

@@ -15,7 +15,6 @@ export const svaDrawer = sva({
       zIndex: "modal",
     },
     content: {
-      padding: "1rem",
       bg: "wkb.bg-overlay",
       border: "1px solid",
       rounded: "xl",
@@ -23,12 +22,14 @@ export const svaDrawer = sva({
       position: "fixed",
       bottom: "0",
       textAlign: "center",
+      overflowY: "auto",
     },
     handle: {
+      mt: "1rem",
       w: "100px",
       h: "0.3rem",
       borderRadius: "full",
-      backgroundColor: "wkb-neutral.900",
+      backgroundColor: "wkb-neutral.700",
       marginBottom: "1rem",
       cursor: "grab",
     },
