@@ -1,3 +1,5 @@
+import { match } from "ts-pattern";
+import { type Project } from "@/lib/classes/project";
 import { fetchResultWithError, type RequestResult } from "@/lib/utils/fetch";
 
 type Param = {
@@ -140,5 +142,15 @@ export function fetchAddressFromLocation(
 
   return fetchResultWithError<Response, APIError>(
     `/address?${searchParams.toString()}`,
+    { cache: "force-cache" },
   );
+}
+
+export function addr2str(
+  addr: Response["Feature"][0]["Property"]["AddressElement"],
+  projectStatus: ReturnType<Project["calcStatus"]>,
+): string {
+  return match(projectStatus)
+    .with("wakaba", () => `${addr?.at(2)?.Name}周辺`)
+    .otherwise(() => addr?.at(2)?.Name ?? addr?.at(3)?.Name ?? "");
 }

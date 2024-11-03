@@ -80,6 +80,13 @@ export function Map({
           lng: currentUserLocation.lng,
         }}
       />
+      <Marker
+        icon={currentUserIcon}
+        position={{
+          lat: currentUserLocation.lat,
+          lng: currentUserLocation.lng,
+        }}
+      />
       {projects.map((project) => (
         <Marker
           key={project.project_id}

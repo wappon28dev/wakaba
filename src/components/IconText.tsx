@@ -1,18 +1,22 @@
 import { Icon } from "@iconify/react";
-import { HStack, type HstackProps } from "panda/jsx";
+import { HStack } from "panda/jsx";
 import { type ComponentProps, type ReactElement, type ReactNode } from "react";
+import { type OmitStrict } from "@/types/utils";
 
 export function IconText({
   icon,
   children,
-  ...props
+  containerProps,
+  iconProps,
 }: {
   icon: ComponentProps<typeof Icon>["icon"];
   children: ReactNode;
-} & HstackProps): ReactElement {
+  containerProps?: ComponentProps<typeof HStack>;
+  iconProps?: OmitStrict<ComponentProps<typeof Icon>, "icon">;
+}): ReactElement {
   return (
-    <HStack {...props}>
-      <Icon icon={icon} />
+    <HStack {...containerProps}>
+      <Icon {...iconProps} icon={icon} />
       {children}
     </HStack>
   );

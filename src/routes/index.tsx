@@ -50,6 +50,7 @@ export const Route = createFileRoute("/")({
             }}
           />
         </p.div>
+
         <p.div
           ref={ref1}
           display="grid"

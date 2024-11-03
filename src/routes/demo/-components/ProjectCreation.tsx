@@ -1,15 +1,18 @@
 import { css } from "panda/css";
 import { Flex, HStack, styled as p, VStack } from "panda/jsx";
-import { type ComponentProps, useState, type ReactElement } from "react";
+import { useState, type ReactElement, useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
 import { IconText } from "@/components/IconText";
 import { Button } from "@/components/cva/Button";
+import { GridLayout } from "@/components/cva/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
+import { Project } from "@/lib/classes/project";
 import { ask } from "@/lib/services/ai";
 import { fetchGeneratedImage } from "@/lib/services/image";
 import { S } from "@/lib/utils/patterns";
 import { notifyErrorInToast, toaster } from "@/lib/utils/toast";
+import { type TableBrandedId } from "@/types/table";
 
 type Seed = {
   category: string;
@@ -191,10 +194,12 @@ function Asking({
             <p.div>
               <p.div>
                 <IconText
-                  icon="mdi:cloud-sync"
-                  onClick={() => {
-                    void swrProject.mutate();
+                  containerProps={{
+                    onClick: () => {
+                      void swrProject.mutate();
+                    },
                   }}
+                  icon="mdi:cloud-sync"
                 >
                   もう一度 Gemini に聞いてみる
                 </IconText>
@@ -205,10 +210,12 @@ function Asking({
             <p.div>
               <p.div>
                 <IconText
-                  icon="mdi:cloud-sync"
-                  onClick={() => {
-                    void swrProject.mutate();
+                  containerProps={{
+                    onClick: () => {
+                      void swrProject.mutate();
+                    },
                   }}
+                  icon="mdi:cloud-sync"
                 >
                   もう一度 Gemini に聞いてみる
                 </IconText>
@@ -240,18 +247,26 @@ function SeedCard({ seed }: { seed: Seed }): ReactElement {
 export function ProjectCreation(): ReactElement {
   const [prompt, setPrompt] = useState(PROMPT);
 
-  const [project, setProject] = useState<Response>();
+  const [projectData, setProjectData] = useState<Response>();
   const [imageUrl, setImageUrl] = useState<string>();
 
   const [needAsk, setNeedAsk] = useState(false);
 
-  const projectCard = {
-    amount_of_money: 0,
-    key_visual: imageUrl ?? "https://placehold.jp/300x150.png",
-    location: { lon: 136.886326, lat: 35.172757 },
-    name: project?.name ?? "",
-    status: "wakaba",
-  } satisfies ComponentProps<typeof ProjectCard>;
+  const project = useMemo(
+    () =>
+      new Project({
+        project_id:
+          "08a78db3-f61b-4aac-bf7c-cad2fc45ebad" as TableBrandedId<Project>,
+        name: projectData?.name ?? "",
+        key_visual: imageUrl ?? "https://placehold.jp/300x150.png",
+        deadline: "2025-02-28 23:59:59+00",
+        created_at: "2024-10-30 16:22:50.279232+00",
+        territory_id: "dcc2053e-306d-4b2d-9704-47686925e626",
+        category_id: "55b46fee-ad75-4072-97b8-787ca0284c1d",
+        description: projectData?.description ?? "",
+      }),
+    [projectData, imageUrl],
+  );
 
   return (
     <Flex
@@ -299,7 +314,10 @@ export function ProjectCreation(): ReactElement {
           value={prompt}
         />
         {needAsk ? (
-          <Asking onImageFetched={setImageUrl} onProjectFetched={setProject} />
+          <Asking
+            onImageFetched={setImageUrl}
+            onProjectFetched={setProjectData}
+          />
         ) : (
           <Button
             onClick={() => {
@@ -317,16 +335,18 @@ export function ProjectCreation(): ReactElement {
           mdDown={{ flexDir: "column-reverse" }}
           w="100%"
         >
-          <VStack w="min-content">
+          <VStack flex="1">
             <p.h3>プロジェクト</p.h3>
-            <ProjectCard {...projectCard} />
+            <GridLayout pointerEvents="none">
+              <ProjectCard project={project} />
+            </GridLayout>
           </VStack>
           <VStack flex="1" w="100%">
             <p.h3>出力</p.h3>
             <Textarea
               h="380px"
               readOnly
-              value={JSON.stringify(project, null, 2)}
+              value={JSON.stringify(projectData, null, 2)}
             />
           </VStack>
         </HStack>

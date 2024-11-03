@@ -18,32 +18,32 @@ const config = {
 } as const satisfies TableConfig;
 
 type Schema = Table2schema<typeof config>;
-type SchemaResolvedData = Schema & {
+type SchemaRelationData = Schema & {
   project: TableSchemaOf<Project>;
   sponsor: TableSchemaOf<Sponsor>;
 };
-type SchemaResolved = Schema & {
+type SchemaRelation = Schema & {
   project: Project;
   sponsor: Sponsor;
 };
 
-export class Fruit extends Table<typeof config, Schema, SchemaResolved> {
+export class Fruit extends Table<typeof config, Schema, SchemaRelation> {
   constructor(data: Schema) {
     super(data, config);
   }
 
   static factories = Table.getFactories(Fruit, config);
 
-  public override resolveRelations(): TableResult<SchemaResolved> {
+  public override resolveRelation(): TableResult<SchemaRelation> {
     return ResultAsync.fromSafePromise(
       supabase
         .from(config.tableName)
         .select("*, project:projects(*), sponsor:sponsors(*)")
         .eq(config.primaryKeyName, this.data.fruit_id)
-        .returns<SchemaResolvedData>()
+        .returns<SchemaRelationData>()
         .single(),
     )
-      .andThen(this.transform<SchemaResolvedData>)
+      .andThen(this.transform<SchemaRelationData>)
       .map((data) => ({
         ...data,
         project: new Project(data.project),

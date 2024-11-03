@@ -59,10 +59,12 @@ function Asking(): ReactElement {
           ))
           .otherwise(() => (
             <IconText
-              icon="mdi:cloud-sync"
-              onClick={() => {
-                void result.mutate();
+              containerProps={{
+                onClick: () => {
+                  void result.mutate();
+                },
               }}
+              icon="mdi:cloud-sync"
             >
               もう一度 Gemini に聞いてみる
             </IconText>

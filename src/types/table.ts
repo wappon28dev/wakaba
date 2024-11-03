@@ -12,6 +12,28 @@ import { type queryErrorCode, type Table } from "@/lib/utils/table";
 
 export type UserId = Brand<string, "user_id">;
 
+export type Location = {
+  type: "Point";
+  crs: {
+    type: "name";
+    properties: {
+      name: string;
+    };
+  };
+  coordinates: [number, number];
+};
+
+export type Zone = {
+  type: "Polygon";
+  crs: {
+    type: "name";
+    properties: {
+      name: string;
+    };
+  };
+  coordinates: [[Array<[number, number]>]];
+};
+
 export type TableConfig = {
   className: string;
   primaryKeyName: string;
@@ -30,10 +52,14 @@ export type TableError = {
 export type TableResult<S> = ResultAsync<S, TableError>;
 
 export type TableKeys = keyof Database["public"]["Tables"];
-export type TableConfigOf<T> = T extends Table<infer C, any> ? C : never;
-export type TableSchemaOf<T> = T extends Table<any, infer S> ? S : never;
-export type TableSchemaResolvedOf<T> =
-  T extends Table<any, any, infer S> ? S : never;
+export type TableConfigOf<T> =
+  T extends Table<infer C, any, any, any> ? C : never;
+export type TableSchemaOf<T> =
+  T extends Table<any, infer S, any, any> ? S : never;
+export type TableSchemaRelationOf<T> =
+  T extends Table<any, any, infer S, any> ? S : never;
+export type TableSchemaReferencedOf<T> =
+  T extends Table<any, any, any, infer S> ? S : never;
 export type TableBrandedId<T> = Brand<
   string,
   TableConfigOf<T>["primaryKeyName"]

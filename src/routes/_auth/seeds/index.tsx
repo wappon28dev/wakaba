@@ -1,37 +1,192 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { styled as p } from "panda/jsx";
+import { HoverCard, Portal } from "@ark-ui/react";
+import { createFileRoute } from "@tanstack/react-router";
+import { ResultAsync } from "neverthrow";
+import { css } from "panda/css";
+import { styled as p, VStack } from "panda/jsx";
+import { type ReactElement } from "react";
+import useSWRImmutable from "swr/immutable";
+import { match } from "ts-pattern";
 import { SownSeed } from "./-components/SownSeed";
-import { seedsData, projectsData } from "@/assets/data";
-import { GridLayout } from "@/components/GridLayout";
+import { SownSeedInline } from "./-components/SownSeedInline";
+import { ErrorScreen } from "@/components/ErrorScreen";
+import { Loading } from "@/components/Loading";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
+import { GridLayout } from "@/components/cva/GridLayout";
 import { ProjectCard } from "@/components/project/Card";
-import { useSession } from "@/hooks/useSession";
-import { User } from "@/lib/classes/user";
+import { svaHoverCard } from "@/components/sva/hover-card";
+import { Project } from "@/lib/classes/project";
+import { type Seed } from "@/lib/classes/seed";
+import { Sower } from "@/lib/classes/sower";
+import { S } from "@/lib/utils/patterns";
+import { notifyTableErrorInToast } from "@/lib/utils/table";
+import { type TableError, type TableResult } from "@/types/table";
 
-type CategoryType = "休憩" | "環境" | "飲食" | "施設" | "移動" | "その他";
+function fetchProjectSeedsMap(
+  seeds: Seed[],
+): TableResult<Map<Project, Seed[]>> {
+  // s_n と p(t) のペア (1-N)
+  const seedsTerritoriesProjects = ResultAsync.combine(
+    seeds.map((s) =>
+      s.fetchTerritoriesProjects().map((tPs) => [s, tPs] as const),
+    ),
+  ).map((sTsPs) => new Map(sTsPs));
 
-const convertCategory = (categoryId: string): CategoryType | undefined => {
-  const categoryMap: Record<string, CategoryType> = {
-    1: "休憩",
-    2: "環境",
-    3: "飲食",
-    4: "施設",
-    5: "移動",
-    6: "その他",
-  };
-  return categoryId in categoryMap ? categoryMap[categoryId] : undefined;
-};
+  // p(t) と, s_n とのペア (1-N)
+  return seedsTerritoriesProjects.map((sTsPs) => {
+    const uniqueProjects = Project.getUniqueMap(
+      Array.from(sTsPs).flatMap(([, { projects }]) => projects),
+    );
 
-const formatCreatedAt = (createdAt: string): string =>
-  new Date(createdAt).toLocaleDateString("ja-JP");
+    const projectSeedsMap = new Map<Project, Seed[]>();
+    uniqueProjects.forEach((pj) => {
+      projectSeedsMap.set(
+        pj,
+        Array.from(sTsPs).flatMap(([seed, { projects }]) =>
+          projects
+            .filter(
+              ({ data: { project_id } }) => project_id === pj.data.project_id,
+            )
+            .map(() => seed),
+        ),
+      );
+    });
+
+    return projectSeedsMap;
+  });
+}
+
+function ProjectsBySeeds({ seeds }: { seeds: Seed[] }): ReactElement {
+  const cls = svaHoverCard();
+
+  const swrProjectSeedsPairs = useSWRImmutable(
+    "project-seeds-pairs",
+    async () =>
+      (
+        await fetchProjectSeedsMap(seeds).mapErr((e) =>
+          notifyTableErrorInToast("swrProjects")({
+            ...e,
+            message: "芽が出た種の取得に失敗しました",
+          }),
+        )
+      )._unsafeUnwrap(),
+  );
+
+  return match(swrProjectSeedsPairs)
+    .with(S.Loading, () => <Loading>芽が出た種を読み込み中…</Loading>)
+    .with(S.Success, ({ data }) => (
+      <GridLayout>
+        {Array.from(data).map(([pj, sd]) => (
+          <HoverCard.Root
+            key={pj.data.project_id}
+            closeDelay={200}
+            openDelay={200}
+            positioning={{ placement: "right", gutter: 8 }}
+          >
+            <HoverCard.Trigger asChild>
+              <GridLayout h="100%" textAlign="start">
+                <ProjectCard project={pj} />
+              </GridLayout>
+            </HoverCard.Trigger>
+            <Portal>
+              <HoverCard.Positioner>
+                <HoverCard.Content
+                  className={css(svaHoverCard.raw().content, {
+                    display: {
+                      base: "none",
+                      md: "block",
+                    },
+                    "&[data-placement='right']": {
+                      _open: {
+                        slideInX: "-3",
+                        slideInY: "0",
+                      },
+                      _closed: {
+                        slideOutX: "0",
+                        slideOutY: "0",
+                      },
+                    },
+                    "&[data-placement='left']": {
+                      _open: {
+                        slideInX: "3",
+                        slideInY: "0",
+                      },
+                      _closed: {
+                        slideOutX: "0",
+                        slideOutY: "0",
+                      },
+                    },
+                  })}
+                >
+                  <HoverCard.Arrow className={cls.arrow}>
+                    <HoverCard.ArrowTip className={cls.arrowTip} />
+                  </HoverCard.Arrow>
+                  <VStack>
+                    <p.h3 fontSize="md" fontWeight="bold">
+                      元となったあなたのシード
+                    </p.h3>
+                    <VStack
+                      alignItems="start"
+                      maxH="300px"
+                      overflowY="auto"
+                      w="300px"
+                    >
+                      {sd.map((s) => (
+                        <SownSeedInline key={s.data.seed_id} seed={s} />
+                      ))}
+                    </VStack>
+                  </VStack>
+                </HoverCard.Content>
+              </HoverCard.Positioner>
+            </Portal>
+          </HoverCard.Root>
+        ))}
+      </GridLayout>
+    ))
+    .otherwise(() => (
+      <ErrorScreen error={swrProjectSeedsPairs} title="芽が出た種の取得" />
+    ));
+}
 
 export const Route = createFileRoute("/_auth/seeds/")({
+  loader: async ({ context }) => {
+    const { user } = context;
+    const sower = Sower.factories.fromUser(user.id);
+
+    return (
+      await sower.andThen((s) =>
+        s.fetchOwnSeeds().map((seeds) => ({
+          sower: s,
+          seeds,
+        })),
+      )
+    ).match(
+      (s) => s,
+      (e) => {
+        throw new Error(e.message, { cause: e });
+      },
+    );
+  },
+  errorComponent: ({ error }) => {
+    const { cause } = error as Error & { cause: TableError };
+    // eslint-disable-next-line no-console
+    console.error(cause);
+
+    return (
+      <Expanded items="center">
+        <ErrorScreen error={error} title="シードの読み込み" />
+      </Expanded>
+    );
+  },
+  pendingComponent: () => (
+    <Expanded items="center">
+      <Loading>
+        <p.p>シードを読み込み中…</p.p>
+      </Loading>
+    </Expanded>
+  ),
   component: () => {
-    const { session } = useSession();
-    if (session == null) return undefined;
-    const user = new User(session);
-    const mySeedData = seedsData.filter((seed) => seed.sower_id === user.id);
+    const { seeds } = Route.useLoaderData();
 
     return (
       <Expanded alignItems="start">
@@ -72,79 +227,20 @@ export const Route = createFileRoute("/_auth/seeds/")({
           <p.h2 fontSize="1rem" fontWeight="bold" my={10} textAlign="left">
             自分が蒔いた種
           </p.h2>
-          {mySeedData.length === 0 ? (
+          {seeds.length === 0 ? (
             <p.p>まだ蒔いた種がありません。</p.p>
           ) : (
-            <p.div display="flex" my={5} overflowX="auto" width="100%">
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ display: "flex" }}>
-                  {mySeedData
-                    .filter((_, index) => index % 2 !== 0)
-                    .map((seed) => {
-                      const category = convertCategory(seed.category_id);
-                      if (category === undefined) return null;
-
-                      return (
-                        <p.div key={seed.seed_id} minW={400} p={4} width="1/3">
-                          <SownSeed
-                            category={category}
-                            createdAt={formatCreatedAt(seed.created_at)}
-                            description={seed.description ?? ""}
-                          />
-                        </p.div>
-                      );
-                    })}
-                </div>
-                <div style={{ display: "flex" }}>
-                  {mySeedData
-                    .filter((_, index) => index % 2 === 0)
-                    .map((seed) => {
-                      const category = convertCategory(seed.category_id);
-                      if (category === undefined) return null;
-
-                      return (
-                        <p.div key={seed.seed_id} minW={400} p={4} width="1/3">
-                          <SownSeed
-                            category={category}
-                            createdAt={formatCreatedAt(seed.created_at)}
-                            description={seed.description ?? ""}
-                          />
-                        </p.div>
-                      );
-                    })}
-                </div>
-              </div>
-            </p.div>
+            <GridLayout>
+              {seeds.map((s) => (
+                <SownSeed key={s.data.seed_id} seed={s} />
+              ))}
+            </GridLayout>
           )}
-
           <p.div my={50}>
             <p.h2 fontSize="1rem" fontWeight="bold" my={10} textAlign="left">
               芽が出た種
             </p.h2>
-            <GridLayout>
-              <>
-                {projectsData
-                  .sort((a, b) => b.created_at.localeCompare(a.created_at))
-                  .map((_) => (
-                    <Link key={_.project_id} to={`/projects/${_.project_id}`}>
-                      <ProjectCard
-                        amount_of_money={_.amount_of_money}
-                        key_visual={_.key_visual ?? ""}
-                        location={_.location}
-                        name={_.name}
-                        status={
-                          // eslint-disable-next-line
-                          _.project_id === "1"
-                            ? "tsubomi"
-                            : _.project_id === "7"
-                              ? "hana"
-                              : "wakaba"
-                        }
-                      />
-                    </Link>
-                  ))}
-              </>
-            </GridLayout>
+            <ProjectsBySeeds seeds={seeds} />
           </p.div>
         </p.div>
       </Expanded>

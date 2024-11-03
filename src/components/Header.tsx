@@ -64,13 +64,9 @@ function UserIndicator(): ReactElement {
             </Popover.CloseTrigger>
           </HStack>
           <Divider />
-          <VStack alignItems="start" fontSize="sm" w="100%">
-            <IconText fontFamily="mono" icon="mdi:email">
-              {user.metadata.email}
-            </IconText>
-            <IconText fontFamily="mono" icon="mdi:identifier">
-              {user.id}
-            </IconText>
+          <VStack alignItems="start" fontFamily="mono" fontSize="sm" w="100%">
+            <IconText icon="mdi:email">{user.metadata.email}</IconText>
+            <IconText icon="mdi:identifier">{user.id}</IconText>
           </VStack>
           <Button
             colorPalette="wkb.text"

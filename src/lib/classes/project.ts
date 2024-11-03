@@ -12,6 +12,7 @@ import {
   type TableConfig,
   type Table2schema,
   type TableResult,
+  type TableBrandedId,
 } from "@/types/table";
 import { type Nullable, type Override } from "@/types/utils";
 
@@ -23,12 +24,12 @@ const config = {
 } as const satisfies TableConfig;
 
 type Schema = Table2schema<typeof config>;
-type SchemaResolvedData = Schema & {
+type SchemaRelationData = Schema & {
   category: TableSchemaOf<Category>;
   territory: TableSchemaOf<Territory>;
 };
-type SchemaResolved = Override<
-  SchemaResolvedData,
+type SchemaRelation = Override<
+  SchemaRelationData,
   {
     category: Category;
     territory: Territory;
@@ -45,7 +46,12 @@ type SchemaReferenced = {
 
 type ProjectStatus = "wakaba" | "tsubomi" | "hana";
 
-export class Project extends Table<typeof config, Schema, SchemaResolved> {
+export class Project extends Table<
+  typeof config,
+  Schema,
+  SchemaRelation,
+  SchemaReferenced
+> {
   constructor(data: Schema) {
     super(data, config);
   }
@@ -58,10 +64,7 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
       return "wakaba" as const;
     }
 
-    const totalPledge = pledges.reduce(
-      (acc, pledge) => acc + pledge.data.amount_of_money,
-      0,
-    );
+    const totalPledge = Pledge.calcTotalAmountOfMoney(pledges);
 
     if (totalPledge >= sponsorData.data.target_amount_of_money) {
       return "hana" as const;
@@ -72,16 +75,16 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
 
   public calcStatus = Project.calcStatus;
 
-  public override resolveRelations(): TableResult<SchemaResolved> {
+  public override resolveRelation(): TableResult<SchemaRelation> {
     return ResultAsync.fromSafePromise(
       supabase
         .from("projects")
         .select("*, category:categories(*), territory:territories(*)")
         .eq(config.primaryKeyName, this.data.project_id)
-        .returns<SchemaResolvedData>()
+        .returns<SchemaRelationData>()
         .single(),
     )
-      .andThen(this.transform<SchemaResolvedData>)
+      .andThen(this.transform<SchemaRelationData>)
       .map((data) => ({
         ...data,
         category: new Category(data.category),
@@ -90,7 +93,7 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
       .mapErr(this.transformError("resolveRelations"));
   }
 
-  public resolveReferenced(): TableResult<SchemaReferenced> {
+  public override resolveReferenced(): TableResult<SchemaReferenced> {
     const sponsorData = ResultAsync.fromSafePromise(
       supabase
         .from("sponsor_data")
@@ -133,5 +136,15 @@ export class Project extends Table<typeof config, Schema, SchemaResolved> {
       sponsorData: s,
       ...o,
     }));
+  }
+
+  static getUniqueMap(
+    projects: Project[],
+  ): Map<TableBrandedId<Project>, Project> {
+    const uniqueProjectMap = new Map<TableBrandedId<Project>, Project>();
+    projects.forEach((pj) => {
+      uniqueProjectMap.set(pj.data.project_id, pj);
+    });
+    return uniqueProjectMap;
   }
 }

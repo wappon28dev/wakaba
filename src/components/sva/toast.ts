@@ -10,7 +10,10 @@ export const svaToast = sva({
       rounded: "md",
       border: "1px solid",
       shadow: "md",
-      w: "400px",
+      w: {
+        base: "300px",
+        md: "400px",
+      },
       p: "3",
 
       // ref: https://zagjs.com/components/react/toast#requirement

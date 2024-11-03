@@ -25,7 +25,6 @@ dist-ssr
 /panda/
 src/routeTree.gen.ts
 .env.keys
-
 tsconfig.tsbuildinfo
 .wrangler/
-
+/deps.dot
