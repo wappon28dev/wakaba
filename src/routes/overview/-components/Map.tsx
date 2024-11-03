@@ -2,7 +2,7 @@ import Leaflet from "leaflet";
 import { ResultAsync } from "neverthrow";
 import { styled as p } from "panda/jsx";
 import { type ReactElement } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { Popup, MapContainer, Marker, TileLayer } from "react-leaflet";
 import { type SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
@@ -15,18 +15,13 @@ import { notifyTableErrorInToast } from "@/lib/utils/table";
 Leaflet.Icon.Default.imagePath =
   "//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/";
 
-function MarkerRenderer({ project }: { project: Project }): ReactElement {
-  const projectIcon = new Leaflet.Icon({
-    iconUrl:
-      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png",
-    shadowUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-  });
-
+function MarkerRenderer({
+  project,
+  setProjectId,
+}: {
+  project: Project;
+  setProjectId: React.Dispatch<React.SetStateAction<string>>;
+}): ReactElement {
   const key = `project-${project.data.project_id}`;
 
   const swrProjectAbout = useSWRImmutable(key, async () =>
@@ -43,42 +38,54 @@ function MarkerRenderer({ project }: { project: Project }): ReactElement {
     )._unsafeUnwrap(),
   );
 
-  return (
-    <>
-      {match(swrProjectAbout)
-        .with(
-          S.Success,
-          ({
-            data: {
-              referenced: { sponsorData },
-            },
-          }) => (
-            <Marker
-              key={project.data.project_id}
-              icon={projectIcon}
-              position={[
-                sponsorData?.data.location.coordinates[1] ?? 0,
-                sponsorData?.data.location.coordinates[0] ?? 0,
-              ]}
-            />
-          ),
-        )
-        .otherwise(() => (
-          <p.div>住所の取得に失敗しました</p.div>
-        ))}
-    </>
-  );
+  return match(swrProjectAbout)
+    .with(S.Success, ({ data: { referenced } }) => (
+      <p.div
+        onClick={() => {
+          setProjectId(project.data.project_id);
+          console.log("click");
+        }}
+      >
+      <Marker
+        key={project.data.project_id}
+        icon={
+          new Leaflet.Icon({
+            iconUrl: `./src/assets/img/${project.calcStatus(referenced)}.png`,
+            shadowUrl:
+              "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41],
+          })
+        }
+        position={[
+          (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
+            Math.random() * 0.01,
+          (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
+            Math.random() * 0.01,
+        ]}
+      >
+        <Popup closeButton={false}>
+            <p.div>{project.data.name}</p.div>
+        </Popup>
+      </Marker>
+          </p.div>
+    ))
+    .otherwise(() => <p.div>住所の取得に失敗しました</p.div>);
 }
 
 export function Map({
   currentUserLocation,
   swrProjects,
+  setProjectId,
 }: {
   currentUserLocation: {
     lat: number | null;
     lng: number | null;
   };
   swrProjects: SWRResponse<Project[]>;
+  setProjectId: React.Dispatch<React.SetStateAction<string>>;
 }): ReactElement {
   const currentUserIcon = new Leaflet.Icon({
     iconUrl:
@@ -109,18 +116,15 @@ export function Map({
           lng: currentUserLocation.lng,
         }}
       />
-      <Marker
-        icon={currentUserIcon}
-        position={{
-          lat: currentUserLocation.lat,
-          lng: currentUserLocation.lng,
-        }}
-      />
       {match(swrProjects)
         .with(S.Loading, () => <p.div>プロジェクトを読み込み中…</p.div>)
         .with(S.Success, ({ data }) =>
           data.map((project) => (
-            <MarkerRenderer key={project.data.project_id} project={project} />
+            <MarkerRenderer
+              key={project.data.project_id}
+              project={project}
+              setProjectId={setProjectId}
+            />
           )),
         )
         .otherwise(() => (

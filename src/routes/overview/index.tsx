@@ -12,6 +12,7 @@ import { ProjectDetail } from "@/routes/projects/-components/ProjectDetail";
 export const Route = createFileRoute("/overview/")({
   component: () => {
     const cls = svaDrawer({});
+    const [projectId, setProjectId] = useState<string>("");
     const [responsiveDirection, setResponsiveDirection] = useState<
       "bottom" | "top" | "left" | "right"
     >("bottom");
@@ -63,23 +64,17 @@ export const Route = createFileRoute("/overview/")({
     }, []);
 
     return (
-      <p.div
-        h="50%"
-        xlDown={{
-          h: "50%",
-        }}
-      >
+      <p.div>
         <Map
           currentUserLocation={currentUserLocation}
+          setProjectId={setProjectId}
           swrProjects={swrProjects}
         />
-        <HalfModal direction={responsiveDirection}>
+        <HalfModal projectId={projectId} direction={responsiveDirection}>
           <VStack maxW="768px">
             {responsiveDirection === "bottom" && <div className={cls.handle} />}
             <p.div h="100%" maxW={{ base: "auto", md: "auto" }} w="100%">
-              <ProjectDetail
-                params={{ uuid: "08a78db3-f61b-4aac-bf7c-cad2fc45ebad" }}
-              />
+              <ProjectDetail params={{ uuid: projectId }} />
             </p.div>
           </VStack>
         </HalfModal>
