@@ -1,6 +1,5 @@
 import { useState, useEffect, type ReactElement, useRef } from "react";
 import { Drawer } from "vaul";
-import { Button } from "@/components/cva/Button";
 import { svaDrawer } from "@/components/sva/drawer";
 
 export function HalfModal({
@@ -41,9 +40,6 @@ export function HalfModal({
       open={open}
       snapPoints={direction === "right" ? ["768px"] : ["768px", 0.9]}
     >
-      <Drawer.Trigger asChild>
-        <Button>Open Drawer</Button>
-      </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Content className={cls.content}>{children}</Drawer.Content>
       </Drawer.Portal>

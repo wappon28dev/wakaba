@@ -43,34 +43,33 @@ function MarkerRenderer({
       <p.div
         onClick={() => {
           setProjectId(project.data.project_id);
-          console.log("click");
         }}
       >
-      <Marker
-        key={project.data.project_id}
-        icon={
-          new Leaflet.Icon({
-            iconUrl: `./src/assets/img/${project.calcStatus(referenced)}.png`,
-            shadowUrl:
-              "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41],
-          })
-        }
-        position={[
-          (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
-            Math.random() * 0.01,
-          (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
-            Math.random() * 0.01,
-        ]}
-      >
-        <Popup closeButton={false}>
+        <Marker
+          key={project.data.project_id}
+          icon={
+            new Leaflet.Icon({
+              iconUrl: `./src/assets/img/${project.calcStatus(referenced)}.png`,
+              shadowUrl:
+                "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+              shadowSize: [41, 41],
+            })
+          }
+          position={[
+            (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
+              Math.random() * 0.01,
+            (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
+              Math.random() * 0.01,
+          ]}
+        >
+          <Popup closeButton={false}>
             <p.div>{project.data.name}</p.div>
-        </Popup>
-      </Marker>
-          </p.div>
+          </Popup>
+        </Marker>
+      </p.div>
     ))
     .otherwise(() => <p.div>住所の取得に失敗しました</p.div>);
 }

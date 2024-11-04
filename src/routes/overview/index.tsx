@@ -64,13 +64,15 @@ export const Route = createFileRoute("/overview/")({
     }, []);
 
     return (
-      <p.div>
+      <p.div
+        h="calc(100dvh - 70px)"
+      >
         <Map
           currentUserLocation={currentUserLocation}
           setProjectId={setProjectId}
           swrProjects={swrProjects}
         />
-        <HalfModal projectId={projectId} direction={responsiveDirection}>
+        <HalfModal direction={responsiveDirection} projectId={projectId}>
           <VStack maxW="768px">
             {responsiveDirection === "bottom" && <div className={cls.handle} />}
             <p.div h="100%" maxW={{ base: "auto", md: "auto" }} w="100%">
