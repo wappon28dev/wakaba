@@ -75,7 +75,7 @@ export const Route = createFileRoute("/overview/")({
         <HalfModal direction={responsiveDirection} projectId={projectId}>
           <VStack maxW="768px">
             {responsiveDirection === "bottom" && <div className={cls.handle} />}
-            <p.div h="100%" maxW={{ base: "auto", md: "auto" }} w="100%">
+            <p.div h="100%" maxW="auto" w="100%">
               <ProjectDetail params={{ uuid: projectId }} />
             </p.div>
           </VStack>
