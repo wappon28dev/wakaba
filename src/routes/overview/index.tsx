@@ -64,9 +64,7 @@ export const Route = createFileRoute("/overview/")({
     }, []);
 
     return (
-      <p.div
-        h="calc(100dvh - 70px)"
-      >
+      <p.div h="calc(100dvh - 70px)">
         <Map
           currentUserLocation={currentUserLocation}
           setProjectId={setProjectId}

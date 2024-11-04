@@ -24,13 +24,13 @@ export function HalfModal({
 
   const prevProjectId = usePrevious(projectId);
 
-    useEffect(() => {
-      if (prevProjectId !== projectId) {
-        setOpen(true);
-      }
-      if (prevProjectId !== projectId && projectId === "") {
-        setOpen(false);
-      }
+  useEffect(() => {
+    if (prevProjectId !== projectId) {
+      setOpen(true);
+    }
+    if (prevProjectId !== projectId && projectId === "") {
+      setOpen(false);
+    }
   }, [projectId]);
 
   return (
