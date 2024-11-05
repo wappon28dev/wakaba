@@ -57,7 +57,7 @@ export const Route = createFileRoute("/")({
 
     const [header, inViewHeader] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-1000px";
+        if (window.innerWidth >= 1280) return "-350px";
         if (window.innerWidth >= 640) return "-350px";
         return "-200px";
       })(),
