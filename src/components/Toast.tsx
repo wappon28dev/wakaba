@@ -72,9 +72,7 @@ export function StyledToast(): ReactElement {
             <VStack alignItems="start">
               <HStack justifyContent="space-between" w="100%">
                 <Toast.Title className={cls.title}>
-                  <IconText gap="2" icon={icon}>
-                    {toast.title}
-                  </IconText>
+                  <IconText icon={icon}>{toast.title}</IconText>
                 </Toast.Title>
                 <Toast.CloseTrigger className={cls.closeTrigger}>
                   <Icon icon="mdi:close" />

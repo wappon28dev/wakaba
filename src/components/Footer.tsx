@@ -40,10 +40,17 @@ export function Footer(): ReactElement {
       flexDirection="column"
       fontSize="sm"
       gap="5"
-      p="4"
+      px="4"
+      py="16"
     >
       <HStack gap="5">
-        <Icon height="2em" icon="mdi:github" />
+        <a
+          href="https://github.com/wappon28dev/wakaba"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon height="2em" icon="mdi:github" />
+        </a>
         <Icon height="2em" icon="mdi:twitter" />
         <Icon height="2em" icon="mdi:instagram" />
       </HStack>
@@ -64,7 +71,8 @@ export function Footer(): ReactElement {
             rounded: "md",
           },
         })}
-        gap="5"
+        gap="1"
+        mdDown={{ mr: "1" }}
         ml="5" // NOTE: 中央揃えの見た目のため, 右にずらしている
       >
         <LinkText currentLoc={resolvedLocation} to="/projects" />

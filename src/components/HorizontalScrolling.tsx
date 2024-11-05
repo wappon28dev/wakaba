@@ -9,7 +9,7 @@ export function HorizontalScrolling({
   title?: string;
 }): ReactElement {
   return (
-    <>
+    <p.div w="100%">
       {title !== "" && (
         <p.p fontSize="xl" fontWeight="bold" ml={5} mt={2}>
           {title}
@@ -18,6 +18,6 @@ export function HorizontalScrolling({
       <p.div overflowX="scroll" w="100%">
         {children}
       </p.div>
-    </>
+    </p.div>
   );
 }

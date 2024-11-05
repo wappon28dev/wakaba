@@ -1,13 +1,9 @@
 import { VStack } from "panda/jsx";
-import { type ReactElement } from "react";
+import { type ReactNode, type ReactElement } from "react";
 import LottiePlayer from "./LottiePlayer";
 import loading from "@/assets/animations/loading.json";
 
-export function Loading({
-  children,
-}: {
-  children: ReactElement;
-}): ReactElement {
+export function Loading({ children }: { children: ReactNode }): ReactElement {
   return (
     <VStack>
       <LottiePlayer

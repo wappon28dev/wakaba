@@ -1,5 +1,6 @@
 export const INFO = {
   id: "wakaba",
+  name: "Wakaba",
 } as const;
 
 export const LOCAL_STORAGE_VERSION = "1";

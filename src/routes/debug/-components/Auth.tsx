@@ -4,9 +4,7 @@ import { Button } from "@/components/cva/Button";
 import { useAuth } from "@/hooks/useAuth";
 
 export function Auth(): ReactElement {
-  const { session, signIn } = useAuth();
-
-  console.log(session);
+  const { signIn } = useAuth();
 
   return (
     <VStack alignItems="start">

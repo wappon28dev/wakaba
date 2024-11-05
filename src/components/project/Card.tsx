@@ -1,55 +1,152 @@
 import { Icon } from "@iconify/react";
-import { styled as p, HStack } from "panda/jsx";
+import { Link } from "@tanstack/react-router";
+import { ResultAsync } from "neverthrow";
+import { styled as p, HStack, Grid } from "panda/jsx";
 import { type ReactElement } from "react";
+import useSWRImmutable from "swr/immutable";
+import { match } from "ts-pattern";
+import { ICON } from "@/assets/icon";
+import { IconText } from "@/components/IconText";
+import { Project } from "@/lib/classes/project";
+import { Pledge } from "@/lib/classes/project/pledge";
+import { addr2str, fetchAddressFromLocation } from "@/lib/services/address";
+import { S } from "@/lib/utils/patterns";
+import { notifyTableErrorInToast } from "@/lib/utils/table";
+import { notifyErrorInToast } from "@/lib/utils/toast";
 
-export function ProjectCard({
-  name,
-  keyVisual,
-  location,
-  amountOfMoney,
-}: {
-  name: string;
-  location: string;
-  amountOfMoney: number;
-  keyVisual: string;
-}): ReactElement {
+export function ProjectCard({ project }: { project: Project }): ReactElement {
+  const { name, key_visual } = project.data;
+  const key = `project-${project.data.project_id}`;
+
+  const swrProjectAbout = useSWRImmutable(key, async () =>
+    (
+      await ResultAsync.combine([
+        project.resolveRelation(),
+        project.resolveReferenced(),
+      ])
+        .map(([relation, referenced]) => ({
+          relation,
+          referenced,
+        }))
+        .mapErr(notifyTableErrorInToast("swrProjectAbout"))
+    )._unsafeUnwrap(),
+  );
+
+  const swrAddr = useSWRImmutable(
+    swrProjectAbout.data?.referenced.sponsorData != null
+      ? `project-${key}-addr`
+      : null,
+    async () => {
+      const loc = swrProjectAbout.data?.referenced.sponsorData;
+      if (loc == null) return undefined;
+      const [lon, lat] = loc.data.location.coordinates;
+
+      return (
+        await fetchAddressFromLocation({ lat, lon }).mapErr((e) => {
+          notifyErrorInToast(
+            "swrAddr",
+            new Error("Failed to fetch addr", { cause: e }),
+            "住所の取得中にエラーが発生しました",
+          );
+          return e;
+        })
+      )._unsafeUnwrap();
+    },
+  );
+
   return (
-    <p.div
-      bg="wkb-neutral.0"
-      fontSize="sm"
-      m={4}
-      mdDown={{ minW: "90%" }}
-      minH={300}
-      minW={300}
-      p={4}
-      rounded="md"
-      w="20%"
+    <Link
+      params={{ uuid: project.data.project_id }}
+      style={{
+        // NOTE: 親の Grid display を子に通す.
+        display: "contents",
+      }}
+      to="/projects/$uuid"
     >
-      <p.div position="relative">
+      <Grid
+        _hover={{ shadow: "md" }}
+        alignItems="start"
+        bg="wkb-neutral.0"
+        className="project-card"
+        gap="1"
+        gridRow="span 5"
+        gridTemplateRows="subgrid"
+        p="4"
+        rounded="md"
+        transition="box-shadow 0.1s"
+      >
         <p.img
           alt="Placeholder"
-          h="1/2"
           objectFit="cover"
           rounded="md"
-          src={keyVisual}
+          src={key_visual ?? ""}
           w="100%"
         />
-      </p.div>
-      <p.div h="1/2" pt={4}>
-        <p.span>
-          <HStack gap="-1">
-            <Icon icon="bi:geo-alt-fill" />
-            {location}
+        <p.div minH="1lh" pt="2" w="100%">
+          {match(swrAddr)
+            .with(S.Loading, () => (
+              <IconText
+                containerProps={{ gap: "1" }}
+                icon="svg-spinners:ring-resize"
+                iconProps={{ height: "1.2em" }}
+              >
+                <p.p>住所を取得中...</p.p>
+              </IconText>
+            ))
+            .with(S.Success, ({ data: { Feature } }) => {
+              const addr = Feature.at(0)?.Property.AddressElement;
+              const referenced = swrProjectAbout.data?.referenced;
+              if (addr == null || referenced == null) return null;
+
+              return (
+                <IconText
+                  containerProps={{ gap: "1" }}
+                  icon="mdi:map-marker-outline"
+                  iconProps={{ height: "1.2em" }}
+                >
+                  <p.p>{addr2str(addr, Project.calcStatus(referenced))}</p.p>
+                </IconText>
+              );
+            })
+            .with(S.Error, () => (
+              <p.p color="wkb.secondary">
+                住所の取得中にエラーが発生しました
+              </p.p>
+            ))
+            .otherwise(() => null)}
+        </p.div>
+        <p.p fontSize="2xl" fontWeight="bold" lineClamp="2" minH="1lh">
+          {name}
+        </p.p>
+        <p.p fontSize="md" minH="1lh">
+          {match(swrProjectAbout)
+            .with(
+              S.Success,
+              ({ data: { referenced } }) =>
+                `現在金額 ¥ ${Pledge.calcTotalAmountOfMoney(referenced.pledges).toLocaleString()}`,
+            )
+            .otherwise(() => "---")}
+        </p.p>
+        <HStack justifyContent="space-between" w="100%">
+          <HStack>
+            <Icon height="1.5em" icon="mdi:star-outline" />
+            <Icon height="1.5em" icon="mdi:share-variant" />
           </HStack>
-        </p.span>
-        <p.p fontSize="3xl">{name}</p.p>
-        <p.p fontSize="md">現在金額 ￥{amountOfMoney}</p.p>
-        <HStack>
-          <Icon icon="mdi:star-outline" width={30} />
-          <Icon icon="mdi:share-variant" width={30} />
-          {/*  ここにステータスあいこんを追加してほしい */}
+          <p.div alignItems="baseline" ml="auto">
+            {match(swrProjectAbout)
+              .with(S.Success, ({ data: { referenced } }) => {
+                const status = project.calcStatus(referenced);
+                return (
+                  <Icon
+                    height={status === "hana" ? "2rem" : "1.5rem"}
+                    icon={ICON[status]}
+                  />
+                );
+              })
+              .otherwise(() => null)}
+          </p.div>
         </HStack>
-      </p.div>
-    </p.div>
+      </Grid>
+    </Link>
   );
 }
