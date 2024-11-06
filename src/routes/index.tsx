@@ -71,17 +71,20 @@ export const Route = createFileRoute("/")({
           <Helmet
             meta={[
               { name: "twitter:card", content: "summary" },
-              { name: "twitter:title", content: "Home" },
-              { name: "twitter:description", content: "description of Home" },
+              { name: "twitter:title", content: "Wakaba" },
+              { name: "twitter:description", content: "HOME | Wakaba" },
               {
                 name: "twitter:image",
                 content: "/src/assets/img/ogp/ogp_main.png",
               },
-              { property: "og:title", content: "Home" },
+              { property: "og:title", content: "Wakaba" },
               { property: "og:type", content: "website" },
-              { property: "og:url", content: "http://path/to/this/url" },
-              { property: "og:image", content: "http://path/to/image" },
-              { property: "og:description", content: "description of Home" },
+              { property: "og:url", content: "http://wkb.pages.dev" },
+              {
+                property: "og:image",
+                content: "/src/assets/img/ogp/ogp_main.png",
+              },
+              { property: "og:description", content: "HOME | Wakaba" },
             ]}
             title="Wakaba"
           >
