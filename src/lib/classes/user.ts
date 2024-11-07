@@ -36,9 +36,11 @@ export class User {
 
   static async signIn(): Promise<void> {
     match(
-      await supabase.auth.signInWithPassword({
-        email: "user01@example.com",
-        password: "password",
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${document.location.origin}/user/auth`,
+        },
       }),
     ).with(S.Error, ({ error }) => {
       notifyErrorInToast("User.signIn", error, "サインインに失敗しました");
