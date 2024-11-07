@@ -142,8 +142,8 @@ export const Route = createFileRoute("/")({
           placeItems="center"
           style={{
             backgroundImage: `url(${wakaba}), url(${circle})`,
-            backgroundSize: "auto 40%, auto 5%",
-            backgroundPosition: "5% bottom , 73% 20%",
+            backgroundSize: "auto 0%, auto 95%",
+            backgroundPosition: "5% bottom , 50% 50%",
             backgroundRepeat: "no-repeat, no-repeat",
           }}
         >
@@ -351,10 +351,8 @@ export const Route = createFileRoute("/")({
                     display="flex"
                     duration="3000"
                     fadeIn="5"
-                    fontSize="150%"
-                    fontWeight="bold"
+                    size="lg"
                     mt="40px"
-                    mx="auto"
                     slideInY="10"
                   >
                     近くのプロジェクトを探す

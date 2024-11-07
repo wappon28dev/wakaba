@@ -53,6 +53,12 @@ export const cvaButton = cva({
       md: {
         fontSize: "md",
       },
+      lg: {
+        fontSize: "lg",
+        fontWeight: "bold",
+        px: "6",
+        py: "3",
+      },
     },
   },
   defaultVariants: {
