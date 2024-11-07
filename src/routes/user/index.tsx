@@ -1,4 +1,4 @@
-import { NumberInput } from "@ark-ui/react";
+import { Field, NumberInput } from "@ark-ui/react";
 import { Icon } from "@iconify/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
@@ -9,6 +9,7 @@ import { IconText } from "@/components/IconText";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 import { svaNumberInput } from "@/components/sva/numberInput";
+import { svaTextArea } from "@/components/sva/textArea";
 import { User } from "@/lib/classes/user";
 import { $redirectTo } from "@/lib/stores/redirect";
 import { notifyTableErrorInToast } from "@/lib/utils/table";
@@ -37,7 +38,9 @@ export const Route = createFileRoute("/user/")({
 function Authenticated({ user }: { user: User }): ReactElement {
   const [selected, setSelected] = useState<"sower" | "sponsor" | null>();
   const [age, setAge] = useState(0);
+  const [description, setDescription] = useState("");
   const numberInput = svaNumberInput();
+  const textArea = svaTextArea();
 
   return (
     <Expanded items="center">
@@ -76,12 +79,6 @@ function Authenticated({ user }: { user: User }): ReactElement {
               <Button
                 h="300px"
                 onClick={() => {
-                  // void user.registerAsASponsor({
-                  //   user_id: user.id,
-                  //   name: user.metadata.name,
-                  //   icon: user.metadata.picture,
-                  //   description: `この企業は ${user.metadata.name} です`,
-                  // });
                   setSelected("sponsor");
                 }}
                 variant="outlined"
@@ -104,7 +101,7 @@ function Authenticated({ user }: { user: User }): ReactElement {
         {selected === "sower" && (
           <>
             <p.span>年齢を入力して下さい</p.span>
-            <p.div w="300px" h="100px">
+            <p.div h="100px" w="300px">
               <NumberInput.Root
                 allowMouseWheel
                 className={numberInput.root}
@@ -167,7 +164,41 @@ function Authenticated({ user }: { user: User }): ReactElement {
             </Button>
           </>
         )}
-        {selected === "sponsor" && <p.p>企業としてログインしました！</p.p>}
+        {selected === "sponsor" && (
+          <>
+            <p.span>企業の説明を入力して下さい</p.span>
+            <Field.Root className={textArea.root}>
+              <Field.Textarea
+                className={textArea.textarea}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                value={description}
+              />
+            </Field.Root>
+            <Button
+              h="100px"
+              onClick={() => {
+                void user.registerAsASponsor({
+                  user_id: user.id,
+                  name: user.metadata.name,
+                  icon: user.metadata.picture,
+                  description,
+                });
+              }}
+              variant="outlined"
+              w="300px"
+            >
+              <VStack gap="2">
+                <IconText icon="bi:building" iconProps={{ height: "3em" }}>
+                  <p.p fontSize="lg" fontWeight="bold">
+                    企業としてログイン
+                  </p.p>
+                </IconText>
+              </VStack>
+            </Button>
+          </>
+        )}
       </VStack>
     </Expanded>
   );
