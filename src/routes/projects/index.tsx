@@ -1,4 +1,5 @@
 import { Tabs } from "@ark-ui/react";
+import { Icon } from "@iconify/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { css } from "panda/css";
 import { Center, HStack, styled as p, VStack } from "panda/jsx";
@@ -8,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { type SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
+import { ICON } from "@/assets/icon";
 import { ErrorScreen } from "@/components/ErrorScreen";
 import { IconText } from "@/components/IconText";
 import { Loading } from "@/components/Loading";
@@ -52,9 +54,10 @@ function ProjectCardRenderer({
 const sideBarButton = css(cvaButton.raw(), {
   bg: "transparent",
   colorPalette: "wkb.bg",
-  fontSize: "2xl",
+  fontSize: "xl",
   textAlign: "left",
   w: "full",
+  fontWeight: "extrabold",
 });
 
 function SideBar(): ReactElement {
@@ -65,37 +68,70 @@ function SideBar(): ReactElement {
         base: "none",
         xl: "block",
       }}
+      h="calc(100vh - 75px)"
       minW="400px"
       position="sticky"
       top="75px"
     >
-      <p.div bg="wkb.primary" h="100%" p={4}>
-        <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
-          みんなのプロジェクト
-        </p.p>
-        <VStack alignItems="start" gap={10} p={10}>
-          <p.a className={sideBarButton} href="#recommend">
-            <IconText icon="mdi:thumb-up">おすすめ</IconText>
-          </p.a>
-          <p.a className={sideBarButton} href="#trending">
-            <IconText icon="mdi:chart-line-variant">急上昇</IconText>
-          </p.a>
-          <p.a className={sideBarButton} href="#stars">
-            <IconText icon="mdi:star-outline">お気に入り</IconText>
-          </p.a>
-        </VStack>
+      <p.div
+        bg="wkb.primary"
+        h="100%"
+        overflow="hidden"
+        p={4}
+        position="relative"
+      >
+        <p.div
+          bottom="0"
+          display="flex"
+          justifyContent="center"
+          left="-30"
+          overflow="hidden"
+          position="absolute"
+          transform="rotate(300deg)"
+          zIndex="0"
+        >
+          <Icon color="75B726" height="100dvh" icon={ICON.tsubomi} />
+        </p.div>
 
-        <p.p color="wkb-neutral.0" fontSize="3xl" fontWeight="bold">
-          フィルター
-        </p.p>
-        <VStack alignItems="start" p={10}>
-          <p.button className={sideBarButton}>休憩</p.button>
-          <p.button className={sideBarButton}>環境</p.button>
-          <p.button className={sideBarButton}>飲食</p.button>
-          <p.button className={sideBarButton}>施設</p.button>
-          <p.button className={sideBarButton}>移動</p.button>
-          <p.button className={sideBarButton}>その他</p.button>
-        </VStack>
+        <p.div position="absolute" zIndex="10">
+          <VStack alignItems="start" gap={4} p={4} zIndex="10">
+            <p.a className={sideBarButton} href="#recommend">
+              <IconText icon="mdi:thumb-up">おすすめのプロジェクト</IconText>
+            </p.a>
+            <p.a className={sideBarButton} href="#trending">
+              <IconText icon="mdi:chart-line-variant">
+                急上昇のプロジェクト
+              </IconText>
+            </p.a>
+            <p.a className={sideBarButton} href="#stars">
+              <IconText icon="mdi:star-outline">お気に入り</IconText>
+            </p.a>
+          </VStack>
+
+          <p.p color="wkb-neutral.0" fontSize="xl" fontWeight="bold" px={5}>
+            フィルター
+          </p.p>
+          <VStack alignItems="start" px={10}>
+            <p.button className={sideBarButton} fontSize="1.1rem">
+              休憩
+            </p.button>
+            <p.button className={sideBarButton} fontSize="1.1rem">
+              環境
+            </p.button>
+            <p.button className={sideBarButton} fontSize="1.1rem">
+              飲食
+            </p.button>
+            <p.button className={sideBarButton} fontSize="1.1rem">
+              施設
+            </p.button>
+            <p.button className={sideBarButton} fontSize="1.1rem">
+              移動
+            </p.button>
+            <p.button className={sideBarButton} fontSize="1.1rem">
+              その他
+            </p.button>
+          </VStack>
+        </p.div>
       </p.div>
     </VStack>
   );

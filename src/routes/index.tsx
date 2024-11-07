@@ -350,8 +350,8 @@ export const Route = createFileRoute("/")({
                     display="flex"
                     duration="3000"
                     fadeIn="5"
-                    size="lg"
                     mt="40px"
+                    size="lg"
                     slideInY="10"
                   >
                     近くのプロジェクトを探す
