@@ -126,7 +126,7 @@ export const Route = createFileRoute("/")({
           height={{ base: "400px", sm: "600px", xl: "60vh" }}
           placeItems="center"
           style={{
-            backgroundImage: `url(${wakaba}), url(${circle})`,
+            backgroundImage: `url("${wakaba}"), url("${circle}")`,
             backgroundSize: "auto 0%, auto 95%",
             backgroundPosition: "5% bottom , 50% 50%",
             backgroundRepeat: "no-repeat, no-repeat",
