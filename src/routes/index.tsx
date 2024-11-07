@@ -7,7 +7,7 @@ import headerLeft from "@/assets/svg/background/header-left.svg";
 import headerRight from "@/assets/svg/background/header-right.svg";
 import wakaba from "@/assets/svg/background/wakaba.svg";
 import wakabaIcon from "@/assets/svg/icon/wakaba.svg";
-import { LogoAnimation } from "@/components/LogoAnimation";
+import { LogoComposite } from "@/components/Logo";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 
@@ -57,7 +57,7 @@ export const Route = createFileRoute("/")({
 
     const [header, inViewHeader] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-350px";
+        if (window.innerWidth >= 1280) return "-1000px";
         if (window.innerWidth >= 640) return "-350px";
         return "-200px";
       })(),
@@ -72,21 +72,36 @@ export const Route = createFileRoute("/")({
           display="grid"
           fadeIn="10"
           height={{
+            base: "400px",
             sm: "600px",
-            lg: "40vh",
+            lg: "30vh",
             xl: "50vh",
           }}
           placeItems="center"
           py="20"
           style={{
             position: "relative",
-            backgroundImage: `url("${headerRight}"), url("${headerLeft}")`,
+            backgroundImage: `url(${headerRight}), url(${headerLeft})`,
             backgroundRepeat: "no-repeat, no-repeat",
             backgroundPosition: "right top, left bottom",
             backgroundSize: "auto 50%, auto 50%",
           }}
         >
-          {inViewHeader && <LogoAnimation />}
+          {inViewHeader && (
+            <LogoComposite
+              duration="1000"
+              fadeIn="10"
+              slideInY="10"
+              style={{
+                zIndex: 1,
+                position: "relative",
+              }}
+              zoom={{
+                base: 2,
+                smDown: 1.5,
+              }}
+            />
+          )}
         </p.div>
 
         <p.div
@@ -97,7 +112,7 @@ export const Route = createFileRoute("/")({
           placeItems="center"
           style={{
             position: "relative",
-            backgroundImage: `url("${wakabaIcon}"), url("${decorationRight}")`,
+            backgroundImage: `url(${wakabaIcon}), url(${decorationRight})`,
             backgroundSize: "auto 15%, auto 15%",
             backgroundPosition: "5% bottom , 85% bottom",
             backgroundRepeat: "no-repeat, no-repeat",
@@ -126,9 +141,9 @@ export const Route = createFileRoute("/")({
           height={{ base: "400px", sm: "600px", xl: "60vh" }}
           placeItems="center"
           style={{
-            backgroundImage: `url("${wakaba}"), url("${circle}")`,
-            backgroundSize: "auto 40%, auto 5%",
-            backgroundPosition: "5% bottom , 73% 20%",
+            backgroundImage: `url(${wakaba}), url(${circle})`,
+            backgroundSize: "auto 0%, auto 95%",
+            backgroundPosition: "5% bottom , 50% 50%",
             backgroundRepeat: "no-repeat, no-repeat",
           }}
         >
@@ -336,10 +351,8 @@ export const Route = createFileRoute("/")({
                     display="flex"
                     duration="3000"
                     fadeIn="5"
-                    fontSize="150%"
-                    fontWeight="bold"
+                    size="lg"
                     mt="40px"
-                    mx="auto"
                     slideInY="10"
                   >
                     近くのプロジェクトを探す
