@@ -24,7 +24,7 @@ export const svaContactField = sva({
     },
     textarea: {
       p: "2",
-      bg: "white.0",
+      bg: "white",
       height: "200px",
       rounded: "md",
       shadow: "md",
@@ -33,7 +33,7 @@ export const svaContactField = sva({
     },
     select: {
       p: "2",
-      bg: "white.0",
+      bg: "white",
       border: "1px solid",
       rounded: "md",
       shadow: "md",
@@ -41,7 +41,7 @@ export const svaContactField = sva({
     },
     input: {
       p: "2",
-      bg: "white.0",
+      bg: "white",
       rounded: "md",
       shadow: "md",
       width: "100%",
