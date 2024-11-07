@@ -17,9 +17,9 @@ export const svaContactField = sva({
       display: "grid",
       gap: "0.5rem",
       gridTemplateColumns: "1fr",
-      width: "100%",
+      width: "70vw",
       maxWidth: "700px",
-      minWidth: "500px",
+      minWidth: "300px",
       borderRadius: "md",
     },
     textarea: {
