@@ -80,7 +80,7 @@ export const Route = createFileRoute("/")({
           py="20"
           style={{
             position: "relative",
-            backgroundImage: `url(${headerRight}), url(${headerLeft})`,
+            backgroundImage: `url("${headerRight}"), url("${headerLeft}")`,
             backgroundRepeat: "no-repeat, no-repeat",
             backgroundPosition: "right top, left bottom",
             backgroundSize: "auto 50%, auto 50%",
@@ -111,7 +111,7 @@ export const Route = createFileRoute("/")({
           placeItems="center"
           style={{
             position: "relative",
-            backgroundImage: `url(${wakabaIcon}), url(${decorationRight})`,
+            backgroundImage: `url("${wakabaIcon}"), url("${decorationRight}")`,
             backgroundSize: "auto 15%, auto 15%",
             backgroundPosition: "5% bottom , 85% bottom",
             backgroundRepeat: "no-repeat, no-repeat",
@@ -140,7 +140,7 @@ export const Route = createFileRoute("/")({
           height={{ base: "400px", sm: "600px", xl: "60vh" }}
           placeItems="center"
           style={{
-            backgroundImage: `url(${wakaba}), url(${circle})`,
+            backgroundImage: `url("${wakaba}"), url("${circle}")`,
             backgroundSize: "auto 40%, auto 5%",
             backgroundPosition: "5% bottom , 73% 20%",
             backgroundRepeat: "no-repeat, no-repeat",
