@@ -7,9 +7,9 @@ import headerLeft from "@/assets/svg/background/header-left.svg";
 import headerRight from "@/assets/svg/background/header-right.svg";
 import wakaba from "@/assets/svg/background/wakaba.svg";
 import wakabaIcon from "@/assets/svg/icon/wakaba.svg";
+import { LogoAnimation } from "@/components/LogoAnimation";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
-import { LogoAnimation } from "@/components/LogoAnimation";
 
 export const Route = createFileRoute("/")({
   component: () => {
@@ -86,11 +86,7 @@ export const Route = createFileRoute("/")({
             backgroundSize: "auto 50%, auto 50%",
           }}
         >
-          {inViewHeader && (
-            <LogoAnimation>
-              <></>
-            </LogoAnimation>
-          )}
+          {inViewHeader && <LogoAnimation />}
         </p.div>
 
         <p.div

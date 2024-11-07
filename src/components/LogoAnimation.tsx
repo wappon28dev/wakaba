@@ -1,13 +1,9 @@
 import { VStack } from "panda/jsx";
-import { type ReactNode, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import LottiePlayer from "./LottiePlayer";
 import loading from "@/assets/animations/loading.json";
 
-export function LogoAnimation({
-  children,
-}: {
-  children: ReactNode;
-}): ReactElement {
+export function LogoAnimation(): ReactElement {
   return (
     <VStack>
       <LottiePlayer
@@ -18,7 +14,6 @@ export function LogoAnimation({
           margin: "-50px",
         }}
       />
-      {children}
     </VStack>
   );
 }
