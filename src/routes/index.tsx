@@ -7,7 +7,7 @@ import headerLeft from "@/assets/svg/background/header-left.svg";
 import headerRight from "@/assets/svg/background/header-right.svg";
 import wakaba from "@/assets/svg/background/wakaba.svg";
 import wakabaIcon from "@/assets/svg/icon/wakaba.svg";
-import { LogoAnimation } from "@/components/LogoAnimation";
+import { LogoComposite } from "@/components/Logo";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 
@@ -86,14 +86,28 @@ export const Route = createFileRoute("/")({
             backgroundSize: "auto 50%, auto 50%",
           }}
         >
-          {inViewHeader && <LogoAnimation />}
+          {inViewHeader && (
+            <LogoComposite
+              duration="1000"
+              fadeIn="10"
+              slideInY="10"
+              style={{
+                zIndex: 1,
+                position: "relative",
+              }}
+              zoom={{
+                base: 2,
+                smDown: 1.5,
+              }}
+            />
+          )}
         </p.div>
 
         <p.div
           ref={ref1}
           display="grid"
           fadeIn="2"
-          height={{ base: "400px", sm: "600px", xl: "60vh" }}
+          height={{ base: "400px", sm: "600px", lg: "40vh", xl: "60vh" }}
           placeItems="center"
           style={{
             position: "relative",
