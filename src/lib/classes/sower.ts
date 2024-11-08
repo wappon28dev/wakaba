@@ -56,7 +56,7 @@ export class Sower extends Table<typeof config, Schema> {
       supabase
         .from("seeds")
         .select()
-        .eq(config.primaryKeyName, "this.sowerId")
+        .eq(config.primaryKeyName, this.data.sower_id)
         .order("created_at", { ascending: false })
         .returns<TableSchemaOf<Seed>>()
         .select(),

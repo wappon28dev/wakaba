@@ -1,5 +1,9 @@
 @layer reset, base, tokens, recipes, utilities;
 
+:root {
+  --swiper-theme-color: var(--colors-wkb\.primary) !important;
+}
+
 ul,
 menu,
 dir {

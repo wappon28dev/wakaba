@@ -35,6 +35,7 @@
         "allowAsThisParameter": true
       }
     ],
+    "@typescript-eslint/naming-convention": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-uses-react": "off",
@@ -47,6 +48,7 @@
     "import/prefer-default-export": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
+    "import/no-cycle": "off",
     "import/order": [
       "error",
       {

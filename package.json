@@ -19,7 +19,8 @@
     "supabase:link": "dotenvx run -- bun run ./scripts/supabase-link.ts",
     "supabase:start": "bun supabase start -x imgproxy,inbucket,pgadmin-schema-diff,edge-runtime,logflare,vector,pgbouncer",
     "supabase:seed": "bun supabase db dump --local --data-only -f ./supabase/seed.sql",
-    "supabase:gen-type": "bunx supabase gen types typescript --local > ./src/types/supabase.gen.ts"
+    "supabase:gen-type": "bunx supabase gen types typescript --local > ./src/types/supabase.gen.ts",
+    "deps": "bun depcruise src --include-only \"^src\" --output-type dot > deps.dot"
   },
   "dependencies": {
     "@ark-ui/react": "^3.12.0",
@@ -40,6 +41,7 @@
     "neverthrow": "^8.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.53.0",
     "react-intersection-observer": "^9.13.1",
     "react-leaflet": "^4.2.1",
@@ -66,6 +68,7 @@
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "cspell": "^8.14.2",
+    "dependency-cruiser": "^16.5.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",

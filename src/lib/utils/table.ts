@@ -21,19 +21,22 @@ import {
 export const queryErrorCode = {
   NO_ROWS_FOUND: "PGRST116",
   ALREADY_EXISTS: "23505",
+  INVALID_INPUT: "22P02",
 };
 
 export abstract class Table<
   Config extends TableConfig,
   Schema extends object,
-  SchemaResolved extends object = Schema,
+  SchemaRelation extends object = Schema,
+  SchemaReferenced extends object = Schema,
 > {
   constructor(
     public data: Schema,
     protected config: Config,
   ) {}
 
-  public resolveRelations?(): ResultAsync<SchemaResolved, TableError>;
+  public resolveRelation?(): TableResult<SchemaRelation>;
+  public resolveReferenced?(): TableResult<SchemaReferenced>;
 
   static transformError(
     this: void,
@@ -52,6 +55,10 @@ export abstract class Table<
         .with(queryErrorCode.ALREADY_EXISTS, () => ({
           type: "ALREADY_EXISTS" as const,
           message: message ?? `この${config.displayName}は既に存在します`,
+        }))
+        .with(queryErrorCode.INVALID_INPUT, () => ({
+          type: "INVALID_INPUT" as const,
+          message: message ?? `不正な${config.displayName}IDです`,
         }))
         .otherwise(() => ({
           type: "UNKNOWN",
@@ -136,5 +143,6 @@ export function notifyTableErrorInToast(parentCaller: string) {
       message,
       hint,
     );
+    return tableError;
   };
 }

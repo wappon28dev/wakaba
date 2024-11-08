@@ -12,6 +12,7 @@ import { Loading } from "@/components/Loading";
 import { NotFoundScreen } from "@/components/NotFound";
 import { StyledToast } from "@/components/Toast";
 import { Expanded } from "@/components/cva/Expanded";
+import { INFO } from "@/lib/consts";
 import { type Nullable } from "@/types/utils";
 
 import "@/styles/global.css";
@@ -30,7 +31,7 @@ export const Route = createRootRouteWithContext<{
       return (
         <Expanded basedOn="screen" items="center">
           <Loading>
-            <p.p>わかばの起動中...</p.p>
+            <p.p>{INFO.name} の起動中...</p.p>
           </Loading>
         </Expanded>
       );
