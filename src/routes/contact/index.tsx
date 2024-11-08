@@ -5,6 +5,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/cva/Button";
 import { svaContactField } from "@/components/sva/contactField";
 import { toaster } from "@/lib/utils/toast";
+import wakaba from "@/assets/svg/background/wakaba-mat.svg";
 
 export const Route = createFileRoute("/contact/")({
   component: () => {
@@ -34,7 +35,14 @@ export const Route = createFileRoute("/contact/")({
     };
 
     return (
-      <p.div>
+      <p.div
+        style={{
+          backgroundImage: `url("${wakaba}")`,
+          backgroundPosition: "90% bottom",
+          backgroundSize: "20% auto",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <p.div py={24}>
           <p.h1 fontSize="4xl" fontWeight="bold" textAlign="center">
             Contact

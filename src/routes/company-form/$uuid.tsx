@@ -1,3 +1,9 @@
+import { createFileRoute } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/company-form/$uuid")({
+  component: () => <div>Hello /company-form/$uuid!</div>,
+});
+
 import { Dialog, Portal, Field, DatePicker, NumberInput } from "@ark-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { HStack, styled as p } from "panda/jsx";
