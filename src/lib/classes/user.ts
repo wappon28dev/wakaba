@@ -1,6 +1,6 @@
 import { type Session } from "@supabase/supabase-js";
 import { type UseNavigateResult } from "@tanstack/react-router";
-import { ResultAsync } from "neverthrow";
+import { ok, ResultAsync } from "neverthrow";
 import { match } from "ts-pattern";
 import { Sower } from "./sower";
 import { Sponsor } from "./sponsor";
@@ -36,9 +36,11 @@ export class User {
 
   static async signIn(): Promise<void> {
     match(
-      await supabase.auth.signInWithPassword({
-        email: "user01@example.com",
-        password: "password",
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${document.location.origin}/user/auth`,
+        },
       }),
     ).with(S.Error, ({ error }) => {
       notifyErrorInToast("User.signIn", error, "サインインに失敗しました");
@@ -104,5 +106,34 @@ export class User {
       .mapErr((error) =>
         Table.transformError(config, "fetchOwnComments", error),
       );
+  }
+
+  public fetchKindOf(): TableResult<
+    | {
+        type: "SOWER";
+        data: Sower;
+      }
+    | {
+        type: "SPONSOR";
+        data: Sponsor;
+      }
+    | {
+        type: "UNKNOWN";
+      }
+  > {
+    const data = ResultAsync.combine([
+      Sower.factories.fromUser(this.id).orElse(() => ok(null)),
+      Sponsor.factories.fromUser(this.id).orElse(() => ok(null)),
+    ]);
+
+    return data.andThen(([sower, sponsor]) => {
+      if (sower != null) {
+        return ok({ type: "SOWER", data: sower } as const);
+      }
+      if (sponsor != null) {
+        return ok({ type: "SPONSOR", data: sponsor } as const);
+      }
+      return ok({ type: "UNKNOWN" } as const);
+    });
   }
 }
