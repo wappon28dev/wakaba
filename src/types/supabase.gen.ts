@@ -452,24 +452,24 @@ export type Database = {
         Args: {
           territory_id: string;
         };
-        Returns: {
+        Returns: Array<{
           category_id: string;
           created_at: string;
           description: string | null;
           location: unknown;
           seed_id: string;
           sower_id: string;
-        }[];
+        }>;
       };
       get_territories_within_seed: {
         Args: {
           seed_id: string;
         };
-        Returns: {
+        Returns: Array<{
           created_at: string;
           territory_id: string;
           zone: unknown;
-        }[];
+        }>;
       };
     };
     Enums: {
