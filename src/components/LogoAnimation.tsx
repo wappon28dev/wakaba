@@ -8,13 +8,13 @@ export function LogoAnimation(): ReactElement {
     <VStack>
       <LottiePlayer
         autoplay
-        stopAtEnd={true}
+        speed={0.7}
         src={logoAnimation}
+        stopAtEnd
         style={{
           height: "40dvh",
           maxWidth: "70dvw",
         }}
-        speed={0.7}
       />
     </VStack>
   );
