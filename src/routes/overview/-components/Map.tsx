@@ -60,9 +60,9 @@ function MarkerRenderer({
           }
           position={[
             (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
-              Math.random() * 0.01,
+              Math.random() * 0.1,
             (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
-              Math.random() * 0.01,
+              Math.random() * 0.1,
           ]}
         >
           <Popup closeButton={false}>

@@ -1,5 +1,5 @@
 import { useState, useEffect, type ReactElement, useRef } from "react";
-import { Drawer, Overlay } from "vaul";
+import { Drawer } from "vaul";
 import { svaDrawer } from "@/components/sva/drawer";
 
 export function HalfModal({
@@ -45,6 +45,7 @@ export function HalfModal({
       snapPoints={direction === "right" ? ["768px"] : ["768px", "0.9"]}
     >
       <Drawer.Portal>
+        <Drawer.Overlay className={cls.overlay} />
         <Drawer.Content className={cls.content}>{children}</Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>

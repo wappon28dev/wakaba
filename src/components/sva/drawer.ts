@@ -9,14 +9,16 @@ export const svaDrawer = sva({
   ) as Array<Lowercase<keyof typeof Drawer>>,
   base: {
     overlay: {
-      backgroundColor: "wkb-neutral.900/20",
+      color: "wkb.primary",
+      bg: "wkb.primary",
       position: "fixed",
-      inset: "0",
-      zIndex: "modal",
+      zIndex: "1000",
+      bottom: 0,
+      w: "full",
+      h: "full",
     },
     content: {
       bg: "wkb.bg-overlay",
-      border: "1px solid",
       rounded: "xl",
       zIndex: "1000",
       position: "fixed",
