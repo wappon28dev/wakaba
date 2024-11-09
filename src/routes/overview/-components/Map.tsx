@@ -6,6 +6,9 @@ import { Popup, MapContainer, Marker, TileLayer } from "react-leaflet";
 import { type SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { match } from "ts-pattern";
+import hana from "@/assets/img/hana.png";
+import tsubomi from "@/assets/img/tsubomi.png";
+import wakaba from "@/assets/img/wakaba.png";
 import { ErrorScreen } from "@/components/ErrorScreen";
 import { type Project } from "@/lib/classes/project";
 import { S } from "@/lib/utils/patterns";
@@ -45,30 +48,84 @@ function MarkerRenderer({
           setProjectId(project.data.project_id);
         }}
       >
-        <Marker
-          key={project.data.project_id}
-          icon={
-            new Leaflet.Icon({
-              iconUrl: `./src/assets/img/${project.calcStatus(referenced)}.png`,
-              shadowUrl:
-                "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-              iconSize: [41, 41],
-              iconAnchor: [12, 41],
-              popupAnchor: [1, -34],
-              shadowSize: [41, 41],
-            })
-          }
-          position={[
-            (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
-              Math.random() * 0.1,
-            (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
-              Math.random() * 0.1,
-          ]}
-        >
-          <Popup closeButton={false}>
-            <p.div>{project.data.name}</p.div>
-          </Popup>
-        </Marker>
+        {project.calcStatus(referenced) === "hana" && (
+          <Marker
+            key={project.data.project_id}
+            icon={
+              new Leaflet.Icon({
+                iconUrl: hana,
+                shadowUrl:
+                  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+                iconSize: [41, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41],
+              })
+            }
+            position={[
+              (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
+                Math.random() * 0.1,
+              (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
+                Math.random() * 0.1,
+            ]}
+          >
+            <Popup closeButton={false}>
+              <p.div>{project.data.name}</p.div>
+            </Popup>
+          </Marker>
+        )}
+        {project.calcStatus(referenced) === "tsubomi" && (
+          <Marker
+            key={project.data.project_id}
+            icon={
+              new Leaflet.Icon({
+                iconUrl: tsubomi,
+                shadowUrl:
+                  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+                iconSize: [41, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41],
+              })
+            }
+            position={[
+              (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
+                Math.random() * 0.1,
+              (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
+                Math.random() * 0.1,
+            ]}
+          >
+            <Popup closeButton={false}>
+              <p.div>{project.data.name}</p.div>
+            </Popup>
+          </Marker>
+        )}
+        {project.calcStatus(referenced) === "wakaba" && (
+          <Marker
+            key={project.data.project_id}
+            icon={
+              new Leaflet.Icon({
+                iconUrl: wakaba,
+                shadowUrl:
+                  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+                iconSize: [41, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41],
+              })
+            }
+            position={[
+              (referenced.sponsorData?.data.location.coordinates[1] ?? 0) +
+                Math.random() * 0.1,
+              (referenced.sponsorData?.data.location.coordinates[0] ?? 0) +
+                Math.random() * 0.1,
+            ]}
+          >
+            <Popup closeButton={false}>
+              <p.div>{project.data.name}</p.div>
+            </Popup>
+          </Marker>
+        )}
       </p.div>
     ))
     .otherwise(() => <p.div>住所の取得に失敗しました</p.div>);
