@@ -7,7 +7,7 @@ import headerLeft from "@/assets/svg/background/header-left.svg";
 import headerRight from "@/assets/svg/background/header-right.svg";
 import wakaba from "@/assets/svg/background/wakaba.svg";
 import wakabaIcon from "@/assets/svg/icon/wakaba.svg";
-import { LogoComposite } from "@/components/Logo";
+import { LogoAnimation } from "@/components/LogoAnimation";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
 
@@ -55,52 +55,54 @@ export const Route = createFileRoute("/")({
       triggerOnce: true,
     });
 
-    const [header, inViewHeader] = useInView({
-      rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-350px";
-        if (window.innerWidth >= 640) return "-350px";
-        return "-200px";
-      })(),
-      triggerOnce: true,
-    });
-
     return (
       <Expanded alignItems="start">
         <p.div
-          ref={header}
           backgroundColor="white"
           display="grid"
-          fadeIn="10"
+          duration="1000"
           height={{
-            sm: "600px",
-            lg: "40vh",
+            base: "50vh",
+            sm: "50vh",
+            lg: "50vh",
             xl: "50vh",
           }}
-          placeItems="center"
-          py="20"
+          slideInX="-10"
           style={{
             position: "relative",
-            backgroundImage: `url("${headerRight}"), url("${headerLeft}")`,
-            backgroundRepeat: "no-repeat, no-repeat",
-            backgroundPosition: "right top, left bottom",
-            backgroundSize: "auto 50%, auto 50%",
+            backgroundImage: `url("${headerLeft}")`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "left bottom",
+            backgroundSize: "70% auto",
           }}
         >
-          {inViewHeader && (
-            <LogoComposite
-              duration="1000"
-              fadeIn="10"
-              slideInY="10"
-              style={{
-                zIndex: 1,
-                position: "relative",
-              }}
-              zoom={{
-                base: 2,
-                smDown: 1.5,
-              }}
-            />
-          )}
+          <p.div
+            fadeIn="8"
+            position="relative"
+            slideInX="20"
+            style={{
+              position: "relative",
+              backgroundImage: `url("${headerRight}")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right top",
+              backgroundSize: "70% auto",
+            }}
+          >
+            <p.div
+              bottom="0"
+              height="100%"
+              left="0"
+              m="0 auto"
+              margin="auto"
+              placeItems="center"
+              position="absolute"
+              right="0"
+              slideInX="-10"
+              verticalAlign="middle"
+            >
+              <LogoAnimation />
+            </p.div>
+          </p.div>
         </p.div>
 
         <p.div
@@ -109,27 +111,29 @@ export const Route = createFileRoute("/")({
           fadeIn="2"
           height={{ base: "400px", sm: "600px", lg: "40vh", xl: "60vh" }}
           placeItems="center"
+          slideInX="100"
           style={{
-            position: "relative",
             backgroundImage: `url("${wakabaIcon}"), url("${decorationRight}")`,
             backgroundSize: "auto 15%, auto 15%",
             backgroundPosition: "5% bottom , 85% bottom",
             backgroundRepeat: "no-repeat, no-repeat",
           }}
         >
-          {inView1 && (
-            <p.div duration="1000" fadeIn="5" slideInY="10">
-              <p.h2 fontSize="3rem" fontWeight="bold" textAlign="center">
-                Wakabaとは
-              </p.h2>
+          <p.div fadeIn="2" slideInX="100">
+            {inView1 && (
+              <p.div duration="1000" fadeIn="5" slideInY="10">
+                <p.h2 fontSize="3rem" fontWeight="bold" textAlign="center">
+                  Wakabaとは
+                </p.h2>
 
-              <p.p fontSize="1rem" mt="20px" mx="auto" textAlign="center">
-                アイデアの種をあつめ形にするサービスです。
-                <br />
-                あなたの投稿したアイデアがこの町の明日を豊かにするかも！
-              </p.p>
-            </p.div>
-          )}
+                <p.p fontSize="1rem" mt="20px" mx="auto" textAlign="center">
+                  アイデアの種をあつめ形にするサービスです。
+                  <br />
+                  あなたの投稿したアイデアがこの町の明日を豊かにするかも！
+                </p.p>
+              </p.div>
+            )}
+          </p.div>
         </p.div>
 
         <p.div
@@ -156,10 +160,17 @@ export const Route = createFileRoute("/")({
               width="100%"
             >
               {inView2 && (
-                <p.div duration="1000" placeItems="center" slideInY="10">
+                <p.div
+                  animationDirection="200ms"
+                  animationDuration="100"
+                  duration="1000"
+                  fadeIn="5"
+                  placeItems="center"
+                >
                   <p.h2
+                    animationDuration="10"
                     color="wkb.bg"
-                    fadeIn="5"
+                    fadeIn="10"
                     fontSize="3rem"
                     fontWeight="bold"
                     textAlign="center"
@@ -187,13 +198,11 @@ export const Route = createFileRoute("/")({
                       }}
                       background="wkb.bg"
                       display="flex"
-                      duration="3000"
-                      fadeIn="5"
+                      fadeIn="10"
                       fontSize="150%"
                       fontWeight="bold"
                       mt="40px"
                       mx="auto"
-                      slideInY="10"
                     >
                       実際に初めてみる
                     </Button>
