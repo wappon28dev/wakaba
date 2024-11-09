@@ -54,7 +54,6 @@ function Authenticated({ user }: { user: User }): ReactElement {
   return (
     <Expanded items="center">
       <VStack gap="10" p="10">
-
         {swrUserKindOf.data?.type === "UNKNOWN" && (
           <>
             <p.span fontSize="xl" fontWeight="bold">
