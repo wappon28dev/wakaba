@@ -90,7 +90,7 @@ function SideBar(): ReactElement {
           transform="rotate(300deg)"
           zIndex="0"
         >
-          <Icon color="75B726" height="100dvh" icon={ICON.tsubomi} />
+          <Icon color="#75B726" height="100dvh" icon={ICON.tsubomi} />
         </p.div>
 
         <p.div position="absolute" zIndex="10">
