@@ -54,7 +54,7 @@ function Authenticated({ user }: { user: User }): ReactElement {
   return (
     <Expanded items="center">
       <VStack gap="10" p="10">
-        {swrUserKindOf.data?.type === "UNKNOWN" && (
+        {swrUserKindOf.data?.type === "UNKNOWN" ? (
           <>
             <p.span fontSize="xl" fontWeight="bold">
               アカウントタイプを選択して下さい
@@ -106,6 +106,45 @@ function Authenticated({ user }: { user: User }): ReactElement {
               </Button>
             </Grid>
           </>
+        ) : (
+          <VStack gap="10">
+            <Button
+              onClick={() => {
+                void navigate({ to: "/" });
+              }}
+              variant="outlined"
+              w="auto"
+            >
+              <VStack gap="2">
+                <IconText
+                  icon="bi:arrow-left-circle"
+                  iconProps={{ height: "3em" }}
+                >
+                  <p.p fontSize="lg" fontWeight="bold">
+                    トップページに戻る
+                  </p.p>
+                </IconText>
+              </VStack>
+            </Button>
+            <Button
+              onClick={() => {
+                void navigate({ to: "/projects" });
+              }}
+              variant="outlined"
+              w="auto"
+            >
+              <VStack gap="2">
+                <IconText
+                  icon="bi:arrow-return-right"
+                  iconProps={{ height: "3em" }}
+                >
+                  <p.p fontSize="lg" fontWeight="bold">
+                    プロジェクト一覧を見る
+                  </p.p>
+                </IconText>
+              </VStack>
+            </Button>
+          </VStack>
         )}
         {selected === "sower" && (
           <>
