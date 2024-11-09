@@ -160,10 +160,17 @@ export const Route = createFileRoute("/")({
               width="100%"
             >
               {inView2 && (
-                <p.div duration="1000" placeItems="center" slideInY="10">
+                <p.div
+                  animationDirection="200ms"
+                  animationDuration="100"
+                  duration="1000"
+                  fadeIn="5"
+                  placeItems="center"
+                >
                   <p.h2
+                    animationDuration="10"
                     color="wkb.bg"
-                    fadeIn="5"
+                    fadeIn="10"
                     fontSize="3rem"
                     fontWeight="bold"
                     textAlign="center"
@@ -191,13 +198,11 @@ export const Route = createFileRoute("/")({
                       }}
                       background="wkb.bg"
                       display="flex"
-                      duration="3000"
-                      fadeIn="5"
+                      fadeIn="10"
                       fontSize="150%"
                       fontWeight="bold"
                       mt="40px"
                       mx="auto"
-                      slideInY="10"
                     >
                       実際に初めてみる
                     </Button>
