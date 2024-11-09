@@ -23,7 +23,7 @@ export default function LottiePlayer({
   const _stopAtEnd = stopAtEnd ?? false;
 
   useEffect(() => {
-    if (_stopAtEnd && lottieState) {
+    if (_stopAtEnd && lottieState != null) {
       const lastFrame = lottieState.totalFrames - 1;
 
       lottieState.addEventListener("complete", () => {
@@ -44,11 +44,11 @@ export default function LottiePlayer({
   return (
     <p.div h="100%" overflow="hidden" w="auto">
       <Player
+        loop={!_stopAtEnd}
         lottieRef={(instance) => {
           setLottieState(instance);
         }}
         onEvent={eventHandler}
-        loop={!_stopAtEnd}
         style={{
           height: "100%",
         }}

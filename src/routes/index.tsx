@@ -7,9 +7,9 @@ import headerLeft from "@/assets/svg/background/header-left.svg";
 import headerRight from "@/assets/svg/background/header-right.svg";
 import wakaba from "@/assets/svg/background/wakaba.svg";
 import wakabaIcon from "@/assets/svg/icon/wakaba.svg";
+import { LogoAnimation } from "@/components/LogoAnimation";
 import { Button } from "@/components/cva/Button";
 import { Expanded } from "@/components/cva/Expanded";
-import { LogoAnimation } from "@/components/LogoAnimation";
 
 export const Route = createFileRoute("/")({
   component: () => {
@@ -61,14 +61,13 @@ export const Route = createFileRoute("/")({
           backgroundColor="white"
           display="grid"
           duration="1000"
-          slideInX="-10"
           height={{
             base: "50vh",
             sm: "50vh",
-
             lg: "50vh",
             xl: "50vh",
           }}
+          slideInX="-10"
           style={{
             position: "relative",
             backgroundImage: `url("${headerLeft}")`,
@@ -79,8 +78,8 @@ export const Route = createFileRoute("/")({
         >
           <p.div
             fadeIn="8"
-            slideInX="20"
             position="relative"
+            slideInX="20"
             style={{
               position: "relative",
               backgroundImage: `url("${headerRight}")`,
@@ -90,16 +89,16 @@ export const Route = createFileRoute("/")({
             }}
           >
             <p.div
-              slideInX="-10"
-              placeItems="center"
-              m="0 auto"
-              height="100%"
-              verticalAlign="middle"
-              position="absolute"
-              left="0"
-              right="0"
               bottom="0"
+              height="100%"
+              left="0"
+              m="0 auto"
               margin="auto"
+              placeItems="center"
+              position="absolute"
+              right="0"
+              slideInX="-10"
+              verticalAlign="middle"
             >
               <LogoAnimation />
             </p.div>
@@ -110,9 +109,9 @@ export const Route = createFileRoute("/")({
           ref={ref1}
           display="grid"
           fadeIn="2"
-          slideInX="100"
           height={{ base: "400px", sm: "600px", lg: "40vh", xl: "60vh" }}
           placeItems="center"
+          slideInX="100"
           style={{
             backgroundImage: `url("${wakabaIcon}"), url("${decorationRight}")`,
             backgroundSize: "auto 15%, auto 15%",

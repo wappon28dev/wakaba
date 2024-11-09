@@ -1,7 +1,7 @@
 import { VStack } from "panda/jsx";
 import { type ReactElement } from "react";
 import LottiePlayer from "./LottiePlayer";
-import logoAnimation from "@/assets/animations/logoAnimation.json";
+import logoAnimation from "@/assets/animations/logo.json";
 
 export function LogoAnimation(): ReactElement {
   return (
