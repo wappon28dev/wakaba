@@ -15,42 +15,42 @@ export const Route = createFileRoute("/")({
   component: () => {
     const [ref1, inView1] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-1000px";
-        if (window.innerWidth >= 640) return "-350px";
-        return "-200px";
+        if (window.innerWidth >= 1280) return "-300px";
+        if (window.innerWidth >= 640) return "-200px";
+        return "-100px";
       })(),
       triggerOnce: true,
     });
     const [ref2, inView2] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-1000px";
-        if (window.innerWidth >= 640) return "-350px";
-        return "-200px";
+        if (window.innerWidth >= 1280) return "-300px";
+        if (window.innerWidth >= 640) return "-200px";
+        return "-100px";
       })(),
       triggerOnce: true,
     });
     const [ref3, inView3] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-1000px";
-        if (window.innerWidth >= 640) return "-350px";
-        return "-200px";
+        if (window.innerWidth >= 1280) return "-300px";
+        if (window.innerWidth >= 640) return "-200px";
+        return "-100px";
       })(),
       triggerOnce: true,
     });
     const [ref4, inView4] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-1000px";
-        if (window.innerWidth >= 640) return "-350px";
-        return "-200px";
+        if (window.innerWidth >= 1280) return "-300px";
+        if (window.innerWidth >= 640) return "-200px";
+        return "-100px";
       })(),
       triggerOnce: true,
     });
 
     const [ref5, inView5] = useInView({
       rootMargin: (() => {
-        if (window.innerWidth >= 1280) return "-1000px";
-        if (window.innerWidth >= 640) return "-350px";
-        return "-200px";
+        if (window.innerWidth >= 1280) return "-300px";
+        if (window.innerWidth >= 640) return "-200px";
+        return "-100px";
       })(),
       triggerOnce: true,
     });
