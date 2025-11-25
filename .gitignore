@@ -28,3 +28,4 @@ src/routeTree.gen.ts
 tsconfig.tsbuildinfo
 .wrangler/
 /deps.dot
+package-lock.json
